@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "moods",
+  "info": {
+    "name": "Mood",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tracks": {
+      "collection": "track",
+      "via": "moods",
+      "dominant": true
+    },
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

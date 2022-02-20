@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tracks",
+  "info": {
+    "name": "Track",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "genres": {
+      "via": "tracks",
+      "collection": "genre"
+    },
+    "moods": {
+      "via": "tracks",
+      "collection": "mood"
+    },
+    "album": {
+      "via": "tracks",
+      "model": "album"
+    }
+  }
+}
