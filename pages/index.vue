@@ -17,8 +17,8 @@
     </div>
     <div class="row">
       <div class="col d-flex flex-column justify-content-center align-items-center">
-        <div id="music" class="ctr-main">
-
+        <div id="music" class="ctr-main p-3 p-md-5">
+          <MusicLibrary />
         </div>
       </div>
     </div>
@@ -45,29 +45,34 @@
           { link: 'https://www.facebook.com/OliVyaeMusic', icon: 'facebook' },
           { link: 'https://www.instagram.com/oli.vyae/', icon: 'instagram' },
           { link: 'https://olivyae.bandcamp.com/', icon: 'bandcamp'},
-          { link: 'https://soundcloud.com/oliolimusic', icon: 'soundcloud'},    
+          { link: 'https://soundcloud.com/oliolimusic', icon: 'soundcloud'}    
         ]
       }
+    },
+    created(){
+    //  this.getFilters()
     },
     mounted() {
       this.scrollImg()
     },
     methods: {
+      async getFilters(){
+        this.filters = await [...this.$store.dispatch('loadFilters')]
+      },
       scrollImg() {
         let lastScrollTop = 0;
-
         
         this.$nextTick(() => {
           document.addEventListener('scroll', () => {
             let st = window.pageYOffset || document.documentElement.scrollTop;
             if(st > lastScrollTop) { 
               document.body.classList.add('midnight')
-              documnet.getElementById('ctr-main').classList.add('midnight')
+              // documnet.getElementById('ctr-main').classList.add('midnight')
               document.getElementById('hero').classList.add('midnight') 
             }
             else { 
               document.body.classList.remove('midnight') 
-              documnet.getElementById('ctr-main').classList.remove('midnight')
+              // documnet.getElementById('ctr-main').classList.remove('midnight')
               document.getElementById('hero').classList.remove('midnight') 
             }
 
@@ -82,6 +87,10 @@
 <style lang="scss">
   #ctr-main {
     transition: .9s ease;
+    background-position:center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
   }
 
   .ten-pm { background-image: url(~/assets/img/bg_light.jpg); transition: .9s ease;}
@@ -90,6 +99,10 @@
     width: 100%;
     height: 100vh;
     transition: .9s ease;
+    background-position:center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 
     .ctr-logo {
       width: 100%;
@@ -113,8 +126,8 @@
     }
   }
   .ctr-main {
-    height: 100vh;
     width: 98%;
+    min-height: 900px;
     background-color: #00000082;
   }
   .social-btns {

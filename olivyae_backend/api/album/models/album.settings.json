@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "albums",
   "info": {
-    "name": "Album"
+    "name": "Album",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -21,8 +22,22 @@
       "required": true
     },
     "tracks": {
-      "collection": "track",
-      "via": "album"
+      "via": "album",
+      "collection": "track"
+    },
+    "moods": {
+      "collection": "mood",
+      "via": "albums",
+      "dominant": true
+    },
+    "genres": {
+      "collection": "genre",
+      "via": "albums",
+      "dominant": true
+    },
+    "instruments": {
+      "via": "albums",
+      "collection": "instrument"
     }
   }
 }

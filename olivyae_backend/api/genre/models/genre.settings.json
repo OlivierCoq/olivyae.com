@@ -18,9 +18,17 @@
       "unique": true
     },
     "tracks": {
-      "collection": "track",
       "via": "genres",
+      "collection": "track",
       "dominant": true
+    },
+    "albums": {
+      "via": "genres",
+      "collection": "album"
+    },
+    "instruments": {
+      "via": "genres",
+      "collection": "instrument"
     }
   }
 }

@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "moods",
+  "collectionName": "instruments",
   "info": {
-    "name": "Mood",
-    "description": ""
+    "name": "Instrument"
   },
   "options": {
     "increments": true,
@@ -12,19 +11,25 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "albums": {
+      "collection": "album",
+      "via": "instruments",
+      "dominant": true
+    },
+    "genres": {
+      "collection": "genre",
+      "via": "instruments",
+      "dominant": true
+    },
     "tracks": {
-      "via": "moods",
       "collection": "track",
+      "via": "instruments",
       "dominant": true
     },
     "Name": {
       "type": "string",
       "required": true,
       "unique": true
-    },
-    "albums": {
-      "via": "moods",
-      "collection": "album"
     }
   }
 }

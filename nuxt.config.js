@@ -29,6 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/index.js' },
     { src: '~/plugins/bootstrap.js', mode: 'client' }
   ],
 
@@ -41,8 +42,7 @@ export default {
     '@nuxtjs/strapi'  
   ],
   strapi: {
-    // url: process.env.STRAPI_URL || 'http://localhost:1337', 
-    url: 'http://localhost:1337', 
+    url: process.env.STRAPI_URL || 'http://localhost:1337', 
     prefix: '/api',
     version: 'v4',
     cookie: {},
@@ -50,7 +50,8 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // '@nuxtjs/style-resources', 
+    '@nuxtjs/style-resources', 
+    '@nuxtjs/axios'
   ],
 
   styleResources: {

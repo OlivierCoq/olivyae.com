@@ -26,6 +26,20 @@
     "album": {
       "via": "tracks",
       "model": "album"
+    },
+    "audiofile": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "instruments": {
+      "via": "tracks",
+      "collection": "instrument"
     }
   }
 }
