@@ -155,6 +155,7 @@ export default {
                     background-color: #61cdf775;
                     color: white;
                     font-size: 1.5em;
+                    border-radius: 10px;
 
                     &:hover {
                         cursor: pointer;
