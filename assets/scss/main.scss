@@ -1,5 +1,6 @@
 
 @import "~bootstrap/scss/bootstrap"; 
+@import "./variables.scss";
 
 body {
     background-image: url(~/assets/img/bg_light.jpg);
@@ -8,4 +9,4 @@ body {
     background-attachment: fixed;
     background-size: cover;
     transition: .9s ease;
-}
+} 

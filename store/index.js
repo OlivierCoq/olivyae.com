@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const state = () => ({
+    user: false,
     filters: {
         instruments: false,
         albums: false, 
@@ -13,8 +14,13 @@ export const state = () => ({
 export const mutations = {
     set(state, filters) {
         state.filters = filters
+    },
+    ON_AUTH_STATE_CHANGED_MUTATION(state, {authUser, claims}){
+        if(authUser) {
+            const { uid, email, displayName } = authUser
+            state.user = { uid, email, displayName }
+        } else { state.user = false }
     }
-    
 }
 
 export const actions = {

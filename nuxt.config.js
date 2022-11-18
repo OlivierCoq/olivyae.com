@@ -1,7 +1,7 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-
+  mode: 'spa',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Oli.Vyae Music',
@@ -15,7 +15,10 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap' }
     ],
     script: [
       { src: 'https://kit.fontawesome.com/d39843528a.js' }
@@ -39,24 +42,73 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/style-resources',
-    '@nuxtjs/strapi'  
+    // '@nuxtjs/strapi'  
   ],
-  strapi: {
-    url: process.env.STRAPI_URL || 'http://localhost:1337', 
-    prefix: '/api',
-    version: 'v4',
-    cookie: {},
-  },
+  // No longer using strapi for this project. Switching to Google's firebase instead:
+  // strapi: {
+  //   url: process.env.STRAPI_URL || 'http://localhost:1337', 
+  //   prefix: '/api',
+  //   version: 'v4',
+  //   cookie: {},
+  // },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/style-resources', 
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/firebase',
+    '@nuxtjs/pwa',
+    '@nuxtjs/firebase'
   ],
 
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyDmIgDHvkZGt66C9MVAQIBcKgD7z6ViDM4',
+      authDomain: 'olivyae-58b01.firebaseapp.com',
+      projectId: 'olivyae-58b01',
+      storageBucket: 'olivyae-58b01.appspot.com',
+      messagingSenderId: '717334486380',
+      appId: '1:717334486380:web:8425741ba410e141c26749',
+      measurementId: 'G-2WKB37HQWS'
+    },
+    services: {
+      auth:{
+        initialize: {
+          onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+          onAuthStateChangedAction: 'onAuthStateChangedAction' 
+        }
+        // persistence: 'local',
+        // initialize: {
+          
+        //   subscribeManually: false
+        // },
+        // ssr: false,
+        // emulatorPort: 9099,
+        // emulatorHost: 'http://localhost'
+      },
+      firestore: true,
+      functions: true,
+      storage: true,
+      database: true,
+      messaging: true,
+      performance: true,
+      analytics: true,
+      remoteConfig: true
+    }
+  },
+  pwa: {
+    meta: false,
+    icon: false,
+    workbox: {
+      importScripts: [
+        '/firebase-auth-sw.js'
+      ],
+      dev: process.env.NODE_ENV === 'development'
+    }
+  },
   styleResources: {
     scss: [
-      '~assets/scss/main.scss',
+      '~assets/scss/*.scss',
     ]
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build

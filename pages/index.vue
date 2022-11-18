@@ -7,9 +7,9 @@
         </div>
         <div class="container">
           <div class="row">
-            <div class="ctr-cta-btns d-flex">
-              <a href="#music" class="music m-3">Music Library</a>
-              <a href="#contact" class="contact m-3">Contact</a> 
+            <div class="d-flex w-100 flex-row justify-content-center">
+              <a href="#music" class="music m-3 text-uppercase text-light text-decoration-none fs-3 lato">Listen Now <i class="fa fa-arrow-down"></i></a>
+              <a href="#contact" class="contact m-3 text-uppercase text-light text-decoration-none fs-3 lato">Contact</a> 
             </div>
           </div>
         </div>
@@ -113,17 +113,7 @@
         }
       }
     }
-    a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.5em;
-      // width: 100%;
-    }
-    .ctr-cta-btns {
-      width: 100%;
-      flex-direction: row;
-      justify-content: center;
-    }
+
   }
   .ctr-main {
     width: 98%;

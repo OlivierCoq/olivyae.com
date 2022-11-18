@@ -3,14 +3,14 @@
       <div class="row">
           <div class="col-sm-12 col-md-3">
               <div class="ctr-filters">
-                  <h3 class="text-uppercase">Search By</h3>
-                  <h5 class="mb-3" @click="clearFilters">Clear Filters</h5>
+                  <h3 class="text-uppercase lato">Search By</h3>
+                  <h5 class="mb-3 lato" @click="clearFilters">Clear Filters</h5>
                   <ul class="filter">
                       <li v-for="(filter, i) in filters" :key="i" class="p-3 my-1" :class="filter.active ? 'active' : '' " @click="selectFilterMenu(filter)">
-                          <span>{{filter.name}}</span>
+                          <span class="lato">{{filter.name}}</span>
                           <ul class="filter-options mt-3" v-if="filter.active">
                               <li v-for="(option, a) in filter.options" :key="a" @click="selectFilter(filter, option)" class="my-3">
-                                 <span v-html="option.Name ? option.Name : option.name" class="p-2" :class="option.active ? 'active' : '' "></span>
+                                 <span v-html="option.Name ? option.Name : option.name" class="p-2 lato" :class="option.active ? 'active' : '' "></span>
                               </li>
                           </ul>
                       </li>
@@ -79,7 +79,7 @@ export default {
         }
     },
     async fetch() {
-        this.tracks = await this.$axios.$get('http://localhost:1337/tracks') // Will be replaced by actual URL
+        // this.tracks = await this.$axios.$get('http://localhost:1337/tracks') // Will be replaced by actual URL
     },
     created() {
         // DOES NOT WORK FOR SOME REASON:
@@ -100,14 +100,14 @@ export default {
             // stupid
         setupFilters() {
             const thisObj = this
-            Object.keys(this.filterObj).forEach((key) => {
-                this.$axios.$get(`http://localhost:1337/${key}`)
-                .then((data) => {
-                    thisObj.filters.forEach((filter) => {
-                        if(filter.key === key) { filter.options = data }
-                    })
-                })
-            })
+            // Object.keys(this.filterObj).forEach((key) => {
+            //     this.$axios.$get(`http://localhost:1337/${key}`)
+            //     .then((data) => {
+            //         thisObj.filters.forEach((filter) => {
+            //             if(filter.key === key) { filter.options = data }
+            //         })
+            //     })
+            // })
         },
         selectFilterMenu(filter) {
             filter.active = !filter.active
