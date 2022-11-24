@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 export const state = () => ({
     user: false,
@@ -12,7 +12,8 @@ export const state = () => ({
 
 
 export const mutations = {
-    set(state, filters) {
+    ...vuexfireMutations,
+    SET_FILTERS(state, filters) {
         state.filters = filters
     },
     ON_AUTH_STATE_CHANGED_MUTATION(state, {authUser, claims}){
@@ -26,21 +27,10 @@ export const mutations = {
 export const actions = {
     nuxtServerInit() {},
 
-    async loadFilters({ commit }) { 
-        try {
-            const filterObj = this.state?.filters
 
-            Object.keys(filterObj).forEach((key) => {
-                axios.get(`http://localhost:1337/${key}`)
-                .then((data) => {
-                    // console.log('this sum bull', data)
-                    filterObj[key] = data.data
-                })
-            })
-            commit('set', filterObj)
-            return filterObj
-        } catch (error) {
-            console.log('error in store', error)
-        }
-    }
 }
+export const getters = {
+    filters(state) {
+      return state.filters
+    },
+  }

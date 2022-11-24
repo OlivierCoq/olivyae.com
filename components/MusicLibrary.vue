@@ -6,14 +6,14 @@
                   <h3 class="text-uppercase lato">Search By</h3>
                   <h5 class="mb-3 lato" @click="clearFilters">Clear Filters</h5>
                   <ul class="filter">
-                      <li v-for="(filter, i) in filters" :key="i" class="p-3 my-1" :class="filter.active ? 'active' : '' " @click="selectFilterMenu(filter)">
+                      <!-- <li v-for="(filter, i) in filters" :key="i" class="p-3 my-1" :class="filter.active ? 'active' : '' " @click="selectFilterMenu(filter)">
                           <span class="lato">{{filter.name}}</span>
                           <ul class="filter-options mt-3" v-if="filter.active">
                               <li v-for="(option, a) in filter.options" :key="a" @click="selectFilter(filter, option)" class="my-3">
                                  <span v-html="option.Name ? option.Name : option.name" class="p-2 lato" :class="option.active ? 'active' : '' "></span>
                               </li>
                           </ul>
-                      </li>
+                      </li> -->
                   </ul>
               </div>
           </div>
@@ -39,33 +39,38 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'MusicLibrary',   
+    async asyncData({ }) {
+        const filters = this.$fire.firestore.collection('filters').doc('name')
+        return { filters }
+    },
     data() {
         return {
-            filters: [
-                {   name: 'Instruments', 
-                    key: 'instruments', 
-                    active: false,
-                    options: false
-                },
-                {   name: 'Albums', 
-                    key: 'albums', 
-                    active: false,
-                    options: false
-                }, 
-                {   name: 'Genres', 
-                    key: 'genres', 
-                    active: false,
-                    options: false
-                },
-                {   name: 'Mood', 
-                    key: 'moods', 
-                    active: false,
-                    options: false 
-                },
-            ],
+            // filters: [
+            //     {   name: 'Instruments', 
+            //         key: 'instruments', 
+            //         active: false,
+            //         options: false
+            //     },
+            //     {   name: 'Albums', 
+            //         key: 'albums', 
+            //         active: false,
+            //         options: false
+            //     }, 
+            //     {   name: 'Genres', 
+            //         key: 'genres', 
+            //         active: false,
+            //         options: false
+            //     },
+            //     {   name: 'Mood', 
+            //         key: 'moods', 
+            //         active: false,
+            //         options: false 
+            //     },
+            // ],
             filterObj: {
                 instruments: false,
                 albums: false, 
@@ -77,6 +82,9 @@ export default {
                 query: ''
             }
         }
+    },
+    computed: {
+
     },
     async fetch() {
         // this.tracks = await this.$axios.$get('http://localhost:1337/tracks') // Will be replaced by actual URL
@@ -95,6 +103,7 @@ export default {
         this.setupFilters()
     },
     computed: {
+        ...mapGetters(['filters']),
     },
     methods: {
             // stupid
@@ -149,7 +158,7 @@ export default {
                 &:hover {cursor: pointer;}
             }
 
-            .filter { list-style-type: none; padding: 0;  overflow-y: scroll; height: 400px;
+            .filter { list-style-type: none; padding: 0; height: 400px;
                 li {
                     width: 100%;
                     background-color: #61cdf775;
