@@ -5,15 +5,15 @@
               <div class="ctr-filters">
                   <h3 class="text-uppercase lato">Search By</h3>
                   <h5 class="mb-3 lato" @click="clearFilters">Clear Filters</h5>
-                  <ul class="filter">
-                      <!-- <li v-for="(filter, i) in filters" :key="i" class="p-3 my-1" :class="filter.active ? 'active' : '' " @click="selectFilterMenu(filter)">
+                  <ul v-if="filters.length > 1" class="filter">
+                      <li v-for="(filter, a) in filters" :key="a" class="p-3 my-1" :class="filter.active ? 'active' : '' " @click="selectFilterMenu(filter)">
                           <span class="lato">{{filter.name}}</span>
-                          <ul class="filter-options mt-3" v-if="filter.active">
-                              <li v-for="(option, a) in filter.options" :key="a" @click="selectFilter(filter, option)" class="my-3">
+                          <ul v-show="filter.active == true" :ref="'filter_options-' + filter.name"  class="filter-options mt-3">
+                              <li v-for="(option, b) in filter.options" :key="b" class="my-3" @click="selectFilter(filter, option)" >
                                  <span v-html="option.Name ? option.Name : option.name" class="p-2 lato" :class="option.active ? 'active' : '' "></span>
                               </li>
                           </ul>
-                      </li> -->
+                      </li>
                   </ul>
               </div>
           </div>
@@ -39,87 +39,39 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
     name: 'MusicLibrary',   
-    async asyncData({ }) {
-        const filters = this.$fire.firestore.collection('filters').doc('name')
-        return { filters }
-    },
     data() {
         return {
-            // filters: [
-            //     {   name: 'Instruments', 
-            //         key: 'instruments', 
-            //         active: false,
-            //         options: false
-            //     },
-            //     {   name: 'Albums', 
-            //         key: 'albums', 
-            //         active: false,
-            //         options: false
-            //     }, 
-            //     {   name: 'Genres', 
-            //         key: 'genres', 
-            //         active: false,
-            //         options: false
-            //     },
-            //     {   name: 'Mood', 
-            //         key: 'moods', 
-            //         active: false,
-            //         options: false 
-            //     },
-            // ],
-            filterObj: {
-                instruments: false,
-                albums: false, 
-                moods: false,
-                genres: false
-            },
+            filters: [],
             tracks: [],
             search: {
                 query: ''
-            }
+            },
+            queryObj: ''
         }
     },
-    computed: {
-
-    },
-    async fetch() {
-        // this.tracks = await this.$axios.$get('http://localhost:1337/tracks') // Will be replaced by actual URL
-    },
     created() {
-        // DOES NOT WORK FOR SOME REASON:
-        // const thisObj = this
-        // thisObj.filters.forEach((filter) => {
-        //     thisObj.$axios.$get(`http://localhost:1337/${filter.key}`)
-        //         .then((data) => {
-        //             console.log('wtffff', data)
-        //             filter.options = data
-        //         })
-        // })
-
         this.setupFilters()
     },
-    computed: {
-        ...mapGetters(['filters']),
-    },
     methods: {
-            // stupid
         setupFilters() {
             const thisObj = this
-            // Object.keys(this.filterObj).forEach((key) => {
-            //     this.$axios.$get(`http://localhost:1337/${key}`)
-            //     .then((data) => {
-            //         thisObj.filters.forEach((filter) => {
-            //             if(filter.key === key) { filter.options = data }
-            //         })
-            //     })
-            // })
+            this.$fire.firestore.collection('filters').get()
+            .then((snapshot) => { snapshot.docs.forEach((f) => { thisObj.filters.push(f.data()) }) })   
+            .then(() => { thisObj.$nextTick(()=> {
+                thisObj.filters.forEach((filt) => { filt['active'] = false })
+            }) })     
         },
         selectFilterMenu(filter) {
             filter.active = !filter.active
+            let main_menu = this.$refs[`filter_options-${filter.name}`][0]
+            if(filter.active) {
+                main_menu.style.display = 'block'
+            } else {
+                main_menu.style.display = 'none'
+            }
         },
         selectFilter(filter, option) {
             filter.active = !filter.active
@@ -132,6 +84,9 @@ export default {
                     option.active = false
                 })
             })
+        },
+        confirm() {
+            console.log('.')
         },
         doSearch() {
             console.log('Searching for: ', this.search.query)
@@ -158,13 +113,23 @@ export default {
                 &:hover {cursor: pointer;}
             }
 
-            .filter { list-style-type: none; padding: 0; height: 400px;
+            .filter { 
+                list-style-type: none; 
+                padding: 0; height: 400px;
+                transition-delay: 0.8s;
+                transition: 0.8s ease;
+                transition-timing-function: ease;
+
                 li {
                     width: 100%;
                     background-color: #61cdf775;
                     color: white;
                     font-size: 1.5em;
                     border-radius: 10px;
+
+                    transition-delay: 0.8s;
+                    transition: 0.8s ease;
+                    transition-timing-function: ease;
 
                     &:hover {
                         cursor: pointer;
@@ -179,6 +144,9 @@ export default {
                     list-style-type: none;
                     li {
                         font-size: .7em;
+                        transition-delay: 0.5s;
+                        transition: 0.8s ease;
+                        transition-timing-function: ease;
                     }
                     .active {
                         background-color: #4187a2;

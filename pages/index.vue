@@ -16,8 +16,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col d-flex flex-column justify-content-center align-items-center">
-        <div id="music" class="ctr-main p-3 p-md-5">
+      <div class="col d-flex flex-column justify-content-center align-items-center m-0 p-0 w-100">
+        <div id="music" class="ctr-main p-3 p-md-5 w-100">
           <MusicLibrary />
         </div>
       </div>
@@ -45,7 +45,8 @@
           { link: 'https://www.facebook.com/OliVyaeMusic', icon: 'facebook' },
           { link: 'https://www.instagram.com/oli.vyae/', icon: 'instagram' },
           { link: 'https://olivyae.bandcamp.com/', icon: 'bandcamp'},
-          { link: 'https://soundcloud.com/oliolimusic', icon: 'soundcloud'}    
+          { link: 'https://soundcloud.com/oliolimusic', icon: 'soundcloud'},
+          { link: 'https://www.youtube.com/@user-wq6ob3oo7t', icon: 'youtube' }    
         ]
       }
     },
@@ -116,14 +117,13 @@
 
   }
   .ctr-main {
-    width: 98%;
     min-height: 900px;
     background-color: #00000082;
   }
   .social-btns {
-    top: auto;
-    bottom: 0;
-    right: 5%;
+    top: 15px;
+    bottom: auto;
+    right: 10px;
     z-index: 999;
     width: 100%;
 

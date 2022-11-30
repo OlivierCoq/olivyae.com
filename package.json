@@ -6,9 +6,11 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "emulators": "firebase emulators:start"
   },
   "dependencies": {
+    "@johmun/vue-tags-input": "^2.1.0",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/firebase": "^8.2.2",
     "@nuxtjs/proxy": "^2.1.0",
@@ -21,6 +23,8 @@
     "firebase-admin": "^11.0.1",
     "firebaseui": "^6.0.2",
     "nuxt": "^2.15.7",
+    "nuxt-dropzone": "^1.0.4",
+    "vue2-editor": "^2.10.3",
     "vuexfire": "^3.2.5"
   },
   "devDependencies": {

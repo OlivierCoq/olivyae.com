@@ -58,7 +58,7 @@
                 ],
                 signInSuccessUrl: '/admin',
                 callbacks: {
-                    ssignInSuccesssWithAuthResult() {
+                    signInSuccessWithAuthResult() {
                         console.log('you are in!')
                         window.location = '/admin'
                     }

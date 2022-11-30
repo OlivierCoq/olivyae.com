@@ -10,3 +10,11 @@ body {
     background-size: cover;
     transition: .9s ease;
 } 
+
+.hoverable {
+    &:hover { cursor: pointer; }
+}
+
+.shadow-1 {
+    box-shadow: 0px 2px 18px #22222836;
+}
