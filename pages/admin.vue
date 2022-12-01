@@ -28,7 +28,7 @@
                                 </div>
                                 <div v-else>
 
-                                    <div v-if="current_tab.data.select_option.name = 'Album' ">
+                                    <div v-if="current_tab.data.select_option.name == 'Album' ">
                                         <h3 class="fw-bold my-3">album</h3><hr/>
                                         <div class="row">
                                             <div class="col-sm-12 col-md-4">
@@ -51,11 +51,39 @@
                                                     <div class="mb-3">
                                                         <input type="text" class="form-control" v-model="current_tab.data.select_option.metadata.credits" placeholder="credits (optional)">
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <vue-tags-input class="w-100"
-                                                            v-model="current_tab.data.select_option.metadata.filters[0].tag" 
-                                                            :tags="current_tab.data.select_option.metadata.filters[0].tags"
-                                                            @tags-changed="newTags => tags = newTags" />
+                                                    <div v-for="filter_input, c in current_tab.data.select_option.metadata.filters" :key="c" class="mb-3 w-100 ctr-tags">
+                                                        <div class="form-control p-2" style="height: 4rem;">
+                                                            <div v-for="tag, i in filter_input.tags" :key=" 'tag' + i" class="tag mx-1 py-1 px-2 rounded"> 
+                                                                {{ tag.name }} <i class="fa fa-times text-light hoverable" @click="removeTag(filter_input, i)"></i>
+                                                            </div>
+                                                            <input 
+                                                                v-model="filter_input.tag" 
+                                                                class="m-0 p-0 tag-input" 
+                                                                :placeholder="filter_input.name"
+                                                                @keyup.enter="addTag(filter_input)"  /> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 w-100">
+                                                        <h4 class="mb-3">Tracks</h4>
+
+                                                        <!-- List tracks here -->
+
+
+                                                        <button class="btn btn-info btn-md w-100 text-center text-light" @click="add_track(current_tab.data.select_option.metadata)">
+                                                             <i class="fa fa-plus"></i> new track
+                                                        </button>
+                                                        <div v-if="current_tab.data.select_option.metadata.adding_track" class="w-100 my-3">
+                                                            <div class="w-100 d-flex bg-light shadow-1 p-3">
+                                                                <div class="w-75"> 
+                                                                    <input type="text" class="form-control" v-model="current_tab.data.select_option.metadata.new_track.name" placeholder="Track title" required>
+                                                                </div>
+                                                                <div class="w-25 d-flex flex-direction-row align-items-center justify-content-end">
+                                                                    <i class="fa fa-file-audio fa-2x text-info me-2 hoverable"></i>
+                                                                    <i class="fa fa-plus fa-2x text-success hoverable mx-4"></i>
+                                                                    <i class="fas fa-ban text-danger hoverable" @click="cancel_add_track(current_tab.data.select_option.metadata)"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,7 +106,6 @@
     import Dropzone from 'nuxt-dropzone'
     import 'nuxt-dropzone/dropzone.css'
     import { VueEditor } from 'vue2-editor'
-    import VueTagsInput from '@johmun/vue-tags-input';
 
 
     export default {
@@ -87,8 +114,7 @@
         layout: 'inner_page',
         components: {
             Dropzone,
-            VueEditor,
-            VueTagsInput
+            VueEditor
         },
         data() {
             return {
@@ -117,16 +143,36 @@
                                     credits: ``,
                                     filters: [
                                         {
-                                            name: 'Instrument',
+                                            name: 'Instruments',
+                                            tag: '',
+                                            tags: []
+                                        },
+                                        {
+                                            name: 'Mood',
+                                            tag: '',
+                                            tags: []
+                                        },
+                                        {
+                                            name: 'Genre',
                                             tag: '',
                                             tags: []
                                         }
+                                    ],
+                                    adding_track: false,
+                                    new_track: {
+                                        name: '',
+                                        album: '',
+                                        audio_file: ''
+                                    },
+                                    tracks: [
+
                                     ]
                                 }
                             },
                             {
                                 name: `Track`,
-                                icon: `<i class="far fa-file-audio fa-3x hoverable"></i>`
+                                icon: `<i class="far fa-file-audio fa-3x hoverable"></i>`,
+                                options: []
                             }
                         ]
                     }
@@ -143,7 +189,11 @@
                    {
                     name: `Tracks`,
                     icon: `<i class="far fa-file-audio fa-2x hoverable"></i>`,
-                    data: {}
+                    data: {
+                        adding_new: false,
+                        editing: false,
+                        options: []
+                    }
                    }
                 ],
                 current_tab: false
@@ -171,12 +221,28 @@
                         this.init_album_upload(option)
                       break;
                     default:
-                        return true
+                        console.log('default.')
                 }
             },
                 // Album
             init_album_upload(option) {
                 option.new_album_cover.zone = this.$refs.album_cover
+            },
+            addTag(filter){
+                if(!filter.tags == '') 
+                    filter.tags.push({name: filter.tag})
+                filter.tag = ''
+            },
+            removeTag(filter, index) {
+                filter.tags.splice(index, 1)
+            },
+            add_track(album) {
+                album.adding_track = true
+                console.log('Adding tracks to -> ', album)
+                album.tracks.push(album.new_track)
+            },
+            cancel_add_track(album) {
+                album.adding_track = false
             }
         }
     }
@@ -200,8 +266,20 @@
                 border: 5px solid #8080803b;
                 background: #80808014;
             }
-            .vue-tags-input {
-
+            .ctr-tags {
+                .tag-input {
+                    border: none;
+                    &:focus,
+                    &:focus-visible {
+                        border: none;
+                        outline: none;
+                    }
+                }
+                .tag {
+                    float: left;
+                    background-color: black;
+                    color: white;
+                }
             }
         }
     }
