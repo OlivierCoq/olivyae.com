@@ -83,7 +83,7 @@
                                                                     <i class="fas fa-ban text-danger hoverable" @click="cancel_add_track(current_tab.data.select_option.metadata)"></i>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> 
                                                     </div>
                                                 </div>
                                             </div>
