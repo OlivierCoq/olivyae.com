@@ -316,32 +316,6 @@
             remove_tag(filter, index) {
                 filter.tags.splice(index, 1)
             },
-            add_new_track(album, new_track) {
-                this.init_new_track_zone(new_track)
-                album.adding_track = true
-                console.log('Adding tracks to -> ', album)
-                
-            },
-            cancel_add_track(album) {
-                album.adding_track = false
-            },
-            submit_album(album) {
-                console.log('Submitting album: ', album)
-                this.current_tab.data.select_option.errors = []
-                
-                // Go down list for validation
-                this.submit_album_cover(album)
-                    // Name (Description and Credits are optional)
-                if(!album.name.length) { this.current_tab.data.select_option.errors.push('Album needs a name, man!') }
-                    // Filters
-                album.filters.forEach((filter_obj) => {
-                    if(!filter_obj.tags.length) { this.current_tab.data.select_option.errors.push(`Gotta have ${filter_obj.name}, or the listeners'll be lost!`) }
-                })
-                    // Tracks
-                if(!album.tracks.length) {
-                    this.current_tab.data.select_option.errors.push(`No tracks? What are they even listening to, dude?`)
-                }
-            },
             submit_album_cover(album){
                 // Album Cover
                 // console.log('zone file', album.album_cover.zone.dropzone.files[0])
@@ -367,7 +341,61 @@
                    
                 }
             },
+            submit_album(album) {
+                console.log('Submitting album: ', album)
+                this.current_tab.data.select_option.errors = []
+                
+                // Go down list for validation
+                this.submit_album_cover(album)
+                    // Name (Description and Credits are optional)
+                if(!album.name.length) { this.current_tab.data.select_option.errors.push('Album needs a name, man!') }
+                    // Filters
+                album.filters.forEach((filter_obj) => {
+                    if(!filter_obj.tags.length) { this.current_tab.data.select_option.errors.push(`Gotta have ${filter_obj.name}, or the listeners'll be lost!`) }
+                })
+                    // Tracks
+                if(!album.tracks.length) {
+                    this.current_tab.data.select_option.errors.push(`No tracks? What are they even listening to, dude?`)
+                }
+                if(!this.current_tab.data.select_option.errors.length) {
+                    try {
+                        let random_id = Math.random().toString(36).slice(2),
+                            target_tracks = []
+
+                            album.tracks.forEach((track) => {
+                                target_tracks.push({
+                                    name: track.name,
+                                    audio_file: track.audio_file,
+                                    file_name: track.file_name,
+                                    order: track.order,
+                                    filters: track.filters,
+                                    album_id: random_id
+                                })
+                            })
+                            
+                        if(target_tracks.length > 0) {
+                            this.$fireModule.firestore().collection('albums').doc(random_id).set({
+                                name: album.name,
+                                art: album.art,
+                                credits: album.credits,
+                                description: album.description,
+                                filters: album.filters,
+                                tracks: target_tracks
+                            })
+                        }
+                    }
+                    catch(err) { console.log('post error', err)}
+                }
+            },
                 // Tracks
+            add_new_track(album, new_track) {
+                this.init_new_track_zone(new_track)
+                album.adding_track = true
+                console.log('Adding tracks to -> ', album)         
+            },
+            cancel_add_track(album) {
+                album.adding_track = false
+            },
             init_new_track_zone(new_track){
                 this.$nextTick(()=> {
                     new_track.zone = this.$refs.new_track_zone 
