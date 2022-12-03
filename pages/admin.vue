@@ -28,19 +28,21 @@
                                 </div>
                                 <div v-else>
 
+                                        <!-- Add a new Album -->
                                     <div v-if="current_tab.data.select_option.name == 'Album' ">
                                         <h3 class="fw-bold my-3">album</h3><hr/>
                                         <div class="row">
                                             <div class="col-sm-12 col-md-4">
                                                 <div class="py-3">
                                                     <h4>album cover</h4>
-                                                    <dropzone id="album_cover" ref="album_cover" :options="current_tab.data.select_option.new_album_cover.options" :destroyDropzone="true" />
+                                                    <dropzone id="album_cover" ref="album_cover" :options="current_tab.data.select_option.metadata.album_cover.options" :destroyDropzone="true" />
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-8">
                                                 <div class="py-3 w-100 mt-5">
                                                     <div class="mb-3">
-                                                        <input type="text" class="form-control" v-model="current_tab.data.select_option.metadata.name" placeholder="album name">
+                                                        <input type="text" class="form-control" v-model="current_tab.data.select_option.metadata.name" placeholder="album name" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <client-only>
@@ -53,8 +55,8 @@
                                                     </div>
                                                     <div v-for="filter_input, c in current_tab.data.select_option.metadata.filters" :key="c" class="mb-3 w-100 ctr-tags">
                                                         <div class="form-control p-2" style="height: 4rem;">
-                                                            <div v-for="tag, i in filter_input.tags" :key=" 'tag' + i" class="tag mx-1 py-1 px-2 rounded"> 
-                                                                {{ tag.name }} <i class="fa fa-times text-light hoverable" @click="removeTag(filter_input, i)"></i>
+                                                            <div v-for="(tag, d) in filter_input.tags" :key="( 'tag' + d)" class="tag mx-1 py-1 px-2 rounded"> 
+                                                                {{ tag.name }} <i class="fa fa-times text-light hoverable" @click="removeTag(filter_input, d)"></i>
                                                             </div>
                                                             <input 
                                                                 v-model="filter_input.tag" 
@@ -72,6 +74,7 @@
                                                         <button class="btn btn-info btn-md w-100 text-center text-light" @click="add_track(current_tab.data.select_option.metadata)">
                                                              <i class="fa fa-plus"></i> new track
                                                         </button>
+                                                            <!-- Add Track -->
                                                         <div v-if="current_tab.data.select_option.metadata.adding_track" class="w-100 my-3">
                                                             <div class="w-100 d-flex bg-light shadow-1 p-3">
                                                                 <div class="w-75"> 
@@ -84,6 +87,20 @@
                                                                 </div>
                                                             </div>
                                                         </div> 
+
+                                                             <!-- Submit Album -->
+                                                        <button class="btn btn-success text-center text-light w-100 btn-md my-3" @click.prevent="submit_album(current_tab.data.select_option.metadata)">
+                                                            submit new album
+                                                        </button>
+
+                                                        <div v-if="(current_tab.data.select_option.errors.length > 0)" class="alert alert-danger">
+                                                            <ul class="list-unstyled">
+                                                                <li v-for="error, e in current_tab.data.select_option.errors" :key="e">
+                                                                    {{ error }}
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,16 +147,19 @@
                             {
                                 name: `Album`,
                                 icon: `<i class="fas fa-record-vinyl fa-3x hoverable"></i>`,
-                                new_album_cover: {
-                                    zone: false,
-                                    file: null,
-                                    options: {
-                                        url: '/upload'
-                                    }
-                                },
+                                errors: [],
                                 metadata: {
                                     name: ``,
                                     description: ``,
+                                    art: false,
+                                    album_cover: {
+                                        zone: false,
+                                        options: {
+                                            url: '/upload',
+                                            addRemoveLinks: true,
+                                            acceptedFiles: 'image/*s'
+                                        }
+                                    },
                                     credits: ``,
                                     filters: [
                                         {
@@ -159,6 +179,7 @@
                                         }
                                     ],
                                     adding_track: false,
+                                    clear: false,
                                     new_track: {
                                         name: '',
                                         album: '',
@@ -226,7 +247,9 @@
             },
                 // Album
             init_album_upload(option) {
-                option.new_album_cover.zone = this.$refs.album_cover
+                this.$nextTick(()=> {
+                    option.metadata.album_cover.zone = this.$refs.album_cover 
+                })
             },
             addTag(filter){
                 if(!filter.tags == '') 
@@ -243,6 +266,29 @@
             },
             cancel_add_track(album) {
                 album.adding_track = false
+            },
+            submit_album(album) {
+                console.log('Submitting album: ', album)
+                this.current_tab.data.select_option.errors = []
+                
+                // Go down list for validation
+                this.submit_album_cover(album)
+
+            },
+            submit_album_cover(album){
+                // Album Cover
+                console.log('zone file', album.album_cover.zone.dropzone.files[0])
+                let album_cover = album.album_cover.zone.dropzone.files[0]
+                if(!album_cover) {
+                    album.clear = false
+                    this.current_tab.data.select_option.errors.push('Please upload an album cover. We need to give the people something to look at!')
+                } else {
+                    let storageRef = this.$fireModule.storage().ref(),
+                        uploadTask = storageRef.child(album_cover.name).put(album_cover)
+
+                    uploadTask.snapshot.ref.getDownloadURL()
+                        .then((url)=> { album.art = url})
+                }
             }
         }
     }
