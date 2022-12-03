@@ -36,7 +36,6 @@
                                                 <div class="py-3">
                                                     <h4>album cover</h4>
                                                     <dropzone id="album_cover" ref="album_cover" :options="current_tab.data.select_option.metadata.album_cover.options" :destroyDropzone="true" />
-
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-8">
@@ -56,34 +55,65 @@
                                                     <div v-for="filter_input, c in current_tab.data.select_option.metadata.filters" :key="c" class="mb-3 w-100 ctr-tags">
                                                         <div class="form-control p-2" style="height: 4rem;">
                                                             <div v-for="(tag, d) in filter_input.tags" :key="( 'tag' + d)" class="tag mx-1 py-1 px-2 rounded"> 
-                                                                {{ tag.name }} <i class="fa fa-times text-light hoverable" @click="removeTag(filter_input, d)"></i>
+                                                                {{ tag.name }} <i class="fa fa-times text-light hoverable" @click="remove_tag(filter_input, d)"></i>
                                                             </div>
                                                             <input 
                                                                 v-model="filter_input.tag" 
                                                                 class="m-0 p-0 tag-input" 
                                                                 :placeholder="filter_input.name"
-                                                                @keyup.enter="addTag(filter_input)"  /> 
+                                                                @keyup.enter="add_tag(filter_input)"  /> 
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 w-100">
                                                         <h4 class="mb-3">Tracks</h4>
 
                                                         <!-- List tracks here -->
-
-
-                                                        <button class="btn btn-info btn-md w-100 text-center text-light" @click="add_track(current_tab.data.select_option.metadata)">
+                                                        <draggable v-model="current_tab.data.select_option.metadata.tracks" @start="drag=true" @end="drag=false" class="w-100 my-3 d-flex flex-column position relative">
+                                                            <div v-for="(track, e) in current_tab.data.select_option.metadata.tracks" :key="e" class="w-100 p-3 shadow-1 my-2 rounded d-flex flex-row align-items-center justify-content-between hoverable">
+                                                                <i class="fas fa-grip-vertical text-secondary m-1" @click="(track.order = e)"></i>
+                                                                <p class="fw-bold m-0">{{ track.name }} |</p>
+                                                                <p class="m-0 d-inline-block text-truncate w-75">{{ track.file_name }}</p>
+                                                                <i class="fa fas fa-trash text-danger hoverable" @click="remove_track(current_tab.data.select_option.metadata, track, e)"></i>
+                                                            </div>
+                                                        </draggable>
+    
+                                                            <!-- Adding a new track -->
+                                                        <button class="btn btn-info btn-md w-100 text-center text-light" @click="add_new_track(current_tab.data.select_option.metadata, current_tab.data.select_option.metadata.new_track)">
                                                              <i class="fa fa-plus"></i> new track
                                                         </button>
-                                                            <!-- Add Track -->
-                                                        <div v-if="current_tab.data.select_option.metadata.adding_track" class="w-100 my-3">
-                                                            <div class="w-100 d-flex bg-light shadow-1 p-3">
-                                                                <div class="w-75"> 
-                                                                    <input type="text" class="form-control" v-model="current_tab.data.select_option.metadata.new_track.name" placeholder="Track title" required>
+                                                            <!-- Submit new Track -->
+                                                        <div v-show="current_tab.data.select_option.metadata.adding_track" class="w-100 my-3">
+                                                            <div class="w-100 bg-light shadow-1 p-3">
+                                                                <div class="w-100 d-flex flex-row">
+                                                                    <div class="w-75"> 
+                                                                        <input type="text" class="form-control" v-model="current_tab.data.select_option.metadata.new_track.name" placeholder="Track title" @keydown="current_tab.data.select_option.metadata.new_track.errors = []" required>
+                                                                    </div>
+                                                                    <div class="w-25 d-flex flex-direction-row align-items-center justify-content-end">
+                                                                        <i class="fa fa-plus fa-2x text-success hoverable mx-4" @click="add_track(current_tab.data.select_option.metadata, current_tab.data.select_option.metadata.new_track)"></i>
+                                                                        <i class="fas fa-ban text-danger hoverable" @click="cancel_add_track(current_tab.data.select_option.metadata)"></i>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="w-25 d-flex flex-direction-row align-items-center justify-content-end">
-                                                                    <i class="fa fa-file-audio fa-2x text-info me-2 hoverable"></i>
-                                                                    <i class="fa fa-plus fa-2x text-success hoverable mx-4"></i>
-                                                                    <i class="fas fa-ban text-danger hoverable" @click="cancel_add_track(current_tab.data.select_option.metadata)"></i>
+                                                                <div v-show="current_tab.data.select_option.metadata.new_track.zone" class="w-100 d-flex flex-row">
+                                                                    <div class="w-100 my-3">
+                                                                        <dropzone id="new_track_zone" ref="new_track_zone" :options="current_tab.data.select_option.metadata.new_track.options" :destroyDropzone="true" />
+                                                                    </div>
+                                                                </div>
+                                                                <div v-for="filter_input, f in current_tab.data.select_option.metadata.new_track.filters" :key="f" class="mb-3 w-100 ctr-tags">
+                                                                    <div class="form-control p-2" style="height: 4rem;">
+                                                                        <div v-for="tag, g in filter_input.tags" :key="( 'tag' + g)" class="tag mx-1 py-1 px-2 rounded"> 
+                                                                            {{ tag.name }} <i class="fa fa-times text-light hoverable" @click="remove_tag(filter_input, d)"></i>
+                                                                        </div>
+                                                                        <input 
+                                                                            v-model="filter_input.tag" 
+                                                                            class="m-0 p-0 tag-input" 
+                                                                            :placeholder="filter_input.name"
+                                                                            @keyup.enter="add_tag(filter_input)"  /> 
+                                                                    </div>
+                                                                </div>
+                                                                <div v-if="current_tab.data.select_option.metadata.new_track.errors.length" class="w-100 alert alert-danger">
+                                                                    <ul class="list-unstyled">
+                                                                        <li v-for="error, h in current_tab.data.select_option.metadata.new_track.errors" :key="h">{{ error }}</li>
+                                                                    </ul>
                                                                 </div>
                                                             </div>
                                                         </div> 
@@ -95,7 +125,7 @@
 
                                                         <div v-if="(current_tab.data.select_option.errors.length > 0)" class="alert alert-danger">
                                                             <ul class="list-unstyled">
-                                                                <li v-for="error, e in current_tab.data.select_option.errors" :key="e">
+                                                                <li v-for="(error, i) in current_tab.data.select_option.errors" :key="i">
                                                                     {{ error }}
                                                                 </li>
                                                             </ul>
@@ -123,7 +153,7 @@
     import Dropzone from 'nuxt-dropzone'
     import 'nuxt-dropzone/dropzone.css'
     import { VueEditor } from 'vue2-editor'
-
+    import draggable from 'vuedraggable'
 
     export default {
         name: 'Admin',
@@ -131,7 +161,8 @@
         layout: 'inner_page',
         components: {
             Dropzone,
-            VueEditor
+            VueEditor,
+            draggable
         },
         data() {
             return {
@@ -157,7 +188,7 @@
                                         options: {
                                             url: '/upload',
                                             addRemoveLinks: true,
-                                            acceptedFiles: 'image/*s'
+                                            acceptedFiles: 'image/*'
                                         }
                                     },
                                     credits: ``,
@@ -181,9 +212,35 @@
                                     adding_track: false,
                                     clear: false,
                                     new_track: {
+                                        order: 0,
                                         name: '',
                                         album: '',
-                                        audio_file: ''
+                                        audio_file: '',
+                                        file_name: '',
+                                        zone: false,
+                                        options: {
+                                            url: '/upload',
+                                            addRemoveLinks: true,
+                                            acceptedFiles: 'audio/*'
+                                        },
+                                        filters: [
+                                            {
+                                                name: 'Instruments',
+                                                tag: '',
+                                                tags: []
+                                            },
+                                            {
+                                                name: 'Mood',
+                                                tag: '',
+                                                tags: []
+                                            },
+                                            {
+                                                name: 'Genre',
+                                                tag: '',
+                                                tags: []
+                                            }
+                                        ],
+                                        errors: []
                                     },
                                     tracks: [
 
@@ -251,18 +308,19 @@
                     option.metadata.album_cover.zone = this.$refs.album_cover 
                 })
             },
-            addTag(filter){
+            add_tag(filter){
                 if(!filter.tags == '') 
                     filter.tags.push({name: filter.tag})
                 filter.tag = ''
             },
-            removeTag(filter, index) {
+            remove_tag(filter, index) {
                 filter.tags.splice(index, 1)
             },
-            add_track(album) {
+            add_new_track(album, new_track) {
+                this.init_new_track_zone(new_track)
                 album.adding_track = true
                 console.log('Adding tracks to -> ', album)
-                album.tracks.push(album.new_track)
+                
             },
             cancel_add_track(album) {
                 album.adding_track = false
@@ -273,11 +331,20 @@
                 
                 // Go down list for validation
                 this.submit_album_cover(album)
-
+                    // Name (Description and Credits are optional)
+                if(!album.name.length) { this.current_tab.data.select_option.errors.push('Album needs a name, man!') }
+                    // Filters
+                album.filters.forEach((filter_obj) => {
+                    if(!filter_obj.tags.length) { this.current_tab.data.select_option.errors.push(`Gotta have ${filter_obj.name}, or the listeners'll be lost!`) }
+                })
+                    // Tracks
+                if(!album.tracks.length) {
+                    this.current_tab.data.select_option.errors.push(`No tracks? What are they even listening to, dude?`)
+                }
             },
             submit_album_cover(album){
                 // Album Cover
-                console.log('zone file', album.album_cover.zone.dropzone.files[0])
+                // console.log('zone file', album.album_cover.zone.dropzone.files[0])
                 let album_cover = album.album_cover.zone.dropzone.files[0]
                 if(!album_cover) {
                     album.clear = false
@@ -286,9 +353,90 @@
                     let storageRef = this.$fireModule.storage().ref(),
                         uploadTask = storageRef.child(album_cover.name).put(album_cover)
 
-                    uploadTask.snapshot.ref.getDownloadURL()
-                        .then((url)=> { album.art = url})
+                    uploadTask.on('state_changed', 
+                        (snapshot) => {
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log(`Uploading: ${progress}%`);
+                        },
+                        (error) => { console.log(`Upload Error: ${error}`)},
+                        () => {
+                            uploadTask.snapshot.ref.getDownloadURL()
+                                .then((url)=> { album.art = url})
+                        }
+                    )
+                   
                 }
+            },
+                // Tracks
+            init_new_track_zone(new_track){
+                this.$nextTick(()=> {
+                    new_track.zone = this.$refs.new_track_zone 
+                })
+            },
+            add_track(album, track){
+                console.log('adding track to ->', album)
+                if(!track.name.length) { track.errors.push(`Track needs a name, or it'll never be heard!`) }
+                if(!track.zone.dropzone.files.length) { track.errors.push(`Track needs...an actual track, fam!`) }
+                track.filters.forEach((filter_obj) => {
+                    if(!filter_obj.tags.length) { track.errors.push(`Gotta have ${filter_obj.name}, or the listeners'll be lost!`) }
+                })
+                if(!track.errors.length) { 
+                    this.upload_track(track)
+                    album.tracks.push(track) 
+                }
+                album.new_track = {
+                    name: '',
+                    album: '',
+                    audio_file: '',
+                    zone: false,
+                    options: {
+                        url: '/upload',
+                        addRemoveLinks: true, 
+                        acceptedFiles: 'audio/*'
+                    },
+                    filters: [
+                        {
+                            name: 'Instruments',
+                            tag: '',
+                            tags: []
+                        },
+                        {
+                            name: 'Mood',
+                            tag: '',
+                            tags: []
+                        },
+                        {
+                            name: 'Genre',
+                            tag: '',
+                            tags: []
+                        }
+                    ],
+                    order: null,
+                    errors: []
+                }
+                album.adding_track = false
+            },
+            upload_track(track){
+                let file = track.zone.dropzone.files[0],
+                    storageRef = this.$fireModule.storage().ref(),
+                    uploadTask = storageRef.child(file.name).put(file)
+
+                track.file_name = file.name
+                
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log(`Uploading: ${progress}%`);
+                    },
+                    (error) => { console.log(`Upload Error: ${error}`)},
+                    () => {
+                        uploadTask.snapshot.ref.getDownloadURL()
+                            .then((url)=> { track.audio_file = url})
+                    }
+                )
+            },
+            remove_track(album, track, index) {
+                album.tracks.splice(index, 1)
             }
         }
     }

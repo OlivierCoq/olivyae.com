@@ -1,6 +1,6 @@
 # OliVyae.com
 
-Music website. Contains Firebase hosted files as well as database. In addition, contains a custom-built admin in subdomain that edits data. Both Admin and Front End are built with same stack:
+My music website. Custom built music player. Contains Firebase hosted files as well as database. In addition, contains a custom-built admin in that edits data. Both Admin and Front End are built with same stack:
 
 ## Front End:
 
