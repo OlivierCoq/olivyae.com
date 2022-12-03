@@ -71,8 +71,8 @@
                                                         <draggable v-model="current_tab.data.select_option.metadata.tracks" @start="drag=true" @end="drag=false" class="w-100 my-3 d-flex flex-column position relative">
                                                             <div v-for="(track, e) in current_tab.data.select_option.metadata.tracks" :key="e" class="w-100 p-3 shadow-1 my-2 rounded d-flex flex-row align-items-center justify-content-between hoverable">
                                                                 <i class="fas fa-grip-vertical text-secondary m-1" @click="(track.order = e)"></i>
-                                                                <p class="fw-bold m-0">{{ track.name }} |</p>
-                                                                <p class="m-0 d-inline-block text-truncate w-75">{{ track.file_name }}</p>
+                                                                <p class="fw-bold m-0 d-inline-block text-truncate w-50">{{ track.name }} |</p>
+                                                                <p class="m-0 d-inline-block text-truncate w-50">{{ track.file_name }}</p>
                                                                 <i class="fa fas fa-trash text-danger hoverable" @click="remove_track(current_tab.data.select_option.metadata, track, e)"></i>
                                                             </div>
                                                         </draggable>
@@ -81,6 +81,13 @@
                                                         <button class="btn btn-info btn-md w-100 text-center text-light" @click="add_new_track(current_tab.data.select_option.metadata, current_tab.data.select_option.metadata.new_track)">
                                                              <i class="fa fa-plus"></i> new track
                                                         </button>
+                                                            <!-- Track upload progress -->
+                                                        <div v-if="current_tab.data.select_option.metadata.adding_track" class="w-100 p-3">
+                                                            <h6>uploading track...</h6>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" role="progressbar" :style="`width: ${current_tab.data.select_option.metadata.upload_progress}%`" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
                                                             <!-- Submit new Track -->
                                                         <div v-show="current_tab.data.select_option.metadata.adding_track" class="w-100 my-3">
                                                             <div class="w-100 bg-light shadow-1 p-3">
@@ -119,7 +126,10 @@
                                                         </div> 
 
                                                              <!-- Submit Album -->
-                                                        <button class="btn btn-success text-center text-light w-100 btn-md my-3" @click.prevent="submit_album(current_tab.data.select_option.metadata)">
+                                                        <button 
+                                                            class="btn btn-success text-center text-light w-100 btn-md my-3" 
+                                                            @click.prevent="submit_album(current_tab.data.select_option.metadata)"
+                                                            :disabled="this.current_tab.data.select_option.metadata.adding_track">
                                                             submit new album
                                                         </button>
 
@@ -130,6 +140,7 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
+
 
                                                     </div>
                                                 </div>
@@ -210,6 +221,7 @@
                                         }
                                     ],
                                     adding_track: false,
+                                    upload_progress:0,
                                     clear: false,
                                     new_track: {
                                         order: 0,
@@ -218,6 +230,7 @@
                                         audio_file: '',
                                         file_name: '',
                                         zone: false,
+                                        upload_progress: 0,
                                         options: {
                                             url: '/upload',
                                             addRemoveLinks: true,
@@ -329,24 +342,26 @@
 
                     uploadTask.on('state_changed', 
                         (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            console.log(`Uploading: ${progress}%`);
+                            album.upload_progress += (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log(`Uploading: ${album.upload_progress}%`);
                         },
                         (error) => { console.log(`Upload Error: ${error}`)},
                         () => {
                             uploadTask.snapshot.ref.getDownloadURL()
-                                .then((url)=> { album.art = url})
+                                .then((url)=> { 
+                                    album.art = url
+                                })
                         }
                     )
                    
                 }
             },
-            submit_album(album) {
+            async submit_album(album) {
                 console.log('Submitting album: ', album)
                 this.current_tab.data.select_option.errors = []
                 
                 // Go down list for validation
-                this.submit_album_cover(album)
+                await this.submit_album_cover(album)
                     // Name (Description and Credits are optional)
                 if(!album.name.length) { this.current_tab.data.select_option.errors.push('Album needs a name, man!') }
                     // Filters
@@ -373,7 +388,7 @@
                                 })
                             })
                             
-                        if(target_tracks.length > 0) {
+                        if((target_tracks.length > 0) && (album.art)) {
                             this.$fireModule.firestore().collection('albums').doc(random_id).set({
                                 name: album.name,
                                 art: album.art,
@@ -417,6 +432,7 @@
                     album: '',
                     audio_file: '',
                     zone: false,
+                    upload_progress: 0,
                     options: {
                         url: '/upload',
                         addRemoveLinks: true, 
@@ -453,8 +469,11 @@
                 
                 uploadTask.on('state_changed', 
                     (snapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log(`Uploading: ${progress}%`);
+                        track.upload_progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        this.current_tab.data.select_option.metadata.upload_progress = track.upload_progress
+                        this.current_tab.data.select_option.metadata.adding_track = true
+                        console.log(`Uploading: ${track.upload_progress}%`);
+                        if(track.upload_progress == 100) { this.current_tab.data.select_option.metadata.adding_track = false  }
                     },
                     (error) => { console.log(`Upload Error: ${error}`)},
                     () => {
