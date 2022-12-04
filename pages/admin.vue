@@ -37,8 +37,8 @@
                             </div>
 
                             <div v-if="current_tab.name == 'Albums' " class="p-4 w-100">
-                                <h2 class="fw-bold mb-4">your albums</h2>
-                                
+                                <h2 class="fw-bold">my albums</h2>
+                                <AlbumsGrid v-if="tabs[1].data.albums" :items="tabs[1].data.albums" />
                             </div>
 
                         </div>
@@ -49,20 +49,11 @@
     </div>
 </template>
 <script>
-    import Dropzone from 'nuxt-dropzone'
-    import 'nuxt-dropzone/dropzone.css'
-    import { VueEditor } from 'vue2-editor'
-    import draggable from 'vuedraggable'
 
     export default {
         name: 'Admin',
         middleware: 'auth',
         layout: 'inner_page',
-        components: {
-            Dropzone,
-            VueEditor,
-            draggable
-        },
         data() {
             return {
                 tabs: [
@@ -93,7 +84,8 @@
                     data: {
                         adding_new: false,
                         editing: false,
-                        options: []
+                        options: [],
+                        albums: []
                     }
                    },
                    {
@@ -115,7 +107,8 @@
             }
         },
         created() {
-            this.current_tab = this.tabs[0]
+            this.current_tab = this.tabs[1]
+            this.fetch_albums()
         },
         methods: {
             toggle(tab) {
@@ -125,7 +118,11 @@
             select_option(option) {
                 this.current_tab.data.select_option = option
                 this.current_tab.data.adding_new = true
-
+            },
+            fetch_albums() {
+                console.log('fetching albums')
+                this.$fire.firestore.collection('albums').get()
+                    .then((snapshot) => { snapshot.docs.forEach((album) => { this.tabs[1].data.albums.push(album.data()) }) })    
             }
         }
     }
@@ -142,27 +139,6 @@
                 &:hover {
                     color: #3ECAEF !important;
                 }                
-            }
-            .dropzone {
-                box-shadow: 0px 2px 18px #22222836;
-                border-radius: 0.25rem;
-                border: 5px solid #8080803b;
-                background: #80808014;
-            }
-            .ctr-tags {
-                .tag-input {
-                    border: none;
-                    &:focus,
-                    &:focus-visible {
-                        border: none;
-                        outline: none;
-                    }
-                }
-                .tag {
-                    float: left;
-                    background-color: black;
-                    color: white;
-                }
             }
         }
     }

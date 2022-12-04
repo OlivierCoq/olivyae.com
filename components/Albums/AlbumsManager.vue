@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="albums_manager">
         <!-- New Album -->
         <div v-if="mode == 'new album' ">
             <h3 class="fw-bold my-3">album</h3><hr/>
@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-8">
-                    <div class="py-3 w-100 mt-5">
+                    <div class="pb-3 w-100 mt-5">
                         <div class="mb-3">
                             <input type="text" class="form-control" v-model="select_option.metadata.name" placeholder="album name" required>
                         </div>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                                 <!-- Submit new Track -->
-                            <div v-show="select_option.metadata.adding_new_track" class="w-100 my-3">
+                            <div v-show="select_option.metadata.adding_new_track" class="w-100 my-3" :key="comp_key">
                                 <div class="w-100 bg-light shadow-1 p-3">
                                     <div class="w-100 d-flex flex-row">
                                         <div class="w-75"> 
@@ -141,6 +141,7 @@ export default {
     },
     data(){
         return {
+            comp_key: 0,
             adding_new: false,
             select_option: false,
             posting: false,
@@ -219,11 +220,6 @@ export default {
                         ]
                     },
                     upload_complete: false
-                },
-                {
-                    name: `Track`,
-                    icon: `<i class="far fa-file-audio fa-3x hoverable"></i>`,
-                    options: []
                 }
             ]
         }
@@ -330,7 +326,9 @@ export default {
             console.log('Adding tracks to -> ', album)         
         },
         cancel_add_track(album) {
-            album.adding_track = false
+            this.select_option.metadata.adding_new_track = false
+            album.adding_new_track = false
+            this.comp_key += 1
         },
         init_new_track_zone(new_track){
             this.$nextTick(()=> {
@@ -347,8 +345,7 @@ export default {
             if(!track.errors.length) { 
                 this.upload_track(track)
                 album.tracks.push(track) 
-            }
-            album.new_track = {
+                album.new_track = {
                 name: '',
                 album: '',
                 audio_file: '',
@@ -379,6 +376,8 @@ export default {
                 order: null,
                 errors: []
             }
+            }
+            
             album.adding_track = false
         },
         upload_track(track){
@@ -410,5 +409,27 @@ export default {
 }
 </script>
 <style lang="scss">
-
+    #albums_manager {
+        .dropzone {
+                box-shadow: 0px 2px 18px #22222836;
+                border-radius: 0.25rem;
+                border: 5px solid #8080803b;
+                background: #80808014;
+            }
+        .ctr-tags {
+            .tag-input {
+                border: none;
+                &:focus,
+                &:focus-visible {
+                    border: none;
+                    outline: none;
+                }
+            }
+            .tag {
+                float: left;
+                background-color: black;
+                color: white;
+            }
+        }
+    }
 </style>
