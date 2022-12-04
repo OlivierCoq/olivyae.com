@@ -112,7 +112,7 @@
                             </div>
                         </div> 
                             <!-- Editing existing track (WET code. Will refactor soon.) -->
-                        <div v-show="target_edit_track" class="w-100 my-3" :key="comp_key">
+                        <div v-if="target_edit_track" class="w-100 my-3" :key="(comp_key + 1)">
                             <div class="w-100 bg-light shadow-1 p-3">
                                 <div class="w-100 d-flex flex-row">
                                     <div class="w-75"> 
@@ -376,7 +376,10 @@
             },
             update_track(existing_track){
                 this.init_new_track_zone(existing_track)
-            }  
+            },
+            cancel_update_track(track) {
+                this.target_edit_track = false
+            }
         }
     }
 </script>
