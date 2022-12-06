@@ -41,9 +41,9 @@
 
                             <!-- List tracks here -->
                             <draggable v-model="select_option.metadata.tracks" @start="drag=true" @end="drag=false" class="w-100 my-3 d-flex flex-column position relative">
-                                <div v-for="(track, e) in select_option.metadata.tracks" :key="e" class="w-100 p-3 shadow-1 my-2 rounded d-flex flex-row align-items-center justify-content-between grabbable">
+                                <div v-for="(track, e) in select_option.metadata.tracks" :key="e" class="w-100 bg-white p-3 shadow-1 my-2 rounded d-flex flex-row align-items-center justify-content-between grabbable">
                                     <i class="fas fa-grip-vertical text-secondary m-1" @click="(track.order = e)"></i>
-                                    <p class="fw-bold m-0 d-inline-block text-truncate">{{ track.name }} |</p>
+                                    <p class="fw-bold m-0 d-inline-block text-truncate w-25">{{ track.name }} |</p>
                                     <p class="m-0 d-inline-block text-truncate w-50"><strong>File: </strong>{{ track.file_name }}</p>
                                     <i class="fa fas fa-trash text-danger hoverable" @click="remove_track(select_option.metadata, track, e)"></i>
                                 </div>
@@ -233,7 +233,7 @@ export default {
     methods: {
             // Album
         init_album_upload(option) {
-            this.$nextTick(()=> {
+            this.$nextTick(()=> {f
                 option.metadata.album_cover.zone = this.$refs.album_cover 
             })
         },
@@ -306,6 +306,7 @@ export default {
                         
                     if((target_tracks.length > 0) && (album.art)) {
                         this.$fireModule.firestore().collection('albums').doc(random_id).set({
+                            id: random_id,
                             name: album.name,
                             art: album.art,
                             credits: album.credits,
@@ -398,7 +399,21 @@ export default {
                 (error) => { console.log(`Upload Error: ${error}`)},
                 () => {
                     uploadTask.snapshot.ref.getDownloadURL()
-                        .then((url)=> { track.audio_file = url})
+                        .then((url)=> { 
+                            
+                            track.audio_file = url
+                        
+                            // Add Track to Database:
+                            let random_id = Math.random().toString(36).slice(2)
+                            this.$fireModule.firestore().collection('tracks').doc(random_id).set({
+                                id: random_id,
+                                name: track.name,
+                                file_name: track.file_name,
+                                audio_file: track.audio_file,
+                                description: '',
+                                filters: track.filters
+                            })
+                        })
                 }
             )
         },
