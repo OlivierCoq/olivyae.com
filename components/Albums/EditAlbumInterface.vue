@@ -53,7 +53,7 @@
 
                         <!-- List tracks here -->
                         <draggable v-model="album.tracks" @start="drag=true" @end="drag=false" class="w-100 my-3 d-flex flex-column position relative">
-                            <div v-for="(track, e) in album.tracks" :key="e" class="w-100 p-3 shadow-1 my-2 rounded d-flex flex-row align-items-center justify-content-between">
+                            <div v-for="(track, e) in album.tracks" :key="e" class="bg-white w-100 p-3 shadow-1 my-2 rounded d-flex flex-row align-items-center justify-content-between">
                                 <i class="fas fa-grip-vertical text-secondary m-1 grabbable" @click="(track.order = e)"></i>
                                 <p class="fw-bold m-0 d-inline-block text-truncate">{{ track.name }} |</p>
                                 <p class="m-0 d-inline-block text-truncate w-50"><strong>File: </strong>{{ track.file_name }}</p>
