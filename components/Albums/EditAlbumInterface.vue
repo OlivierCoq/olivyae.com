@@ -168,8 +168,8 @@
                             </ul>
                         </div>
 
-                        <div v-if="album.upload_complete" class="alert alert-success">
-                            Album successfully added!
+                        <div v-if="update.album_update_complete" class="alert alert-success alert-dismissible" :key="comp_key">
+                            Album successfully Updated!
                         </div>
 
                     </div>
@@ -216,7 +216,7 @@
                 new_track: {
                     order: 0,
                     name: '',
-                    album: '',
+                    album_id: '',
                     audio_file: '',
                     file_name: '',
                     zone: false,
@@ -246,7 +246,13 @@
                     ],
                     errors: []
                 },
-                errors: []
+                errors: [],
+                update: {
+                    errors: [],
+                    updating: false,
+                    update_progress: 0,
+                    album_update_complete: false,
+                }
             }
         },
         created(){
@@ -361,7 +367,7 @@
                     this.album.tracks.push(track) 
                     this.new_track = {
                         name: '',
-                        album: '',
+                        album_id: '',
                         audio_file: '',
                         zone: false,
                         uploading_track: false,
@@ -427,14 +433,12 @@
                                 this.$fire.firestore.collection('tracks').get()
                                     .then((snapshot) => { 
                                         snapshot.docs.forEach((trk) => { 
-                                             if(trk.name == track.name) { match = true }
-                                             else { match = 'no match' }
+                                             if(trk.data().name == track.name) { match = true }
                                         }) 
                                     })
                                     .then(()=>{
-                                        if(match == 'no match') {
-                                            console.log('no match! we are a-ok.')
-                                                // Then add to DB
+                                        if(!match) {
+                                             // Then add to DB
                                             this.$fireModule.firestore().collection('tracks').doc(random_id).set({
                                                 id: random_id,
                                                 name: track.name,
@@ -444,6 +448,7 @@
                                                 filters: track.filters,
                                                 album_id: thisObj.album.id
                                             })
+                                            thisObj.uploading_track = false
                                         }
                                     })
                             })
@@ -456,7 +461,39 @@
                 // Updating album
             update_album(album){
                 console.log('updating album ->', album)
+                const thisObj = this
+                // let storageRef = this.$fireModule.storage().ref(),
+                //     uploadTask = storageRef.child(album.name).put(album)
 
+                thisObj.update.updating = true
+
+                // update: {
+                //     errors: [],
+                //     updating: false,
+                //     update_progress: 0,
+                //     album_update_complete: false,
+                // }
+                // return false
+                album.tracks.forEach((tr) => { tr.zone = false })
+                this.$fireModule.firestore().collection('albums').doc(album.id).set({
+                    name: album.name,
+                    art: album.art,
+                    credits: album.credits,
+                    id: album.id,
+                    description: album.description,
+                    filters: album.filters,
+                    tracks: album.tracks
+                })
+                    .then(()=> {
+                        thisObj.update.updating = false
+                        thisObj.update.album_update_complete = true
+
+                        setTimeout(() => {
+                            thisObj.update.album_update_complete = false
+                        }, 2000)
+                    })
+
+                
 
             }
         }

@@ -186,7 +186,7 @@ export default {
                         new_track: {
                             order: 0,
                             name: '',
-                            album: '',
+                            album_id: '',
                             audio_file: '',
                             file_name: '',
                             zone: false,
@@ -233,7 +233,7 @@ export default {
     methods: {
             // Album
         init_album_upload(option) {
-            this.$nextTick(()=> {f
+            this.$nextTick(()=> {
                 option.metadata.album_cover.zone = this.$refs.album_cover 
             })
         },
@@ -304,7 +304,8 @@ export default {
                             })
                         })
                         
-                    if((target_tracks.length > 0) && (album.art)) {
+                    if((target_tracks.length > 0) && (album.art.length)) {
+                        console.log('Sending to Firebase')
                         this.$fireModule.firestore().collection('albums').doc(random_id).set({
                             id: random_id,
                             name: album.name,
@@ -324,12 +325,14 @@ export default {
         add_new_track(album, new_track) {
             this.init_new_track_zone(new_track)
             album.adding_new_track = true
-            console.log('Adding tracks to -> ', album)         
-        },
+            console.log('Adding tracks to -> ', album)     
+            this.comp_key += 1    
+        }, 
         cancel_add_track(album) {
             this.select_option.metadata.adding_new_track = false
             album.adding_new_track = false
             this.comp_key += 1
+            console.log('canceling add new track')
         },
         init_new_track_zone(new_track){
             this.$nextTick(()=> {
@@ -348,7 +351,7 @@ export default {
                 album.tracks.push(track) 
                 album.new_track = {
                 name: '',
-                album: '',
+                album_id: '',
                 audio_file: '',
                 zone: false,
                 upload_progress: 0,
@@ -404,15 +407,26 @@ export default {
                             track.audio_file = url
                         
                             // Add Track to Database:
-                            let random_id = Math.random().toString(36).slice(2)
-                            this.$fireModule.firestore().collection('tracks').doc(random_id).set({
-                                id: random_id,
-                                name: track.name,
-                                file_name: track.file_name,
-                                audio_file: track.audio_file,
-                                description: '',
-                                filters: track.filters
-                            })
+                            let random_id = Math.random().toString(36).slice(2), match
+
+                            this.$fire.firestore.collection('tracks').get()
+                                .then((snapshot) => { 
+                                    snapshot.docs.forEach((trk) => { 
+                                            if(trk.data().name == track.name) { match = true }
+                                    }) 
+                                })
+                                .then(()=> {
+                                    if(!match) {
+                                        this.$fireModule.firestore().collection('tracks').doc(random_id).set({
+                                            id: random_id,
+                                            name: track.name,
+                                            file_name: track.file_name,
+                                            audio_file: track.audio_file,
+                                            description: '',
+                                            filters: track.filters
+                                        })
+                                    }
+                                })
                         })
                 }
             )
