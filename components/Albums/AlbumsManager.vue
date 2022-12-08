@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                                 <!-- Submit new Track -->
-                            <div v-show="select_option.metadata.adding_new_track" class="w-100 my-3" :key="comp_key">
+                            <div v-show="select_option.metadata.adding_new_track" class="w-100 my-3" >
                                 <div class="w-100 bg-light shadow-1 p-3">
                                     <div class="w-100 d-flex flex-row">
                                         <div class="w-75"> 

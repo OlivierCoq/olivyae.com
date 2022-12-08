@@ -362,6 +362,7 @@
                 track.filters.forEach((filter_obj) => {
                     if(!filter_obj.tags.length) { track.errors.push(`Gotta have ${filter_obj.name}, or the listeners'll be lost!`) }
                 })
+                track['album_id'] = thisObj.album.id
                 if(!track.errors.length) { 
                     this.upload_track(track)
                     this.album.tracks.push(track) 
@@ -439,7 +440,7 @@
                                     .then(()=>{
                                         if(!match) {
                                              // Then add to DB
-                                            this.$fireModule.firestore().collection('tracks').doc(random_id).set({
+                                            const new_track_obj = {
                                                 id: random_id,
                                                 name: track.name,
                                                 file_name: track.file_name,
@@ -447,7 +448,9 @@
                                                 description: '',
                                                 filters: track.filters,
                                                 album_id: thisObj.album.id
-                                            })
+                                            }
+                                            console.log('lobbing to Firebase', new_track_obj)
+                                            this.$fireModule.firestore().collection('tracks').doc(random_id).set(new_track_obj)
                                             thisObj.uploading_track = false
                                         }
                                     })

@@ -37,7 +37,7 @@
                             </div>
 
                             <div v-if="current_tab.name == 'Albums' " class="p-4 w-100">
-                                <h2 class="fw-bold">my albums</h2>
+                                <h2 class="fw-bold mb-4">my albums</h2>
                                 <AlbumsGrid v-if="tabs[1].data.albums" :items="tabs[1].data.albums" />
                             </div>
 
