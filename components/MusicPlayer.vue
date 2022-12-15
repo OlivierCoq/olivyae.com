@@ -14,10 +14,31 @@
                 </div>
             </div>
             <div class="col-4">
-                <div v-if="!selecting" class="ctr-player">
-                    <audio controls autoplay>
+                <!-- https://codepen.io/EmNudge/pen/rRbLJQ -->
+                <div v-if="!selecting" class="d-none">
+                    <audio ref="audio_player" controls autoplay>
                         <source :src="track.audio_file" type="audio/mpeg" />
                     </audio>
+                </div>
+                <div v-if="!selecting" class="ctr-player">
+                     <div class="ctr-controls mt-3 w-100 d-flex flex-row align-items-center justify-content-center">
+                        <button class="btn btn-outline-secondary mx-2">
+                            <i class="fas fa-backward"></i>
+                        </button>
+                        <button v-if="playing" class="btn btn-outline-secondary center-btn mx-2" @click="pause">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button v-if="!playing" class="btn btn-outline-secondary center-btn mx-2" @click="play">
+                            <i class="fas fa-play ms-1"></i>
+                        </button>
+                       
+                        <button class="btn btn-outline-secondary mx-2">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                     </div>
+                     <div class="ctr-scrubber w-100">
+
+                     </div>
                 </div>
             </div>
             <div class="col-4">
@@ -33,10 +54,34 @@
 <script>
 export default {
     name: 'MusicPlayer',
-    props: ['track','pause_track', 'selecting'],
+    props: ['track','pause_track', 'play_track', 'selecting'],
     data(){
         return {
-            playing: false
+            player: false,
+            playing: true
+        }
+    },
+    created(){
+    },
+    methods: {
+        play(){
+            this.playing = true
+            this.$refs.audio_player.play()
+            this.$emit('playing', true)
+        },
+        pause(){
+            this.playing = false
+            this.$refs.audio_player.pause()
+            this.$emit('paused', true)
+        }
+    },
+    watch: {
+        pause_track() {
+            this.pause()
+        },
+        play_track() {
+            this.play()
+            // https://stackoverflow.com/questions/43334796/pass-data-from-child-to-parent-in-vuejs-is-it-so-complicated
         }
     }
 }
@@ -47,7 +92,7 @@ export default {
         bottom: 0;
         left: 0;
         right: 0;
-        height: 80px;
+        height: 90px;
 
         .ctr-album_cover {
             height: 70px;
@@ -94,7 +139,21 @@ export default {
             }
         }
         .ctr-player {
-            height: 80px;
+            height: 60px;
+
+            button {
+                border-radius: 60px;
+                height: 40px;
+                width: 40px;
+            }
+            .center-btn {
+                height: 50px;
+                width: 50px;
+
+                i {
+                    transform: scale(1.5);
+                }
+            }
         }
     }
 </style>

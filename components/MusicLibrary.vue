@@ -43,7 +43,7 @@
                     <div class="col-1">
                         <h5 class="text-light hoverable num_play mt-2 mb-1">{{c + 1}}</h5>
                         <i v-if="playing_track == track" class="fa fa-pause play-btn text-light mt-2 mb-1" @click="pause(track)"></i>
-                        <i v-else class="fa fa-play play-btn text-light mt-2 mb-1" @click="select(track)"></i>
+                        <i v-else class="fa fa-play play-btn text-light mt-2 mb-1" @click="play(track)"></i>
                     </div>
                     <div class="col-4">
                         <h5 class="text-light fw-light mt-1">{{ track.name }}</h5>
@@ -63,7 +63,7 @@
           </div>
       </div>
       <div class="row">
-        <music-player v-if="select_track" :track="select_track" :pause_track="pause_track" :selecting="selecting" />
+        <music-player v-if="select_track" :track="select_track" :pause_track="pause_track" :play_track="play_track" :selecting="selecting" @paused="r_paused" :key="comp_key" />
       </div>
   </div>
 </template>
@@ -85,9 +85,11 @@ export default {
             },
             queryObj: '',
             playing_track: false,
+            play_track: false,
             pause_track: false,
             select_track: false,
-            selecting: false
+            selecting: false,
+            comp_key: 0
         }
     },
     created() {
@@ -161,20 +163,31 @@ export default {
             // console.log('Searching for: ', this.search.query)
         },
             // User actiions
-        select(track) {
+        play(track){
             const thisObj = this
-            thisObj.selecting = true
-            thisObj.$nextTick(() => {
-                thisObj.selecting = false
+                // play new track
+            thisObj.selecting = track == thisObj.select_track ? false : true
+            if(thisObj.selecting) {
+                
                 thisObj.select_track = track
                 thisObj.playing_track = track
+                thisObj.play_track = true
                 thisObj.pause_track = false
-            })
+                thisObj.selecting = false
+                thisObj.comp_key += 1
+            } else {
+                console.log('continuing')
+                thisObj.play_track = true
+            }
         },
         pause(track) {
             const thisObj = this
             thisObj.playing_track = false
             thisObj.pause_track = true
+            thisObj.play_track = false
+        },
+        r_paused(val) {
+            this.playing_track = val
         }
     }
 }
