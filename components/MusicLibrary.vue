@@ -30,32 +30,72 @@
                       </div>
                   </div>
               </div>
-              <div class="row">
-                  <div class="ctr-results"></div>
+              <div class="row p-4">
+                <div class="col-1"><span class="text-light">#</span></div>
+                <div class="col-4"><span class="text-light text-uppercase">name</span></div>
+                <div class="col-3"><span class="text-light text-uppercase">album</span></div>
+                <div class="col-2"><span class="text-light text-uppercase">mood</span></div>
+                <div class="col-2"><span class="text-light text-uppercase">genre</span></div>
+              </div><hr class="text-light m-0"/>
+                <!-- Results -->
+              <div class="ctr-results w-100 hoverable">
+                <div v-for="track, c in results" :key="c" class="row p-2 track">
+                    <div class="col-1">
+                        <h5 class="text-light hoverable num_play mt-2 mb-1">{{c + 1}}</h5>
+                        <i v-if="playing_track == track" class="fa fa-pause play-btn text-light mt-2 mb-1" @click="pause(track)"></i>
+                        <i v-else class="fa fa-play play-btn text-light mt-2 mb-1" @click="select(track)"></i>
+                    </div>
+                    <div class="col-4">
+                        <h5 class="text-light fw-light mt-1">{{ track.name }}</h5>
+                    </div>
+                    <div class="col-3">
+                        <h5 v-if="track.album" class="text-light mt-1">{{track.album.name}}</h5>
+                    </div>
+                    <div class="col-2 overflow-hidden">
+                        <span v-for="item, d in track.filters[1].tags" :key="d" class="text-dark tag rounded px-2 py-1 m-1">{{item.name}} </span>
+                    </div>
+                    <div class="col-2">
+                        <span v-for="item, e in track.filters[2].tags" :key="e" class="text-dark tag rounded px-2 py-1 m-1">{{item.name}} </span>
+                    </div>
+                </div>
               </div>
+
           </div>
+      </div>
+      <div class="row">
+        <music-player v-if="select_track" :track="select_track" :pause_track="pause_track" :selecting="selecting" />
       </div>
   </div>
 </template>
 
 <script>
+import MusicPlayer from './MusicPlayer.vue'
 
 export default {
+    components: { MusicPlayer },
     name: 'MusicLibrary',   
     data() {
         return {
             filters: [],
             tracks: [],
+            albums: [],
+            results: [],
             search: {
                 query: ''
             },
-            queryObj: ''
+            queryObj: '',
+            playing_track: false,
+            pause_track: false,
+            select_track: false,
+            selecting: false
         }
     },
     created() {
         this.setupFilters()
+        this.fetchAlbums()
     },
     methods: {
+            // Filter Functions:
         setupFilters() {
             const thisObj = this
             this.$fire.firestore.collection('filters').get()
@@ -88,8 +128,53 @@ export default {
         confirm() {
             console.log('.')
         },
+            // Albums
+        fetchAlbums(){
+            const thisObj = this
+            this.$fire.firestore.collection('albums').get()
+              .then((snapshot) => { snapshot.forEach((albm) => { thisObj.albums.push(albm.data()) }) })
+              .then(()=> { thisObj.fetchTracks() })
+        },
+            //Track functions:
+        fetchTracks(){
+            const thisObj = this
+            this.$fire.firestore.collection('tracks').get()
+              .then((snapshot) => { snapshot.forEach((trk) => { thisObj.tracks.push(trk.data()) }) })
+              .then(() => {
+                    // I will refactor this. Just shipping out the door for now:
+                thisObj.tracks.forEach((track) => { 
+                    thisObj.albums.forEach((album) => {
+                        if(track.album_id == album.id) { track['album'] = album }
+                    })
+                })
+              })
+              .then(() => { thisObj.setupResults() })
+        },
+        setupResults(){
+            const thisObj = this
+            if(thisObj.tracks.length){ 
+                thisObj.results = thisObj.tracks
+            }
+        },
+            // Search Functions:
         doSearch() {
-            console.log('Searching for: ', this.search.query)
+            // console.log('Searching for: ', this.search.query)
+        },
+            // User actiions
+        select(track) {
+            const thisObj = this
+            thisObj.selecting = true
+            thisObj.$nextTick(() => {
+                thisObj.selecting = false
+                thisObj.select_track = track
+                thisObj.playing_track = track
+                thisObj.pause_track = false
+            })
+        },
+        pause(track) {
+            const thisObj = this
+            thisObj.playing_track = false
+            thisObj.pause_track = true
         }
     }
 }
@@ -186,6 +271,17 @@ export default {
                         cursor: pointer;
                     }
                 }
+            }
+        }
+        .ctr-results {
+            .track {
+                &:hover {
+                    background-color: #000000a1;
+                    .play-btn { display: block;}
+                    .num_play { display: none; }
+                }
+                .play-btn { display: none; }
+                .tag { background-color: #ffffffd4; }
             }
         }
     }
