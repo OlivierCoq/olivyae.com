@@ -22,8 +22,8 @@
                 </div>
                 <div v-if="!selecting" class="ctr-player">
                      <div class="ctr-controls mt-3 w-100 d-flex flex-row align-items-center justify-content-center">
-                        <button class="btn btn-outline-secondary mx-2">
-                            <i class="fas fa-backward"></i>
+                        <button class="btn btn-outline-secondary mx-2" @click="prev">
+                            <i class="fas fa-step-backward"></i>
                         </button>
                         <button v-if="playing" class="btn btn-outline-secondary center-btn mx-2" @click="pause">
                             <i class="fas fa-pause"></i>
@@ -32,8 +32,8 @@
                             <i class="fas fa-play ms-1"></i>
                         </button>
                        
-                        <button class="btn btn-outline-secondary mx-2">
-                            <i class="fas fa-forward"></i>
+                        <button class="btn btn-outline-secondary mx-2" @click="next">
+                            <i class="fas fa-step-forward"></i>
                         </button>
                      </div>
                      <div class="ctr-scrubber w-100">
@@ -67,22 +67,28 @@ export default {
         play(){
             this.playing = true
             this.$refs.audio_player.play()
-            this.$emit('playing', true)
+            this.$emit('playing', this.track)
         },
         pause(){
             this.playing = false
             this.$refs.audio_player.pause()
             this.$emit('paused', true)
+        },
+        prev() {
+            this.$emit('prev') 
+        },
+        next() {
+            this.$emit('next') 
         }
     },
     watch: {
-        pause_track() {
-            this.pause()
-        },
-        play_track() {
-            this.play()
-            // https://stackoverflow.com/questions/43334796/pass-data-from-child-to-parent-in-vuejs-is-it-so-complicated
-        }
+        // pause_track() {
+        //    if(this.pause_track){ this.pause()}
+        // },
+        // play_track() {
+        //     this.play()
+        //     // https://stackoverflow.com/questions/43334796/pass-data-from-child-to-parent-in-vuejs-is-it-so-complicated
+        // }
     }
 }
 </script>

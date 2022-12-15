@@ -63,7 +63,15 @@
           </div>
       </div>
       <div class="row">
-        <music-player v-if="select_track" :track="select_track" :pause_track="pause_track" :play_track="play_track" :selecting="selecting" @paused="r_paused" :key="comp_key" />
+        <music-player v-if="select_track" ref="music_player" :track="select_track" 
+            :pause_track="pause_track" 
+            :play_track="play_track" 
+            :selecting="selecting" 
+            @prev="select_previous"
+            @next="select_next"
+            @playing="r_playing" 
+            @paused="r_paused" 
+            :key="comp_key" />
       </div>
   </div>
 </template>
@@ -156,6 +164,9 @@ export default {
             const thisObj = this
             if(thisObj.tracks.length){ 
                 thisObj.results = thisObj.tracks
+                for(let i = 0; i < thisObj.results.length; i++){
+                    thisObj.results[i]['index'] = i
+                }
             }
         },
             // Search Functions:
@@ -163,12 +174,12 @@ export default {
             // console.log('Searching for: ', this.search.query)
         },
             // User actiions
-        play(track){
+        play(track, index){
             const thisObj = this
                 // play new track
             thisObj.selecting = track == thisObj.select_track ? false : true
-            if(thisObj.selecting) {
-                
+            this.play_track = false
+            if(thisObj.selecting) {               
                 thisObj.select_track = track
                 thisObj.playing_track = track
                 thisObj.play_track = true
@@ -176,18 +187,33 @@ export default {
                 thisObj.selecting = false
                 thisObj.comp_key += 1
             } else {
-                console.log('continuing')
                 thisObj.play_track = true
+                thisObj.$refs.music_player.play()
             }
         },
         pause(track) {
             const thisObj = this
+            // console.log('pausing', track)
             thisObj.playing_track = false
             thisObj.pause_track = true
             thisObj.play_track = false
+            thisObj.$refs.music_player.pause()
         },
         r_paused(val) {
             this.playing_track = val
+        },
+        r_playing(val) {
+            this.playing_track = val
+        },
+        select_previous(){
+            this.select_track = this.results[this.select_track.index - 1] ? this.results[this.select_track.index - 1] : this.select_track
+            this.comp_key += 1
+            this.playing_track = this.select_track
+        },
+        select_next(){
+            this.select_track = this.results[this.select_track.index + 1] ? this.results[this.select_track.index + 1] : this.select_track
+            this.comp_key += 1
+            this.playing_track = this.select_track
         }
     }
 }
