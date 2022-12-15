@@ -78,6 +78,7 @@ export default {
         this.player = this.$refs.audio_player
         this.$nextTick(()=> {
             this.show_tracktime()
+            this.keyboard_actions()
         })
     },
     methods: {
@@ -97,6 +98,25 @@ export default {
             this.playing = false
             this.$refs.audio_player.pause()
             this.$emit('paused', true)
+        },
+        keyboard_actions(){
+            const thisObj = this
+            document.body.onkeyup = (e) => {
+                switch(e.keyCode){
+                    case 32:
+                        if(thisObj.playing) { thisObj.pause() }
+                        else ( thisObj.play() )
+                     break;
+                    case 39:
+                        thisObj.next()
+                     break;
+                    case 37:
+                        thisObj.prev()
+                     break;
+                    default:
+                        return true
+                }
+            }
         },
         prev() {
             this.$emit('prev') 
