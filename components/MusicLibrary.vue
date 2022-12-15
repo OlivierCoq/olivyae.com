@@ -39,7 +39,7 @@
               </div><hr class="text-light m-0"/>
                 <!-- Results -->
               <div class="ctr-results w-100 hoverable">
-                <div v-for="track, c in results" :key="c" class="row p-2 track">
+                <div v-for="track, c in results" :key="c" class="row p-2 track" :class="playing_track == track ? 'playing' : ''">
                     <div class="col-1">
                         <h5 class="text-light hoverable num_play mt-2 mb-1">{{c + 1}}</h5>
                         <i v-if="playing_track == track" class="fa fa-pause play-btn text-light mt-2 mb-1" @click="pause(track)"></i>
@@ -321,6 +321,9 @@ export default {
                 }
                 .play-btn { display: none; }
                 .tag { background-color: #ffffffd4; }
+            }
+            .playing {
+                background-color: #000000a1;
             }
         }
     }

@@ -33,17 +33,19 @@
                         </button>
                        
                         <button class="btn btn-outline-secondary mx-2" @click="next">
-                            <i class="fas fa-step-forward"></i>
+                            <i class="fas fa-step-forward me-2"></i>
                         </button>
                      </div>
-                     <div class="ctr-scrubber w-100">
-
+                     <div class="ctr-scrubber w-100 pt-2">
+                        <div v-if="player" class="progress hoverable" ref="ctr_progress" @click="scrub">
+                            <div class="progress-bar hoverable" role="progressbar" :style="`width: ${track_time}%`" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" @click="scrub"></div>
+                        </div>
                      </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="ctr-volume">
-
+                    
                 </div>
             </div>
         </div>
@@ -58,12 +60,22 @@ export default {
     data(){
         return {
             player: false,
-            playing: true
+            playing: true,
+            track_time: false
         }
     },
-    created(){
+    mounted(){
+        this.player = this.$refs.audio_player
+        this.$nextTick(()=> {
+            this.show_tracktime()
+        })
     },
     methods: {
+        show_tracktime(){
+            setInterval(() => {
+                this.track_time = this.player.currentTime / this.player.duration * 100
+            }, 1000);
+        },
         play(){
             this.playing = true
             this.$refs.audio_player.play()
@@ -79,16 +91,15 @@ export default {
         },
         next() {
             this.$emit('next') 
+        },
+        scrub(e){
+            const timeline = this.$refs.ctr_progress,
+                  end_width = window.getComputedStyle(timeline).width, 
+                  target_time = e.offsetX / parseInt(end_width) * this.player.duration
+            this.player.currentTime = target_time
         }
     },
     watch: {
-        // pause_track() {
-        //    if(this.pause_track){ this.pause()}
-        // },
-        // play_track() {
-        //     this.play()
-        //     // https://stackoverflow.com/questions/43334796/pass-data-from-child-to-parent-in-vuejs-is-it-so-complicated
-        // }
     }
 }
 </script>
@@ -153,11 +164,16 @@ export default {
                 width: 40px;
             }
             .center-btn {
-                height: 50px;
-                width: 50px;
+                height: 45px;
+                width: 45px;
 
                 i {
-                    transform: scale(1.5);
+                    transform: scale(1.3);
+                }
+            }
+            .ctr-scrubber {
+                .progress {
+                    height: 8px;
                 }
             }
         }
