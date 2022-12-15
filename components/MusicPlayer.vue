@@ -36,10 +36,12 @@
                             <i class="fas fa-step-forward me-2"></i>
                         </button>
                      </div>
-                     <div class="ctr-scrubber w-100 pt-2">
-                        <div v-if="player" class="progress hoverable" ref="ctr_progress" @click="scrub">
+                     <div class="ctr-scrubber w-100 p-0 d-flex flex-row justify-content-center align-items-center">
+                        <span class="text-dark elapsed">{{elapsed}}</span>
+                        <div v-if="player" class="progress hoverable mx-4" ref="ctr_progress" @click="scrub">
                             <div class="progress-bar hoverable" role="progressbar" :style="`width: ${track_time}%`" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" @click="scrub"></div>
                         </div>
+                        <span class="text-dark duration">{{duration}}</span>
                      </div>
                 </div>
             </div>
@@ -61,7 +63,9 @@ export default {
         return {
             player: false,
             playing: true,
-            track_time: false
+            track_time: false, 
+            elapsed: 0,
+            duration: 0
         }
     },
     mounted(){
@@ -74,6 +78,8 @@ export default {
         show_tracktime(){
             setInterval(() => {
                 this.track_time = this.player.currentTime / this.player.duration * 100
+                this.duration = this.format_time(this.player.duration)
+                this.elapsed = this.format_time(this.player.currentTime)
             }, 1000);
         },
         play(){
@@ -91,6 +97,17 @@ export default {
         },
         next() {
             this.$emit('next') 
+        },
+        format_time(num){
+            const thisObj = this
+            let seconds = parseInt(num), minutes = parseInt(seconds / 60)
+
+            seconds -= minutes * 60;
+            const hours = parseInt(minutes / 60);
+            minutes -= hours * 60;
+
+            if (hours === 0) return `${minutes}:${String(seconds % 60).padStart(2, 0)}`
+            else return `${String(hours).padStart(2, 0)}:${minutes}:${String(seconds % 60).padStart(2, 0)}`;
         },
         scrub(e){
             const timeline = this.$refs.ctr_progress,
@@ -174,6 +191,7 @@ export default {
             .ctr-scrubber {
                 .progress {
                     height: 8px;
+                    width: 80%;
                 }
             }
         }
