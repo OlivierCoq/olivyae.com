@@ -25,6 +25,7 @@
                         <button class="btn btn-outline-secondary mx-2" @click="prev">
                             <i class="fas fa-step-backward"></i>
                         </button>
+
                         <button v-if="playing" class="btn btn-outline-secondary center-btn mx-2" @click="pause">
                             <i class="fas fa-pause"></i>
                         </button>
@@ -36,9 +37,9 @@
                             <i class="fas fa-step-forward me-2"></i>
                         </button>
                      </div>
-                     <div class="ctr-scrubber w-100 p-0 d-flex flex-row justify-content-center align-items-center">
+                     <div v-if="player" class="ctr-scrubber w-100 p-0 d-flex flex-row justify-content-center align-items-center">
                         <span class="text-dark elapsed">{{elapsed}}</span>
-                        <div v-if="player" class="progress hoverable mx-4" ref="ctr_progress" @click="scrub">
+                        <div class="progress hoverable mx-4" ref="ctr_progress" @click="scrub">
                             <div class="progress-bar hoverable" role="progressbar" :style="`width: ${track_time}%`" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" @click="scrub"></div>
                         </div>
                         <span class="text-dark duration">{{duration}}</span>
@@ -46,8 +47,11 @@
                 </div>
             </div>
             <div class="col-4">
-                <div class="ctr-volume">
-                    
+                <div class="ctr-volume d-flex flex-row align-items-center justify-content-end">
+                    <i class="fas text-dark mx-3 hoverable" :class="mute ? 'fa-volume-mute': 'fa-volume-up' " @click="mute_track"></i>
+                    <div class="progress" ref="volume_adjuster" @click="adjust_volume">
+                        <div class="progress-bar" role="progressbar" :style=" `width: ${volume * 100}%` " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,8 +68,10 @@ export default {
             player: false,
             playing: true,
             track_time: false, 
-            elapsed: 0,
-            duration: 0
+            elapsed: '',
+            duration:'',
+            volume: 0.75,
+            mute: false
         }
     },
     mounted(){
@@ -99,21 +105,33 @@ export default {
             this.$emit('next') 
         },
         format_time(num){
-            const thisObj = this
             let seconds = parseInt(num), minutes = parseInt(seconds / 60)
 
             seconds -= minutes * 60;
-            const hours = parseInt(minutes / 60);
+            const hours = parseInt(minutes / 60)
             minutes -= hours * 60;
 
             if (hours === 0) return `${minutes}:${String(seconds % 60).padStart(2, 0)}`
-            else return `${String(hours).padStart(2, 0)}:${minutes}:${String(seconds % 60).padStart(2, 0)}`;
+            else return `${String(hours).padStart(2, 0)}:${minutes}:${String(seconds % 60).padStart(2, 0)}`
         },
         scrub(e){
             const timeline = this.$refs.ctr_progress,
                   end_width = window.getComputedStyle(timeline).width, 
                   target_time = e.offsetX / parseInt(end_width) * this.player.duration
             this.player.currentTime = target_time
+        },
+        adjust_volume(e){
+            this.mute = false
+            const slider = this.$refs.volume_adjuster,
+                  full_width = window.getComputedStyle(slider).width,
+                  target_volume = e.offsetX / parseInt(full_width)
+
+            this.player.volume = target_volume
+            this.volume = target_volume
+        },
+        mute_track() {
+            this.mute = !this.mute
+            this.player.muted = !this.player.muted
         }
     },
     watch: {
@@ -193,6 +211,13 @@ export default {
                     height: 8px;
                     width: 80%;
                 }
+            }
+        }
+        .ctr-volume {
+            height: 100px;
+            .progress {
+                width: 50%;
+                height: 8px;
             }
         }
     }
