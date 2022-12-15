@@ -362,7 +362,7 @@
                 track.filters.forEach((filter_obj) => {
                     if(!filter_obj.tags.length) { track.errors.push(`Gotta have ${filter_obj.name}, or the listeners'll be lost!`) }
                 })
-                track['album_id'] = thisObj.album.id
+                track['album_id'] = this.album.id
                 if(!track.errors.length) { 
                     this.upload_track(track)
                     this.album.tracks.push(track) 

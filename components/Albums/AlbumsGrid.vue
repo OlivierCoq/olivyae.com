@@ -42,14 +42,14 @@
 <style lang="scss">
     #albums_grid {
         .album {
-            height: 220px;
-            width: 220px;
+            height: 270px;
+            width: 270px;
             background-size: cover;
             background-repeat: no-repeat;
 
             .ctr-actions {
-                height: 200px;
-                width: 200px;
+                height: 250px;
+                width: 250px;
                 background: white;
                 left: 10px;
                 right: auto;
