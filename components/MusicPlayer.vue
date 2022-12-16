@@ -38,12 +38,12 @@
                         </button>
                      </div>
                      <div v-if="player" class="ctr-scrubber w-100 p-0 d-flex flex-row justify-content-center align-items-center">
-                        <span class="text-dark elapsed">{{elapsed}}</span>
-                        <div class="progress hoverable mx-4" ref="ctr_progress" @click="scrub">
+                        <span v-if="elapsed.length" class="text-dark elapsed">{{elapsed}}</span>
+                        <div v-if="elapsed.length" class="progress hoverable mx-4" ref="ctr_progress" @click="scrub">
                             <div class="progress-bar hoverable" role="progressbar" :style="`width: ${track_time}%`" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" @click="scrub"></div>
                         </div>
-                        <span class="text-dark duration">{{duration}}</span>
-                     </div>
+                        <span v-if="duration.length" class="text-dark duration">{{duration}}</span>
+                     </div> 
                 </div>
             </div>
             <div class="col-4">

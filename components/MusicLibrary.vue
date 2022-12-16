@@ -3,18 +3,23 @@
       <div class="row">
           <div class="col-sm-12 col-md-3">
               <div class="ctr-filters">
-                  <h3 class="text-uppercase lato">Search By</h3>
-                  <h5 class="mb-3 lato" @click="clearFilters">Clear Filters</h5>
-                  <ul v-if="filters.length > 1" class="filter">
-                      <li v-for="(filter, a) in filters" :key="a" class="p-3 my-1" :class="filter.active ? 'active' : '' " @click="selectFilterMenu(filter)">
-                          <span class="lato">{{filter.name}}</span>
-                          <ul v-show="filter.active == true" :ref="'filter_options-' + filter.name"  class="filter-options mt-3">
-                              <li v-for="(option, b) in filter.options" :key="b" class="my-3" @click="selectFilter(filter, option)" >
-                                 <span v-html="option.Name ? option.Name : option.name" class="p-2 lato" :class="option.active ? 'active' : '' "></span>
-                              </li>
-                          </ul>
+                  <h3 class="text-uppercase lato text-light">Search By</h3>
+
+                  <h5 class="mb-3 lato text-light hoverable" @click="clearFilters">Clear Filters</h5>
+
+                  <ul v-if="filters.length" class="list-unstyled w-100 my-5">
+                      <li v-for="filter, a in filters" :key="a" class="w-100 my-1">
+                        <div class="filter-head hoverable p-2" @click="selectFilterMenu(filter)" :key="filter_key">
+                            <h4 class="text-light lato">{{ filter.name }}</h4>
+                        </div>
+                        <ul v-show="filter.active" class="list-unstyled">
+                            <li v-for="option, b in filter.options" :key="b" class="filter-option hoverable p-2" @click="applyFilterOption(option)">
+                                <span class="text-light text-uppercase lato">{{ option.name }}</span>
+                            </li>
+                        </ul>
                       </li>
                   </ul>
+
               </div>
           </div>
           <div class="col-sm-12 col-md-9">
@@ -41,9 +46,9 @@
               <div class="ctr-results w-100 hoverable">
                 <div v-for="track, c in results" :key="c" class="row p-2 track" :class="playing_track == track ? 'playing' : ''">
                     <div class="col-1">
-                        <h5 class="text-light hoverable num_play mt-2 mb-1">{{c + 1}}</h5>
-                        <i v-if="playing_track == track" class="fa fa-pause play-btn text-light mt-2 mb-1" @click="pause(track)"></i>
-                        <i v-else class="fa fa-play play-btn text-light mt-2 mb-1" @click="play(track)"></i>
+                        <h5 class="text-light hoverable num_play mt-2 mb-1 mx-3">{{c + 1}}</h5>
+                        <i v-if="playing_track == track" class="fa fa-pause play-btn text-light mt-2 mb-1 mx-3" @click="pause(track)"></i>
+                        <i v-else class="fa fa-play play-btn text-light mt-2 mb-1 mx-3" @click="play(track)"></i>
                     </div>
                     <div class="col-4">
                         <h5 class="text-light fw-light mt-1">{{ track.name }}</h5>
@@ -88,6 +93,7 @@ export default {
             tracks: [],
             albums: [],
             results: [],
+            active_filters: [],
             search: {
                 query: ''
             },
@@ -97,7 +103,8 @@ export default {
             pause_track: false,
             select_track: false,
             selecting: false,
-            comp_key: 0
+            comp_key: 0,
+            filter_key: 0
         }
     },
     created() {
@@ -116,12 +123,7 @@ export default {
         },
         selectFilterMenu(filter) {
             filter.active = !filter.active
-            let main_menu = this.$refs[`filter_options-${filter.name}`][0]
-            if(filter.active) {
-                main_menu.style.display = 'block'
-            } else {
-                main_menu.style.display = 'none'
-            }
+            this.filter_key += 1
         },
         selectFilter(filter, option) {
             filter.active = !filter.active
@@ -172,6 +174,47 @@ export default {
             // Search Functions:
         doSearch() {
             // console.log('Searching for: ', this.search.query)
+            // this.setupResults()
+            const thisObj = this, 
+                  empty_check = (str) => { return str === null || str.match(/^ *$/) !== null; }
+
+            if(thisObj.search.query !== '') {
+                
+                thisObj.results = thisObj.results.filter((track) => {
+                    let q = thisObj.search.query.toLowerCase()
+                    return  track.name.toLowerCase().includes(q) || 
+                            track.album.name.toLowerCase().includes(q)
+                })
+            } else if (empty_check(thisObj.search.query)){
+                thisObj.setupResults()
+            }
+        },
+        applyFilterOption(option){
+            this.active_filters.push(option)
+            console.log('applyng', option)
+            const thisObj = this
+            let temp_arr = []
+
+            thisObj.results.forEach((result) => {
+                result.filters.forEach((filter) => {
+                    filter.tags.forEach((tag) => {
+                        if(option.name == tag.name) {
+                            temp_arr.push(result)
+                        }
+                    })
+                })
+            })
+
+            console.log('result', temp_arr)
+
+            // thisObj.results = thisObj.results.filter((track) => {
+            //     /*  may web dev gods forgive me for the sin I am about to commit: */
+            //     // return ( track.filters[0].options. )
+            // })
+        },
+        clearFilters(){
+            this.active_filters = []
+            this.setupResults()
         },
             // User actiions
         play(track, index){
@@ -227,56 +270,13 @@ export default {
             width: 18rem;
             height: 50rem;
             overflow: hidden;
-           
 
-            h3, h4, h5 {
-                color: white;
+            .filter-head {
+                background-color: #61cdf775;
+                &:hover {background-color: #61cdf7;}
             }
-
-            h5 {
-                &:hover {cursor: pointer;}
-            }
-
-            .filter { 
-                list-style-type: none; 
-                padding: 0; height: 400px;
-                transition-delay: 0.8s;
-                transition: 0.8s ease;
-                transition-timing-function: ease;
-
-                li {
-                    width: 100%;
-                    background-color: #61cdf775;
-                    color: white;
-                    font-size: 1.5em;
-                    border-radius: 10px;
-
-                    transition-delay: 0.8s;
-                    transition: 0.8s ease;
-                    transition-timing-function: ease;
-
-                    &:hover {
-                        cursor: pointer;
-                        background-color: #61cdf7;
-                    }
-                }
-                .active {
-                    background-color: #61cdf7;
-                }
-
-                .filter-options {
-                    list-style-type: none;
-                    li {
-                        font-size: .7em;
-                        transition-delay: 0.5s;
-                        transition: 0.8s ease;
-                        transition-timing-function: ease;
-                    }
-                    .active {
-                        background-color: #4187a2;
-                        border-radius: 10px;
-                    }
-                }
+            .filter-option {
+                &:hover { background-color: black; }
             }
         }
         .ctr-search {
@@ -313,6 +313,9 @@ export default {
             }
         }
         .ctr-results {
+            height: 700px;
+            overflow-y: scroll;
+            overflow-x: hidden;
             .track {
                 &:hover {
                     background-color: #000000a1;
