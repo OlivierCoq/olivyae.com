@@ -5,16 +5,17 @@
               <div class="ctr-filters">
                   <h3 class="text-uppercase lato text-light">Search By</h3>
 
-                  <h5 class="mb-3 lato text-light hoverable" @click="clearFilters">Clear Filters</h5>
+                  <h5 v-if="active_filters.length" class="mb-3 lato text-light hoverable" @click="clearFilters">Clear Filters</h5>
 
                   <ul v-if="filters.length" class="list-unstyled w-100 my-5">
                       <li v-for="filter, a in filters" :key="a" class="w-100 my-1">
                         <div class="filter-head hoverable p-2" @click="selectFilterMenu(filter)" :key="filter_key">
                             <h4 class="text-light lato">{{ filter.name }}</h4>
                         </div>
-                        <ul v-show="filter.active" class="list-unstyled">
-                            <li v-for="option, b in filter.options" :key="b" class="filter-option hoverable p-2" @click="applyFilterOption(option)">
-                                <span class="text-light text-uppercase lato">{{ option.name }}</span>
+                        <ul v-show="filter.active" class="list-unstyled" :key="filter_option_key">
+                            <li v-for="option, b in filter.options" :key="b" class="filter-option hoverable p-2 w-100 d-flex flex-row justify-content-between" :class="option.active ? 'active' : '' ">
+                                <span class="text-light text-uppercase lato" @click="applyFilterOption(option)">{{ option.name }}</span>
+                                <i v-if="option.active" class="fa fa-times text-light mx-2" @click="removeFilter(option)"></i> 
                             </li>
                         </ul>
                       </li>
@@ -104,7 +105,8 @@ export default {
             select_track: false,
             selecting: false,
             comp_key: 0,
-            filter_key: 0
+            filter_key: 0,
+            filter_option_key: 0
         }
     },
     created() {
@@ -189,31 +191,47 @@ export default {
                 thisObj.setupResults()
             }
         },
-        applyFilterOption(option){
-            this.active_filters.push(option)
-            console.log('applyng', option)
+        applyFilterOption(select_option){
+            select_option['active'] = true 
+            this.filter_option_key += 1
             const thisObj = this
-            let temp_arr = []
+                // Add to list of used filters. Ensure no duplicates:
+            if(!thisObj.active_filters.includes(select_option)) { 
+                thisObj.active_filters.push(select_option) 
 
-            thisObj.results.forEach((result) => {
-                result.filters.forEach((filter) => {
-                    filter.tags.forEach((tag) => {
-                        if(option.name == tag.name) {
-                            temp_arr.push(result)
+                // loops throught a filter set and returns if matches OPTION
+                const check_filter_set = (filter_set, opt) => {
+                    let match
+                    filter_set.tags.forEach((tag) => {
+                        if(tag.name.toLowerCase().includes(opt.name.toLowerCase())) {
+                            if(!match) { match = 'match' }
                         }
                     })
-                })
-            })
-
-            console.log('result', temp_arr)
-
-            // thisObj.results = thisObj.results.filter((track) => {
-            //     /*  may web dev gods forgive me for the sin I am about to commit: */
-            //     // return ( track.filters[0].options. )
-            // })
+                    return match
+                }
+                // run ^ function on each filter set of track and return if ANY are positive
+                const check_match = (track, opt) => {
+                    return check_filter_set(track.filters[0], opt) || check_filter_set(track.filters[1], opt) || check_filter_set(track.filters[2], opt)          
+                }
+                // run filter function with ^ as criteria
+                thisObj.results = thisObj.results.filter((track) => {
+                return check_match(track, select_option)
+                })           
+            }
+        },
+        removeFilter(option){
+            option.active = false
+            if(this.active_filters.length !== 1) {
+                this.active_filters = this.active_filters.filter((flr) => { return flr.name !== option.name })
+                this.active_filters.forEach((opt) => { this.applyFilterOption(opt) })
+            } else {this.clearFilters()}
         },
         clearFilters(){
             this.active_filters = []
+            this.filters.forEach((set)=>{
+                set.options.active = false
+            })
+            this.filter_option_key += 1
             this.setupResults()
         },
             // User actiions
@@ -277,6 +295,9 @@ export default {
             }
             .filter-option {
                 &:hover { background-color: black; }
+            }
+            .filter-option.active {
+                background-color: black; 
             }
         }
         .ctr-search {

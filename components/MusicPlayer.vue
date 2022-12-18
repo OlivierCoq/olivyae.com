@@ -167,7 +167,7 @@ export default {
         height: 90px;
 
         .ctr-album_cover {
-            height: 70px;
+            height: 75px;
             
 
             .metadata {
