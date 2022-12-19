@@ -3,13 +3,13 @@
     <div class="row">
       <div id="hero" class="col d-flex flex-column justify-content-center align-items-center">
         <div class="ctr-logo text-center">
-            <img src="~/assets/img/logo-white-1024x308.png" alt="Logo">
+            <img src="~/assets/img/logo-white-1024x308.png" alt="Logo" />
         </div>
         <div class="container">
           <div class="row">
             <div class="d-flex w-100 flex-row justify-content-center">
               <a href="#music" class="music m-3 text-uppercase text-light text-decoration-none fs-3 lato">Listen Now <i class="fa fa-arrow-down"></i></a>
-              <a href="#contact" class="contact m-3 text-uppercase text-light text-decoration-none fs-3 lato">Contact</a> 
+              <a href="/contact" class="contact m-3 text-uppercase text-light text-decoration-none fs-3 lato">Contact <i class="fa fa-arrow-right"></i></a> 
             </div>
           </div>
         </div>

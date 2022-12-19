@@ -5,7 +5,7 @@
               <div class="ctr-filters">
                   <h3 class="text-uppercase lato text-light">Search By</h3>
 
-                  <h5 v-if="active_filters.length" class="mb-3 lato text-light hoverable" @click="clearFilters">Clear Filters</h5>
+                  <h5 v-show="active_filters.length" class="mb-3 lato text-light hoverable" @click="clearFilters">Clear Filters <i class="fa fa-times text-light mx-2"></i></h5>
 
                   <ul v-if="filters.length" class="list-unstyled w-100 my-5">
                       <li v-for="filter, a in filters" :key="a" class="w-100 my-1">
@@ -52,16 +52,16 @@
                         <i v-else class="fa fa-play play-btn text-light mt-2 mb-1 mx-3" @click="play(track)"></i>
                     </div>
                     <div class="col-4">
-                        <h5 class="text-light fw-light mt-1">{{ track.name }}</h5>
+                        <h5 class="text-light fw-light mt-1 lato">{{ track.name }}</h5>
                     </div>
                     <div class="col-3">
                         <h5 v-if="track.album" class="text-light mt-1">{{track.album.name}}</h5>
                     </div>
                     <div class="col-2 overflow-hidden">
-                        <span v-for="item, d in track.filters[1].tags" :key="d" class="text-dark tag rounded px-2 py-1 m-1">{{item.name}} </span>
+                        <span v-for="item, d in track.filters[1].tags" :key="d" class="text-dark tag rounded px-2 py-1 m-1 hoverable" @click="applyFilterOption(item)">{{item.name}} </span>
                     </div>
                     <div class="col-2">
-                        <span v-for="item, e in track.filters[2].tags" :key="e" class="text-dark tag rounded px-2 py-1 m-1">{{item.name}} </span>
+                        <span v-for="item, e in track.filters[2].tags" :key="e" class="text-dark tag rounded px-2 py-1 m-1 hoverable" @click="applyFilterOption(item)">{{item.name}} </span>
                     </div>
                 </div>
               </div>
@@ -132,12 +132,17 @@ export default {
             option.active = !option.active
         },
         clearFilters(){
+            const thisObj = this
             this.filters.forEach((filter) => {
-                filter.active = false
-                filter.options.forEach((option) => {
-                    option.active = false
+                this.$nextTick(()=> {
+                    thisObj.removeFilter(filter)
+                    // filter.active = false
+                    // filter.options.forEach((option) => {
+                    //     option.active = false
+                    // })
                 })
             })
+            this.filter_option_key += 2
         },
         confirm() {
             console.log('.')
@@ -221,9 +226,11 @@ export default {
         },
         removeFilter(option){
             option.active = false
+            console.log('removing filter', option)
             if(this.active_filters.length !== 1) {
                 this.active_filters = this.active_filters.filter((flr) => { return flr.name !== option.name })
                 this.active_filters.forEach((opt) => { this.applyFilterOption(opt) })
+                this.filter_key += 1
             } else {this.clearFilters()}
         },
         clearFilters(){
@@ -337,6 +344,10 @@ export default {
             height: 700px;
             overflow-y: scroll;
             overflow-x: hidden;
+
+
+
+
             .track {
                 &:hover {
                     background-color: #000000a1;
@@ -348,6 +359,21 @@ export default {
             }
             .playing {
                 background-color: #000000a1;
+            }
+        }
+
+            // Scrollbar
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgb(71, 71, 71);
+            border-radius: 10px;
+
+            &:hover {
+                background-color: gray;
             }
         }
     }
