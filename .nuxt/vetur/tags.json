@@ -1,0 +1,23 @@
+{
+  "MusicLibrary": {
+    "description": "Auto imported from components/MusicLibrary.vue"
+  },
+  "MusicPlayer": {
+    "description": "Auto imported from components/MusicPlayer.vue"
+  },
+  "NavBar": {
+    "description": "Auto imported from components/NavBar.vue"
+  },
+  "AlbumsGrid": {
+    "description": "Auto imported from components/Albums/AlbumsGrid.vue"
+  },
+  "AlbumsManager": {
+    "description": "Auto imported from components/Albums/AlbumsManager.vue"
+  },
+  "AlbumsEditAlbumInterface": {
+    "description": "Auto imported from components/Albums/EditAlbumInterface.vue"
+  },
+  "AlbumsEditTrackInterface": {
+    "description": "Auto imported from components/Albums/EditTrackInterface.vue"
+  }
+}

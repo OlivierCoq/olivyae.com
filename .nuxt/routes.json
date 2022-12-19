@@ -1,0 +1,30 @@
+[
+  {
+    "name": "admin",
+    "path": "/admin",
+    "component": "/Users/oliviercoq/Desktop/Music Production/Oli.Vyae/OliVyae Website PROJECT/olivyae.com/pages/admin.vue",
+    "chunkName": "pages/admin",
+    "_name": "_f1f3f792"
+  },
+  {
+    "name": "contact",
+    "path": "/contact",
+    "component": "/Users/oliviercoq/Desktop/Music Production/Oli.Vyae/OliVyae Website PROJECT/olivyae.com/pages/contact.vue",
+    "chunkName": "pages/contact",
+    "_name": "_3bfc2088"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "/Users/oliviercoq/Desktop/Music Production/Oli.Vyae/OliVyae Website PROJECT/olivyae.com/pages/login.vue",
+    "chunkName": "pages/login",
+    "_name": "_1f3e5351"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/oliviercoq/Desktop/Music Production/Oli.Vyae/OliVyae Website PROJECT/olivyae.com/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_5596b03a"
+  }
+]

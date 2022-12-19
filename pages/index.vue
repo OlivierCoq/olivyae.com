@@ -94,8 +94,8 @@
     background-size: cover;
   }
 
-  .ten-pm { background-image: url(~/assets/img/bg_light.jpg); transition: .9s ease;}
-  .midnight{ background-image: url(~/assets/img/bg_dark.jpg); transition: .9s ease;}
+  .ten-pm { background-image: url(~/assets/img/tinified/bg_light.jpg); transition: .9s ease;}
+  .midnight{ background-image: url(~/assets/img/tinified/bg_dark.jpg); transition: .9s ease;}
   #hero {
     width: 100%;
     height: 100vh;

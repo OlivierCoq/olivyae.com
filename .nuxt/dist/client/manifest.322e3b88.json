@@ -1,0 +1,10 @@
+{
+  "name": "olivyae.com",
+  "short_name": "olivyae.com",
+  "description": "My music website. Custom built music player. Contains Firebase hosted files as well as database. In addition, contains a custom-built admin in that edits data. Both Admin and Front End are built with same stack:",
+  "icons": [],
+  "start_url": "/?standalone=true",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "lang": "en"
+}
