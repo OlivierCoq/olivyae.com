@@ -52,22 +52,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/firebase',
     '@nuxtjs/pwa',
-    'vue2-editor/nuxt',
-    ['nuxt-mail', {
-      message: {
-        to: 'olli.vyae@gmail.com',
-      },
-      smtp: {
-        host: 'smtp.mailtrap.io',
-        port: 2525,
-        auth: {
-          // user: 'username',
-          // pass: 'password'
-          user: process.env.mail_user,
-          pass: process.env.mail_password
-        },
-      },
-    }]
+    'vue2-editor/nuxt'
   ],
 
   firebase: {

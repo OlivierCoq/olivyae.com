@@ -17,35 +17,35 @@
         <div class="row">
             <div class="col-12">
                 <div class="my-4 ">
-                    <form>
+                    <form ref="contact_form">
                         <div class="container">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label class="form-label text-light lato text-uppercase">Name</label>
-                                        <input class="form-control" type="text" v-model="name" placeholder="Joanna Smith" required @keydown="error = false">
+                                        <input class="form-control" type="text" name="user_name" v-model="postObj.user_name" placeholder="Joanna Smith" required @keydown="error = false">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label class="form-label text-light lato text-uppercase">Email</label>
-                                        <input class="form-control" type="email" v-model="postObj.from" placeholder="joanna@example.com" required @keydown="error = false">
+                                        <input class="form-control" type="email" name="user_email" v-model="postObj.user_email" placeholder="joanna@example.com" required @keydown="error = false">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label text-light lato text-uppercase">Subject</label>
                                         <input class="form-control" type="text" v-model="postObj.subject" placeholder="Your music possesed my cat!" required @keydown="error = false">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label text-light lato text-uppercase">Message:</label>
-                                        <textarea name="" id="" cols="30" rows="10" class="form-control ta" v-model="postObj.text" required @keydown="error = false"></textarea>
+                                        <textarea name="message" id="" cols="30" rows="10" class="form-control ta" v-model="postObj.message" required @keydown="error = false"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -78,33 +78,55 @@
 </template>
 
 <script>
+    import emailjs from '@emailjs/browser'
+    console.log('envvv', process.env.email_js_key)
     export default {
         name: 'ContactPage',
+        asyncData({ env }) {
+            return { env }
+        },
         data(){
             return {
                 postObj: {
-                    from: '',
-                    subject: '',
-                    text: ''
+                    user_name: '',
+                    user_email: '',
+                    message: '',
                 },
-                name: '',
                 error: false,
                 success: false
             }
         },
+        created(){
+            emailjs.init(this.email_js_key)
+            console.log('envvv', process.env.email_js_key, this.env.email_js_key)
+        },
         methods: {
             submit(){
-                let all_good, vals = Object.values(this.postObj)
+                const thisObj = this, vals = Object.values(this.postObj)
+                let all_good 
                 vals.forEach((val) => {
                     if(!val.length) { all_good = false; this.error = `Oops! Plese check all fields; there might be something missing here.` }
                     else {
                         all_good = true
                         this.error = false 
-                        this.success = `Sent. Thanks for reaching out. I will get back to you as soon as possible.`
                     }
                 })
                 if((all_good !== undefined) && (!this.error)) {
-                    this.$mail.send(this.postObj)
+                   // send mail function:  
+                   emailjs.sendForm('contact_service', 'contact_form', this.$refs.contact_form, this.email_js_key)
+                    .then(()=> {
+                        // console.log('SUCCESS!', result.text)
+                        thisObj.postObj = {
+                            user_name: '',
+                            user_email: '',
+                            message: '',
+                        }
+                        thisObj.success = `Sent. Thanks for reaching out. I will get back to you as soon as possible.`
+                    })
+                    .catch((error) => {
+                        thisObj.error = `Uh oh. Server error. Please try again.`
+                        console.log('FAILED...', error.text)
+                    })
                 }
             }
         }
