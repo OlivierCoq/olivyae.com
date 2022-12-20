@@ -1,7 +1,7 @@
 
 
 export default async function (session) {
-  await import(/* webpackChunkName: 'firebase-functions' */'firebase/compat/functions')
+  await import('firebase/compat/functions')
 
   const functionsService = session.functions('us-central1')
 

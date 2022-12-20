@@ -3,7 +3,7 @@ async function register() {
     throw new Error('serviceWorker is not supported in current browser!')
   }
 
-  const { Workbox } = await import('workbox-cdn/workbox/workbox-window.dev.es5.mjs')
+  const { Workbox } = await import('workbox-cdn/workbox/workbox-window.prod.es5.mjs')
 
   const workbox = new Workbox('/sw.js', {
     scope: '/'
@@ -15,4 +15,4 @@ async function register() {
 }
 
 window.$workbox = register()
-  .catch(error => { console.error('Error registering workbox:', error) })
+  .catch(error => {})

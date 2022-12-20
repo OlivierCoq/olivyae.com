@@ -1,10 +1,10 @@
-export { default as MusicLibrary } from '../../components/MusicLibrary.vue'
-export { default as MusicPlayer } from '../../components/MusicPlayer.vue'
-export { default as NavBar } from '../../components/NavBar.vue'
-export { default as AlbumsGrid } from '../../components/Albums/AlbumsGrid.vue'
-export { default as AlbumsManager } from '../../components/Albums/AlbumsManager.vue'
-export { default as AlbumsEditAlbumInterface } from '../../components/Albums/EditAlbumInterface.vue'
-export { default as AlbumsEditTrackInterface } from '../../components/Albums/EditTrackInterface.vue'
+export const MusicLibrary = () => import('../../components/MusicLibrary.vue' /* webpackChunkName: "components/music-library" */).then(c => wrapFunctional(c.default || c))
+export const MusicPlayer = () => import('../../components/MusicPlayer.vue' /* webpackChunkName: "components/music-player" */).then(c => wrapFunctional(c.default || c))
+export const NavBar = () => import('../../components/NavBar.vue' /* webpackChunkName: "components/nav-bar" */).then(c => wrapFunctional(c.default || c))
+export const AlbumsGrid = () => import('../../components/Albums/AlbumsGrid.vue' /* webpackChunkName: "components/albums-grid" */).then(c => wrapFunctional(c.default || c))
+export const AlbumsManager = () => import('../../components/Albums/AlbumsManager.vue' /* webpackChunkName: "components/albums-manager" */).then(c => wrapFunctional(c.default || c))
+export const AlbumsEditAlbumInterface = () => import('../../components/Albums/EditAlbumInterface.vue' /* webpackChunkName: "components/albums-edit-album-interface" */).then(c => wrapFunctional(c.default || c))
+export const AlbumsEditTrackInterface = () => import('../../components/Albums/EditTrackInterface.vue' /* webpackChunkName: "components/albums-edit-track-interface" */).then(c => wrapFunctional(c.default || c))
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {

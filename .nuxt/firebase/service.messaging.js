@@ -6,7 +6,7 @@ export default async function (session, firebase) {
     return
   }
 
-  await import(/* webpackChunkName: 'firebase-messaging' */'firebase/compat/messaging')
+  await import('firebase/compat/messaging')
 
   if (firebase.messaging.isSupported()) {
     const messagingService = session.messaging()
