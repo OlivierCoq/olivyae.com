@@ -79,12 +79,8 @@
 
 <script>
     import emailjs from '@emailjs/browser'
-    console.log('envvv', process.env.email_js_key)
     export default {
         name: 'ContactPage',
-        asyncData({ env }) {
-            return { env }
-        },
         data(){
             return {
                 postObj: {
@@ -92,13 +88,13 @@
                     user_email: '',
                     message: '',
                 },
+                email_js_key: 'zv1EYETGqrqnPY8Uo',
                 error: false,
                 success: false
             }
         },
         created(){
             emailjs.init(this.email_js_key)
-            console.log('envvv', process.env.email_js_key, this.env.email_js_key)
         },
         methods: {
             submit(){
@@ -121,7 +117,7 @@
                             user_email: '',
                             message: '',
                         }
-                        thisObj.success = `Sent. Thanks for reaching out. I will get back to you as soon as possible.`
+                        thisObj.success = `Sent. Thanks for reaching out! I will get back to you as soon as possible.`
                     })
                     .catch((error) => {
                         thisObj.error = `Uh oh. Server error. Please try again.`
