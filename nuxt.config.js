@@ -43,16 +43,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/style-resources',
-    // '@nuxtjs/strapi'  
+    // '@nuxtjs/style-resources  
   ],
-  // No longer using strapi for this project. Switching to Google's firebase instead:
-  // strapi: {
-  //   url: process.env.STRAPI_URL || 'http://localhost:1337', 
-  //   prefix: '/api',
-  //   version: 'v4',
-  //   cookie: {},
-  // },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -60,7 +52,22 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/firebase',
     '@nuxtjs/pwa',
-    'vue2-editor/nuxt'
+    'vue2-editor/nuxt',
+    ['nuxt-mail', {
+      message: {
+        to: 'olli.vyae@gmail.com',
+      },
+      smtp: {
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+          // user: 'username',
+          // pass: 'password'
+          user: process.env.mail_user,
+          pass: process.env.mail_password
+        },
+      },
+    }]
   ],
 
   firebase: {
