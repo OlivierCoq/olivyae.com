@@ -1,7 +1,7 @@
 <template>
   <div id="ctr-main" class="container-fluid position-relative">
     <div class="row">
-      <div id="hero" class="col d-flex flex-column justify-content-center align-items-center">
+      <div id="hero" ref="hero" class="col d-flex flex-column justify-content-center align-items-center">
         <div class="ctr-logo text-center">
             <img src="~/assets/img/logo-white-1024x308.png" alt="Logo" />
         </div>
@@ -63,23 +63,24 @@
       scrollImg() {
         let lastScrollTop = 0;
         
-        this.$nextTick(() => {
-          document.addEventListener('scroll', () => {
+        document.addEventListener('scroll', () => {
             let st = window.pageYOffset || document.documentElement.scrollTop;
             if(st > lastScrollTop) { 
-              document.body.classList.add('midnight')
-              // documnet.getElementById('ctr-main').classList.add('midnight')
-              document.getElementById('hero').classList.add('midnight') 
+              setTimeout(() => {
+                document.body.classList.add('midnight')
+                this.$refs.hero.classList.add('midnight') 
+              }, 800);
             }
             else { 
-              document.body.classList.remove('midnight') 
-              // documnet.getElementById('ctr-main').classList.remove('midnight')
-              document.getElementById('hero').classList.remove('midnight') 
+              setTimeout(() => {
+                document.body.classList.remove('midnight') 
+                // documnet.getElementById('ctr-main').classList.remove('midnight')
+                this.$refs.hero.classList.remove('midnight') 
+              }, 800);
             }
 
             lastScrollTop = st <= 0 ? 0 : st; // Mobile
           }, false)
-        })
       }
     }
   } 
@@ -87,20 +88,20 @@
 
 <style lang="scss">
   #ctr-main {
-    transition: .9s ease;
+    transition: 2s ease;
     background-position:center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
   }
 
-  .ten-pm { background-image: url(~/assets/img/tinified/bg_light.jpg); transition: .9s ease;}
-  .midnight{ background-image: url(~/assets/img/tinified/bg_dark.jpg); transition: .9s ease;}
+  .ten-pm { background-image: url(~/assets/img/tinified/bg_light.jpg); transition-delay: 2s ease;}
+  .midnight{ background-image: url(~/assets/img/tinified/bg_dark.jpg); transition-delay: 2s ease;}
   #hero {
     width: 100%;
     height: 100vh;
-    transition: .9s ease;
-    background-position:center;
+    transition: 2s ease;
+    background-position:center; 
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

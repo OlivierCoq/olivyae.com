@@ -1,3 +1,4 @@
+import bootstrap from 'bootstrap'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 
 export const state = () => ({

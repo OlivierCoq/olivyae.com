@@ -178,6 +178,11 @@ export default {
                 }
             }
         },
+        clean_track(track){
+            // check top level to see if they are on olivyae.com || localhost (for testing)
+            //if not, track.audio_file = stripped version of url ()
+            //"https://firebasestorage.googleapis.com/v0/b/olivyae-58b01.appspot.com/o/Oli.Vyae%20-%20The%20Art%20of%20Procrastination%20-%2006%20Celestial%20Cycles.mp3?alt=media&token=48cbe462-48d5-44c0-8ad1-e738a1d536f1"
+        },
             // Search Functions:
         doSearch() {
             // console.log('Searching for: ', this.search.query)

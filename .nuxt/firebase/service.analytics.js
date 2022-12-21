@@ -6,7 +6,7 @@ export default async function (session, firebase) {
     return
   }
 
-  await import('firebase/compat/analytics')
+  await import(/* webpackChunkName: 'firebase-analytics' */'firebase/compat/analytics')
 
   // Only initialize it if the Browser supports it
   const isSupported = await firebase.analytics.isSupported()

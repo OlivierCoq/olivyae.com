@@ -16,7 +16,7 @@
             <div class="col-4">
                 <!-- https://codepen.io/EmNudge/pen/rRbLJQ -->
                 <div v-if="!selecting" class="d-none">
-                    <audio ref="audio_player" controls autoplay>
+                    <audio ref="audio_player" controls controlsList="nodownload" autoplay oncontextmenu="return false;">
                         <source :src="track.audio_file" type="audio/mpeg" />
                     </audio>
                 </div>
@@ -242,3 +242,4 @@ export default {
         }
     }
 </style>
+
