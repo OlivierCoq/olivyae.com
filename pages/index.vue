@@ -26,7 +26,7 @@
       <div class="col-sm-12 col-md-6 offset-md-6 d-flex flex-row justify-content-end">
         <ul>
           <li v-for="(social, i) in social" :key="i" class="mx-2">
-            <a :href="social.link">
+            <a :href="social.link" target="_blank">
               <i class="fa fa-2x" :class="`fa-${social.icon}`"></i>
             </a>
           </li>
