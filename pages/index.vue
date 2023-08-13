@@ -46,7 +46,7 @@
           { link: 'https://www.instagram.com/oli.vyae/', icon: 'instagram' },
           { link: 'https://olivyae.bandcamp.com/', icon: 'bandcamp'},
           { link: 'https://soundcloud.com/oliolimusic', icon: 'soundcloud'},
-          { link: 'https://www.youtube.com/@user-wq6ob3oo7t', icon: 'youtube' }    
+          { link: 'https://www.youtube.com/@OliVyae', icon: 'youtube' }    
         ]
       }
     },
