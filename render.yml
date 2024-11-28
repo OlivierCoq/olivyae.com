@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: olivyae.com
+    env: node
+    plan: free
+    buildCommand: npm install --legacy-peer-deps && npm run build
+    startCommand: node .output/server/index.mjs
