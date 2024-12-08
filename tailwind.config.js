@@ -10,7 +10,12 @@ export default {
     "./error.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'dark': {'raw': '(prefers-color-scheme: dark)'},
+        'light': {'raw': '(prefers-color-scheme: light)'},
+      }
+    },
   },
   plugins: [],
 }

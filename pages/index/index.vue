@@ -1,12 +1,21 @@
 <template>
-  <div class="w-[100vw] h-[100vh] bg-slate-200 dark:bg-slate-900 absolute px-2">
-    <div v-show="state.fresh" id="fresh" class="fade-in mt-[3.5rem] p-4 h-full w-full flex flex-col justify-center align-center items-cener rounded-xl">
+  <div class="w-[100vw] h-full bg-slate-200 dark:bg-slate-900 absolute px-2">
+    <div v-show="state.fresh" id="fresh" class="fade-in mt-[3.5rem] p-4 h-full w-full flex flex-col justify-center align-center items-cener fade-in">
       <h1 
         class="uppercase text-9xl font-bold primary-font text-center" 
         :style="{ backgroundImage: `url(${randomBackgroundImage()});` }"
       >
         Oli.Vyae
       </h1>
+      <div class="mx-auto w-full md:w-1/2 lg:w-1/3 flex flex-row justify-center items-center align-center p-4">
+        <span class="primary-font text-slate-800 dark:text-slate-200 text-xl mx-6 cursor-pointer" @click="init_music_browser">Browse my music now <font-awesome :icon="['fas', 'play']" /></span>
+        <a href="/contact">
+          <span class="primary-font text-slate-800 dark:text-slate-200 text-xl mx-6">Get in touch <font-awesome :icon="['fas', 'caret-right']" /></span>
+        </a>
+      </div>
+    </div>
+    <div v-show="!state.fresh" class="fade-in w-full h-full flex flex-col justify-center items-center align-center fade-in">
+
     </div>
   </div> 
 </template>
@@ -40,7 +49,11 @@ const randomBackgroundImage = () => {
   return state.images[randomIndex]
 }
 
-
+const init_music_browser = () => {
+  state.fresh = false
+  // create a cookie to remember the user has visited the site
+  document.cookie = 'fresh=false; max-age=31536000; path=/'
+}
 
 </script>
 <style lang="scss">

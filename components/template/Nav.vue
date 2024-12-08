@@ -23,7 +23,7 @@
           <font-awesome :icon="['fab', social.name]" class="text-slate-700 hover:text-slate-600 dark:text-slate-200 dark:hover:text-slate-300" />
         </a> 
       </div>
-      <a href="/contact" class="uppercase primary-font ms-4 text-sm">Contact</a>
+      <a href="/contact" class="uppercase primary-font ms-4 text-sm text-slate-700 dark:text-slate-200">Contact</a>
     </div>
   </div>
 </template>
