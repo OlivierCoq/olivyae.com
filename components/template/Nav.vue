@@ -1,6 +1,6 @@
 <template>
   <div 
-    id="nav" class="backdrop-blur-sm bg-transparent/10 h-[50px] flex flex-row justify-between absolute top-0 z-10 w-full"
+    id="nav" class="backdrop-blur-sm bg-transparent/10 h-[50px] flex flex-row justify-between fixed top-0 z-10 w-full"
     :class="settings.dark ? 'dark' : ''"
   >
     <div class="ctr-logo w-1/2 md:w-1/3 h-full flex flex-start justify-start align-start items-center p-2">

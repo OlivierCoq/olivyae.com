@@ -1,6 +1,3 @@
-// Fonts
-
-// primary font is Noto Sans:
-.primary-font {
-  font-family: 'Noto Sans', sans-serif;
-}
+@use 'variables' as variables;
+@use 'fonts' as fonts;
+@use 'effects' as effects;
