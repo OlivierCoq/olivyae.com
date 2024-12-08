@@ -30,12 +30,27 @@ export default defineNuxtConfig({
   },
 
   fontawesome: {
-    component: 'fa',
-    suffix: true,
     icons: {
       solid: [
-        'faTimes'
+        'times'
+      ],
+      brands: [
+        'facebook',
+        'instagram',
+        'youtube',
+        'bluesky',
+        'tiktok',
+        'medium',
+        'soundcloud',
+        'bandcamp',
+        'spotify',
       ]
+    }
+  },
+
+  googleFonts: {
+    families: {
+      'Noto+Sans': [100, 200, 300, 400, 500, 600, 700, 800, 900, 'latin', 'latin-ext','bold'],
     }
   }
 })
