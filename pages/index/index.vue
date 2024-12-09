@@ -17,7 +17,7 @@
     <div v-show="!state.fresh" id="music_library" class="fade-in w-[98%] h-[92%] flex flex-col justify-start items-start align-start fade-in mx-auto mt-20 rounded-lg shadow-xl overflow-hidden bg-white dark:bg-slate-600">
       <div id="search-filter" class="w-full min-h-[20%] bg-slate-300 dark:bg-slate-700 flex flex-col items-center">
 
-        <div id="search" class="mx-auto w-[90%] md:w-1/3 flex flex-row p-2 mt-10 mb-4">
+        <div id="search" class="mx-auto w-[90%] md:w-1/3 flex flex-row p-2 mt-10">
           <input 
             type="text" 
             class="w-full p-2 rounded-md primary-font" placeholder="Search for music..."
@@ -41,23 +41,63 @@
           </button>
         </div>
 
-        <div id="filters" class="mx-auto w-[90%] flex flex-row p-4">
+        <div id="filters" class="mx-auto w-[90%] flex flex-col p-4">
           
           <div id="filter-tab-headers" class="py-2 px-4 flex flex-row align-center justify-center mx-auto w-full md:w-1/2">
 
             <div 
-              class="filter_tab shadow-sm rounded-full my-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
+              id="filter-rab-genres"
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
               :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'genres' }" 
-              @click="state.filtering.active = 'genres'"
+              @click="filter_tab_toggle('genres')"
             >
               <span class="primary-font text-xl font-thin">Genres</span>
+            </div>
+
+            <div 
+              id="filter-rab-moods"
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
+              :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'moods' }" 
+              @click="filter_tab_toggle('moods')"
+            >
+              <span class="primary-font text-xl font-thin">Moods</span>
+            </div>
+
+            <div 
+              id="filter-rab-instruments"
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
+              :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'instruments' }" 
+              @click="filter_tab_toggle('instruments')"
+            >
+              <span class="primary-font text-xl font-thin">Instruments</span>
+            </div>
+
+            <div 
+              id="filter-rab-vocals"
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
+              :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'vocals' }" 
+              @click="filter_tab_toggle('vocals')"
+            >
+              <span class="primary-font text-xl font-thin">Vocals</span>
             </div>
 
 
 
           </div>
 
+          <div id="filter-tabs" class="mx-auto w-full md:w-1/2">
 
+            <div v-if="state.filtering.target.active && state.filtering.target.label === 'genres'" class="grid grid-cols-2 md:grid-cols-4 my-4 gap-2 rounded-md overflow-hidden fade-in">
+              <div 
+                v-for="(genre, a) in musicStore.genres" :key="a" 
+                class="w-full h-auto p-10 bg-cover bg-center bg-no-repeat rounded-md shadow-md cursor-pointer opacity-90 hover:opacity-100"
+                :style="{ backgroundImage: `url(${genre.imagery.url})` }"
+              >
+                <span class="primary-font text-white text-xl font-bold">{{ genre.label }}</span>
+              </div>
+            </div>
+
+          </div>
 
 
         </div>
@@ -97,7 +137,10 @@ const state = reactive({
     'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635468/Piano_Instrument_Music_v0ehoo.jpg'
   ],
   filtering: {
-    active: 'all',
+    target: {
+      active: false,
+      label: null
+    },
   }
 })
 
@@ -116,6 +159,16 @@ const init_music_browser = () => {
   state.fresh = false
   // create a cookie to remember the user has visited the site
   document.cookie = 'fresh=false; max-age=31536000; path=/'
+}
+
+const filter_tab_toggle = (target) => {
+  if (state.filtering.target.active && state.filtering.target.label === target) {
+    state.filtering.target.active = false
+    state.filtering.target.label = null
+  } else {
+    state.filtering.target.active = true
+    state.filtering.target.label = target
+  }
 }
 
 </script>

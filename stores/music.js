@@ -97,6 +97,11 @@ export const useMusicStore = defineStore({
             label: 'Moods',
             value: 'moods',
             data: audio_data?.moods,
+          },
+          {
+            label: 'Vocals',
+            value: 'vocals',
+            data: audio_data?.vocals,
           }
         ]
       }

@@ -470,6 +470,23 @@ export default defineEventHandler((event) => {
           value: 'misc',
           active: false
         }
+      ],
+      vocals: [
+        {
+          label: "Male",
+          value: "male",
+          active: false
+        },
+        {
+          label: "Female",
+          value: "female",
+          active: false
+        },
+        {
+          label: "Group",
+          value: "group",
+          active: false
+        }
       ]
     }
   }
