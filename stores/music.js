@@ -5,9 +5,6 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-const api_url = 'https://strapi-potr.onrender.com'
-// const api_url = 'http://localhost:1337'
-import qs from "qs";
 
 export const useMusicStore = defineStore({
   id: "musicStore",
@@ -27,6 +24,7 @@ export const useMusicStore = defineStore({
       filter_option_key: 0,
       albums: [],
       artists: [],
+      genres: [],
       tracks: [],
       player: {
         track: null,
@@ -44,97 +42,66 @@ export const useMusicStore = defineStore({
   },
   actions: {
     // API methods:
-    async init_music() {
-      await this.fetch_albums()
-      await this.fetch_artists()
-      await this.fetch_tracks()
-      await this.fetch_interface()
-    },
-    async fetch_albums() {
-      this.albums = await fetch(`${api_url}/api/albums?${qs.stringify(
-        {
-          populate: [
-            "title",
-            "release_date",
-            "artwork",
-            "music_artists",
-            "tracks",
-            "ratings",
-            "ratings.one_star",
-            "ratings.two_stars",
-            "ratings.three_stars",
-            "ratings.four_stars",
-            "ratings.five_stars"
-          ],
-        },
-        { arrayFormat: "comma" },
-      )}`)
-        .then(res => res.json())
-      .catch(err => console.error(err))
-    },
-    async fetch_artists() {
-      this.artists = await fetch(`${api_url}/api/music-artists?${qs.stringify(
-        {
-          populate: [
-            "name",
-            "bio",
-            "profile_picture",
-            "pictures",
-            "socials",
-            "socials.platform",
-            "socials.link",
-            "albums",
-            "albums.title",
-            "albums.artwork",
-            "albums.release_date",
-            "albums.music_artists",
-            "albums.ratings",
-            "tracks"
-          ],
-        },
-        { arrayFormat: "comma" },
-      )}`)
-        .then(res => res.json())
-      .catch(err => console.error(err))
-    },
-    async fetch_tracks() {
-      console.log('fetching tracks...')
-      this.tracks = await fetch(`${api_url}/api/tracks?${qs.stringify(
-        {
-          populate: [
-            "title",
-            "audio_file",
-            "album",
-            "albums",
-            "single_cover",
-            "music_artists",
-            "genres",
-            "ratings",
-            "ratings.one_star",
-            "ratings.two_stars",
-            "ratings.three_stars",
-            "ratings.four_stars",
-            "ratings.five_stars"
-          ],
-        },
-        { arrayFormat: "comma" },
-      )}`)
-        .then(res => res.json())
-      .catch(err => console.error(err))
-      nextTick(()=> {
-        this.search.results = this.tracks.data
-      })
-    },
-    async fetch_interface() {
-      this.interface = await fetch(`${api_url}/api/music-interface?${qs.stringify({
-        populate: [
-          "genres",
-          "artists"
+    async init_music(data) {
+
+      const audio_data = data?.data?.value?.audio_data
+      console.log('initializing music store', audio_data)
+      const all_tracks = []
+
+
+      // Tracks and Genres
+      if(audio_data) {
+
+        audio_data?.genres?.forEach((genre) => { 
+          this.genres.push(genre)
+          if(genre?.subgenres &&  genre?.subgenres.length) {
+            genre?.subgenres?.forEach((subgenre) => { 
+              if(subgenre?.albums && subgenre?.albums.length) {
+                subgenre?.albums?.forEach((album) => {
+                  this.albums.push(album)
+                  if(album?.tracks && album?.tracks.length) {
+                    album?.tracks?.forEach((track) => {
+                      all_tracks.push(track)
+                    })
+                  }
+                })
+              }
+            })
+          }
+        })
+        if(all_tracks.length) {
+          // randomize order of tracks:
+          all_tracks.sort(() => Math.random() - 0.5)
+          this.tracks = all_tracks
+
+          this.search.results = this.tracks
+        }
+
+
+      }
+
+      // Filters
+      if(audio_data) {
+        this.filters = [
+          {
+            label: 'Genres',
+            value: 'genres',
+            data: audio_data?.genres,
+          },
+          {
+            label: 'Instruments',
+            value: 'instruments',
+            data: audio_data?.instruments,
+          },
+          {
+            label: 'Moods',
+            value: 'moods',
+            data: audio_data?.moods,
+          }
         ]
-      })}`)
-        .then(res => res.json())
-      .catch(err => console.error(err))
+      }
     },
+
     reset() {
       // this.results = this.tracks
     },
@@ -256,13 +223,13 @@ export const useMusicStore = defineStore({
       if(e.keyCode === 17) { return }
       if(!this.search.query.length) { this.clearSearch() }
       else {
-        this.search.results = this.tracks.data.filter((track) => {
+        this.search.results = this.tracks.filter((track) => {
           return track.title.toLowerCase().includes(this.search.query.toLowerCase())
         })
       }
     },
     clearSearch() {
-      this.search.results = this.tracks.data
+      this.search.results = this.tracks
       this.search.query = ''
     },
     doFilter(filter) {
@@ -278,13 +245,7 @@ export const useMusicStore = defineStore({
         })
       }
 
-      if (filter.type === 'music_artist') {
-        this.search.results = this.search.results.filter((track) => {
-          this.search.filters.push(filter)
-          filter.active = true
-          return track.music_artists.some((artist) => artist.name.toLowerCase() === filter.label.toLowerCase())
-        })
-      }
+
 
     },
     clearFilters() {

@@ -1,27 +1,37 @@
 export default defineEventHandler((event) => {
   return {
-    data: {
+    audio_data: {
       genres: [
         {
           label: 'Electronic',
+          value: 'electronic',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704720/Djing_Sound_Engineer_Tuner_llabiw.jpg"
+          },
           subgenres: [
             {
-              label: 'House'
+              label: 'House',
+              value: 'house'
             },
             {
-              label: 'Techno'
+              label: 'Techno',
+              value: 'techno'
             },
             {
-              label: 'Trance'
+              label: 'Trance',
+              value: 'trance'
             },
             {
-              label: 'Drum and Bass'
+              label: 'Drum and Bass',
+              value: 'drum_and_bass'
             },
             {
-              label: 'Electro Funk'
+              label: 'Electro Funk',
+              value: 'electro_funk'
             },
             {
               label: 'Misc',
+              value: 'misc',
               albums: [
                 {
                   title: 'Butterfly',
@@ -306,23 +316,61 @@ export default defineEventHandler((event) => {
           ]
         },
         {
-          label: 'Funk'
+          label: 'Funk',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704766/Funk_x6dwnn.jpg"
+          },
+          value: 'funk',
+          subgenres: []
         },
         {
-          label: 'Hip-Hop'
+          label: 'Hip-Hop',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704799/hip-hop_mugg6g.jpg"
+          },
+          value: 'hip_hop',
+          subgenres: []
         },
         {
-          label: 'R+B'
+          label: 'R+B',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704850/R_B_jykyds.jpg"
+          },
+          value: 'r_and_b',
+          subgenres: []
         },
         {
-          label: 'Reggae'
+          label: 'Reggae',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704937/reggae_ecbqtx.png"
+          },
+          value: 'reggae',
+          subgenres: []
         },
         {
-          label: 'Rock'
+          label: 'Rock',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704967/rock_ol9hku.jpg"
+          },
+          value: 'rock',
+          subgenres: []
         },
         {
-          label: 'Soul'
-        }
+          label: 'Soul',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733705044/Soul_yxf5v0.jpg"
+          },
+          value: 'soul',
+          subgenres: []
+        }, 
+        {
+          label: 'Jazz',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733705240/jazz_c8no5p.jpg"
+          },
+          value: 'jazz',
+          subgenres: []
+        }, 
       ],
       moods: [
         {
