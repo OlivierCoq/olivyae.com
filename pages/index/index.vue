@@ -48,7 +48,7 @@
             <div 
               id="filter-rab-genres"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'genres' }" 
+              :class="{ 'bg-fuchsia-500 text-white': state.filtering.target.label === 'genres' }" 
               @click="filter_tab_toggle('genres')"
             >
               <span class="primary-font text-xl font-thin">Genres</span>
@@ -57,7 +57,7 @@
             <div 
               id="filter-rab-moods"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'moods' }" 
+              :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'moods' }" 
               @click="filter_tab_toggle('moods')"
             >
               <span class="primary-font text-xl font-thin">Moods</span>
@@ -66,7 +66,7 @@
             <div 
               id="filter-rab-instruments"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'instruments' }" 
+              :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'instruments' }" 
               @click="filter_tab_toggle('instruments')"
             >
               <span class="primary-font text-xl font-thin">Instruments</span>
@@ -75,7 +75,7 @@
             <div 
               id="filter-rab-vocals"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white': state.filtering.active === 'vocals' }" 
+              :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'vocals' }" 
               @click="filter_tab_toggle('vocals')"
             >
               <span class="primary-font text-xl font-thin">Vocals</span>
@@ -85,15 +85,29 @@
 
           </div>
 
-          <div id="filter-tabs" class="mx-auto w-full md:w-1/2">
+          <div id="filter-tabs" class="mx-auto w-full flex flex-col md:flex-row">
 
-            <div v-if="state.filtering.target.active && state.filtering.target.label === 'genres'" class="grid grid-cols-2 md:grid-cols-4 my-4 gap-2 rounded-md overflow-hidden fade-in">
-              <div 
-                v-for="(genre, a) in musicStore.genres" :key="a" 
-                class="w-full h-auto p-10 bg-cover bg-center bg-no-repeat rounded-md shadow-md cursor-pointer opacity-90 hover:opacity-100"
-                :style="{ backgroundImage: `url(${genre.imagery.url})` }"
-              >
-                <span class="primary-font text-white text-xl font-bold">{{ genre.label }}</span>
+            <div v-if="state.filtering.target.active && state.filtering.target.label === 'genres'" class="w-full flex flex-col md:flex-row">
+              <div class="grid grid-cols-2 md:grid-cols-4 my-4 gap-2 rounded-md overflow-hidden fade-in w-full md:w-1/2">
+                <div 
+                  v-for="(genre, a) in musicStore.genres" :key="a" 
+                  class="w-full h-auto p-10 bg-cover bg-center bg-no-repeat rounded-md shadow-md cursor-pointer opacity-90 hover:opacity-100"
+                  :style="{ backgroundImage: `url(${genre.imagery.url})` }"
+                  @click="select_genre(genre)"
+                >
+                  <span class="primary-font text-white text-xl font-bold">{{ genre.label }}</span>
+                </div>
+              </div>
+              <div v-if="state.filtering.target.focus" class="w-full md:w-1/2 flex flex-col items-start justify-start px-4 fade-in">
+                <h3 class="primary-font text-2xl font-bold mt-4">{{ state.filtering.target.focus.label }}</h3>
+                <div class="my-4 w-full grid grid-cols-3 gap-2">
+                  <div 
+                    v-for="(subgenre, b) in state.filtering.target.focus.subgenres" :key="b" 
+                    class="py-2 px-4 rounded-md shadow-sm bg-slate-100 hover:bg-slate-200 cursor-pointer"
+                  >
+                    <span class="primary-font font-thin">{{ subgenre.label }}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -139,7 +153,8 @@ const state = reactive({
   filtering: {
     target: {
       active: false,
-      label: null
+      label: null,
+      focus: null
     },
   }
 })
@@ -169,6 +184,10 @@ const filter_tab_toggle = (target) => {
     state.filtering.target.active = true
     state.filtering.target.label = target
   }
+}
+
+const select_genre = (genre) => {
+  state.filtering.target.focus = genre
 }
 
 </script>
