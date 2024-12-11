@@ -757,20 +757,16 @@ export default defineEventHandler((event) => {
           ]
         },
         {
-          label: 'R+B',
+          label: 'R&B',
           imagery: {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704850/R_B_jykyds.jpg"
           },
           value: 'r_and_b',
           subgenres: [
+
             {
-              label: 'Old School',
-              value: 'old_school',
-              albums: []
-            },
-            {
-              label: 'Modern',
-              value: 'modern',
+              label: 'R&B',
+              value: 'r&b',
               albums: [
                 {
                   title: 'Insomnia',
@@ -786,7 +782,7 @@ export default defineEventHandler((event) => {
                       genres: [
                         {
                           label: "R&B",
-                          value: "r_and_b",
+                          value: "modern",
                           active: false
                         },
                       ],
@@ -828,13 +824,23 @@ export default defineEventHandler((event) => {
                           label: "Piano",
                           value: "piano",
                           active: false
+                        },
+                        {
+                          label: "Strings",
+                          value: "strings",
+                          active: false
                         }
                       ],
                     }
                   ]
                 }
               ]
-            }
+            },
+                        {
+              label: 'Old School',
+              value: 'old_school',
+              albums: []
+            },
           ]
         },
         {
