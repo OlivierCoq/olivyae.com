@@ -249,6 +249,10 @@
             :track="track"
             :index="index"
           />
+          <p 
+            v-if="!musicStore.search.results.length"
+            class="my-20 text-center font-thin text-2xl text-slate-800 dark:text-slate-200"
+            >Oh man! No tracks here. I guess I haven't delved too deeply in that genre.......yet! Reach out if you'd like to hear a song in this genre!</p>
           <!-- Pagination -->
         </div>
           <!-- Music player: -->
