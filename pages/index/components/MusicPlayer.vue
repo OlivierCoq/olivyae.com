@@ -9,9 +9,9 @@
         <img
           :src="musicStore.player.track.album.cover .url"
           :alt="musicStore.player.track.title"
-          class="w-[150px] mt-[-8rem] shadow-2xl"
+          class="w-[150px] mt-[-6rem] lg:mt-[-8rem] shadow-2xl"
         />
-        <p class="text-slate-800 dark:text-slate-200 font-thin text-sm primary-font mt-2">
+        <p class="text-slate-800 dark:text-slate-200 font-thin font-bold text-xs lg:text-sm primary-font mt-2">
           {{ musicStore.player.track.title }}
         </p>
         <small class="text-slate-800 dark:text-slate-200 font-thin text-xs">{{ musicStore.player.track.album.title }}</small>

@@ -43,7 +43,7 @@
 
         <div id="filters" class="mx-auto w-[90%] flex flex-col p-4">
           
-          <div id="filter-tab-headers" class="py-2 px-4 flex flex-row align-center justify-center mx-auto w-full md:w-1/2">
+          <div id="filter-tab-headers" class="py-2 px-4 flex flex-wrap lg:flex-row align-center justify-center mx-auto w-full md:w-1/2">
 
             <div 
               id="filter-tab-genres"
@@ -290,7 +290,8 @@ const state = reactive({
   images: [
     'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635260/guitars-small_nubeqe.jpg',
     'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635370/DJing-small_zbhbfd.jpg',
-    'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635468/Piano_Instrument_Music_v0ehoo.jpg'
+    'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635468/Piano_Instrument_Music_v0ehoo.jpg',
+    'https://res.cloudinary.com/dffwof1gx/image/upload/v1733947582/cassette_izcrvj.jpg'
   ],
   filtering: {
     target: {

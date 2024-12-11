@@ -37,7 +37,8 @@
         images: [
           'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635260/guitars-small_nubeqe.jpg',
           'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635370/DJing-small_zbhbfd.jpg',
-          'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635468/Piano_Instrument_Music_v0ehoo.jpg'
+          'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635468/Piano_Instrument_Music_v0ehoo.jpg',
+          'https://res.cloudinary.com/dffwof1gx/image/upload/v1733947582/cassette_izcrvj.jpg'
         ]
       },
       social_media: [

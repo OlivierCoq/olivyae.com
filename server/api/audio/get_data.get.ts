@@ -42,7 +42,77 @@ export default defineEventHandler((event) => {
             {
               label: 'Electro Funk',
               value: 'electro_funk',
-              albums: []
+              albums: [{
+                title: 'Old Tapes',
+                cover: {
+                  url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733948085/Old_Tapes_album_cover_pljscq.png"
+                },
+                tracks: [
+                  {
+                    id: 1,
+                    audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733948087/Click_las2kd.wav",
+                    title: "Click",
+                    length: "0:51",
+                    genres: [
+                      {
+                        label: "Electro Funk",
+                        value: "electro_funk",
+                        active: false
+                      },
+                      {
+                        label:"Electronic",
+                        value: "electronic",
+                        active: false
+                      }
+                    ],
+                    moods: [
+                      {
+                        label: "Playful",
+                        value: "playful",
+                        active: false
+                      },
+                      {
+                        label: "Happy",
+                        value: "happy",
+                        active: false
+                      },
+                      {
+                        label: "Excited",
+                        value: "excited",
+                        active: false
+                      },
+                      {
+                        label: "Upbeat",
+                        value: "upbeat",
+                        active: false
+                      }
+                    ],
+                    vocals: [],
+                    instruments: [
+                      {
+                        label: "Synth",
+                        value: "synth",
+                        active: false
+                      },
+                      {
+                        label: "Drums",
+                        value: "drums",
+                        active: false
+                      },
+                      {
+                        label: "Bass",
+                        value: "bass",
+                        active: false
+                      },
+                      {
+                        label: "Strings",
+                        value: "strings",
+                        active: false
+                      }
+                    ]
+                  },
+                ]
+              }]
             },
             {
               label: 'Amapiano',
@@ -526,6 +596,59 @@ export default defineEventHandler((event) => {
                         }
                       ]
                     },
+                                        {
+                      id: 3,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733949961/Sweet_tooth_qvdrgz.wav",
+                      title: "Sweet tooth",
+                      length: "1:20",
+                      genres: [
+                        {
+                          label: "Funk",
+                          value: "funk",
+                          active: false
+                        },
+                      ],
+                      moods: [
+                        {
+                          label: "Playful",
+                          value: "playful",
+                          active: false
+                        },
+                         {
+                          label: "Happy",
+                          value: "happy",
+                          active: false
+                         },
+                         {
+                          label: "Upbeat",
+                          value: "upbeat",
+                          active: false
+                         }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Synth",
+                          value: "synth",
+                          active: false
+                        },
+                        {
+                          label: "Drums",
+                          value: "drums",
+                          active: false
+                        },
+                        {
+                          label: "Bass",
+                          value: "bass",
+                          active: false
+                        },
+                        {
+                          label: "Electric Guitar",
+                          value: "electric_guitar",
+                          active: false
+                        }
+                      ]
+                    },
                   ]
                 }
               ]
@@ -562,7 +685,74 @@ export default defineEventHandler((event) => {
             {
               label: 'Afrobeat',
               value: 'afrobeat',
-              albums: []
+              albums: [
+                {
+                  title: 'Motherland',
+                  cover: {
+                    url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733949029/Motherland_album_cover_bkksoj.png"
+                  },
+                  tracks: [
+                    {
+                      id: 1,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733949086/Motherland_zmt8on.wav",
+                      title: "Motherland",
+                      length: "4:06",
+                      genres: [
+                        {
+                          label: "Afrobeat",
+                          value: "afrobeat",
+                          active: false
+                        },
+                      ],
+                      moods: [
+                        {
+                          label: "Happy",
+                          value: "happy",
+                          active: false
+                        },
+                         {
+                          label: "Excited",
+                          value: "excited",
+                          active: false
+                         },
+                         {
+                          label: "Upbeat",
+                          value: "upbeat",
+                          active: false
+                         }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Synth",
+                          value: "synth",
+                          active: false
+                        },
+                        {
+                          label: "Drums",
+                          value: "drums",
+                          active: false
+                        },
+                        {
+                          label: "Bass",
+                          value: "bass",
+                          active: false
+                        },
+                        {
+                          label: "Electric Guitar",
+                          value: "electric_guitar",
+                          active: false
+                        },
+                        {
+                          label: "Percussion",
+                          value: "percussion",
+                          active: false
+                        }
+                      ],
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -812,7 +1002,7 @@ export default defineEventHandler((event) => {
           label: 'Vocals',
           value: 'vocals',
           active: false
-        },
+        }, 
         {
           label: 'Misc',
           value: 'misc',

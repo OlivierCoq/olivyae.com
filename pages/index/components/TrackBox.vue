@@ -2,7 +2,7 @@
   <div
     class="w-full h-[60px] mb-1 border-2 border-slate-200 rounded-md p-2 flex flex-row justify-start align-center items-center"
   >
-    <div class="w-[10%] text-gray-100 font-thin flex flex-row justify-center pe-10">
+    <div class="w-[10%] text-gray-100 font-thin flex flex-row justify-center lg:pe-10">
       <font-awesome
         :icon="['fas', 'pause']"
         color="#8d8484"
@@ -24,7 +24,7 @@
         @click="musicStore.play(props.track, props.index)"
       />
     </div>
-    <div class="w-[20%] text-slate-800 dark:text-slate-200 font-thin hover:font-normal text-sm md:text-lg cursor-pointer">
+    <div class="w-[20%] text-slate-800 dark:text-slate-200 font-thin hover:font-normal text-sm md:text-lg cursor-pointer me-4 xl:me-0 flex flex-wrap">
       <p @click="musicStore.play(props.track, props.index)">{{ props.track.title }}</p>
     </div>
 
