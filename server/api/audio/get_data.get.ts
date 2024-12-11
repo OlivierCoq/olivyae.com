@@ -11,23 +11,38 @@ export default defineEventHandler((event) => {
           subgenres: [
             {
               label: 'House',
-              value: 'house'
+              value: 'house',
+              albums: []
             },
             {
               label: 'Techno',
-              value: 'techno'
+              value: 'techno',
+              albums: []
             },
             {
               label: 'Trance',
-              value: 'trance'
+              value: 'trance',
+              albums: []
             },
             {
               label: 'Drum and Bass',
-              value: 'drum_and_bass'
+              value: 'drum_and_bass',
+              albums: []
+            },
+            {
+              label: 'Down Tempo',
+              value: 'down_tempo',
+              albums: []
+            }, 
+            {
+              label: 'Trip Hop',
+              value: 'trip_hop',
+              albums: []
             },
             {
               label: 'Electro Funk',
-              value: 'electro_funk'
+              value: 'electro_funk',
+              albums: []
             },
             {
               label: 'Misc',
@@ -475,7 +490,23 @@ export default defineEventHandler((event) => {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704799/hip-hop_mugg6g.jpg"
           },
           value: 'hip_hop',
-          subgenres: []
+          subgenres: [
+            {
+              label: 'Old School',
+              value: 'old_school',
+              albums: []
+            },
+            {
+              label: 'Trap',
+              value: 'trap',
+              albums: []
+            },
+            {
+              label: 'Lo-Fi',
+              value: 'lo_fi',
+              albums: []
+            }
+          ]
         },
         {
           label: 'R+B',
@@ -483,7 +514,18 @@ export default defineEventHandler((event) => {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704850/R_B_jykyds.jpg"
           },
           value: 'r_and_b',
-          subgenres: []
+          subgenres: [
+            {
+              label: 'Old School',
+              value: 'old_school',
+              albums: []
+            },
+            {
+              label: 'Modern',
+              value: 'modern',
+              albums: []
+            }
+          ]
         },
         {
           label: 'Reggae',
@@ -491,7 +533,18 @@ export default defineEventHandler((event) => {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704937/reggae_ecbqtx.png"
           },
           value: 'reggae',
-          subgenres: []
+          subgenres: [
+            {
+              label: 'Roots',
+              value: 'roots',
+              albums: []
+            },
+            {
+              label: 'Dancehall',
+              value: 'dancehall',
+              albums: []
+            }
+          ]
         },
         {
           label: 'Rock',
@@ -499,7 +552,13 @@ export default defineEventHandler((event) => {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704967/rock_ol9hku.jpg"
           },
           value: 'rock',
-          subgenres: []
+          subgenres: [
+            {
+              label: 'Indie',
+              value: 'indie',
+              albums: []
+            }
+          ]
         },
         {
           label: 'Soul',
@@ -507,7 +566,18 @@ export default defineEventHandler((event) => {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733705044/Soul_yxf5v0.jpg"
           },
           value: 'soul',
-          subgenres: []
+          subgenres: [
+            {
+              label: 'Motown',
+              value: 'motown',
+              albums: []
+            },
+            {
+              label: 'Neo Soul',
+              value: 'neo_soul',
+              albums: []
+            }
+          ]
         }, 
         {
           label: 'Jazz',
@@ -515,7 +585,18 @@ export default defineEventHandler((event) => {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733705240/jazz_c8no5p.jpg"
           },
           value: 'jazz',
-          subgenres: []
+          subgenres: [
+            {
+              label: 'Smooth',
+              value: 'smooth',
+              albums: []
+            },
+            {
+              label: 'Modern',
+              value: 'modern',
+              albums: []
+            }
+          ]
         }, 
       ],
       moods: [
