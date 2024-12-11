@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-[55px] mb-1 border-2 border-slate-200 rounded-md p-2 flex flex-row justify-start align-center items-center"
+    class="w-full h-[60px] mb-1 border-2 border-slate-200 rounded-md p-2 flex flex-row justify-start align-center items-center"
   >
     <div class="w-[10%] text-gray-100 font-thin flex flex-row justify-center pe-10">
       <font-awesome
@@ -37,14 +37,14 @@
     <div class="w-[20%] ctr-genres text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
       <p 
         v-for="(genre, a) in props.track.genres" :key="a"
-        class="cursor-pointer hover:font-normal"
+        class="cursor-pointer hover:font-normal m-0"
         @click="musicStore.doFilter('genre',genre)"
       >
         {{ genre.label }}
         <span v-if="a < props.track.genres.length - 1">, </span>
       </p>
     </div>
-    <div class="ctr-moods text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg flex flex-wrap cursor-pointer">
+    <div class="ctr-moods w-[20%] text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg flex flex-wrap cursor-pointer">
       <p 
         v-for="(mood, b) in props.track.moods" :key="b"
         @click="musicStore.doFilter('mood',mood)"
@@ -54,7 +54,7 @@
       </p>
     </div>
     <div class="ctr-moods text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
-      <!-- <p>{{ props.track.duration }}</p> -->
+      <p>{{ props.track.length }}</p>
     </div>
   </div>
 </template>

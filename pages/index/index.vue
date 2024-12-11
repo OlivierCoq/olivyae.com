@@ -15,7 +15,7 @@
       </div>
     </div>
     <div v-show="!state.fresh" id="music_library" class="fade-in w-[98%] h-[90%] flex flex-col justify-start items-start align-start fade-in mx-auto mt-20 rounded-lg shadow-xl overflow-hidden bg-white dark:bg-slate-600">
-      <div id="search-filter" class="w-full min-h-[20%] bg-slate-300 dark:bg-slate-700 flex flex-col items-center">
+      <div id="search-filter" class="w-full  bg-slate-300 dark:bg-slate-700 flex flex-col items-center">
 
         <div id="search" class="mx-auto w-[90%] md:w-1/3 flex flex-row p-2 mt-10">
           <input 
@@ -134,8 +134,8 @@
               </div>
             </div>
 
-            <div v-if="state.filtering.target.active && state.filtering.target.label === 'vocals'" id="vocals-tab" class="w-full lg:w-1/2 mx-auto fade-in">
-              <div class="w-full grid grid-cols-6 gap-2">
+            <div v-if="state.filtering.target.active && state.filtering.target.label === 'vocals'" id="vocals-tab" class="w-full lg:w-1/2 flex flex-row justify-center mx-auto fade-in">
+              <div class="w-full grid grid-cols-3 gap-2">
                 <div v-for="(vocal, e) in musicStore.vocals" :key="e" 
                   class="bg-slate-100 hover:bg-slate-200 cursor-pointer p-3 text-center rounded-md shadow-sm primary-font font-thin"
                   @click="musicStore.doFilter('vocal', vocal)"
@@ -188,6 +188,14 @@
               </span>
             </span>
 
+            <span v-if="musicStore.search.filters.vocals.length">
+              <span class="primary-font">Vocals: </span>
+              <span v-for="(vocal, g) in musicStore.search.filters.vocals" :key="g">
+                {{ vocal.label }}
+                <span v-if="g < musicStore.search.filters.vocals.length - 1">, </span>
+              </span>
+            </span>
+
           </p>
           <div class="flex-1"></div>
           <button
@@ -234,7 +242,7 @@
           </div>
 
         </div>
-        <div class="w-[96%] h-[75%] mx-auto overflow-y-scroll relative flex flex-col">
+        <div class="w-[96%] h-[75%] mx-auto overflow-scroll relative flex flex-col">
           <TrackBox
             v-for="(track, index) in musicStore.search.results"
             :key="index"

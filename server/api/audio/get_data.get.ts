@@ -64,6 +64,7 @@ export default defineEventHandler((event) => {
                       id: 1,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733693384/Take_Me_Away_brc7ds.wav",
                       title: "Take Me Away",
+                      length: "3:35",
                       genres: [
                         {
                           label: "House",
@@ -113,6 +114,7 @@ export default defineEventHandler((event) => {
                       id: 2,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733693504/Courage_eyaprw.wav",
                       title: "Courage",
+                      length: "3:43",
                       genres: [
                         {
                           label: "House",
@@ -162,6 +164,7 @@ export default defineEventHandler((event) => {
                       id: 3,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733693516/Exhaustion_s1diqg.wav",
                       title: "Exhaustion",
+                      length: "3:15",
                       genres: [
                         {
                           label: "Drum and Bass",
@@ -206,6 +209,7 @@ export default defineEventHandler((event) => {
                       id: 4,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733693527/Everything_I_Ever_Wanted_-_Remastered_jelo6y.wav",
                       title: "Everything I Ever Wanted",
+                      length: "2:44",
                       genres: [
                         {
                           label: "House",
@@ -245,6 +249,7 @@ export default defineEventHandler((event) => {
                       id: 5,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733693536/Watch_me_walk_away_j5cjxq.wav",
                       title: "Watch Me Walk Away",
+                      length: "2:54",
                       genres: [
                         {
                           label: "House",
@@ -289,6 +294,7 @@ export default defineEventHandler((event) => {
                       id: 6,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733693546/Memories_pfrdwu.wav",
                       title: "Memories",
+                      length: "3:12",
                       genres: [
                         {
                           label: "House",
@@ -328,6 +334,7 @@ export default defineEventHandler((event) => {
                       id: 7,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733693558/FOMO_tzc36n.wav",
                       title: "FOMO",
+                      length: "5:53",
                       genres: [
                         {
                           label: "House",
@@ -395,6 +402,7 @@ export default defineEventHandler((event) => {
                       id: 1,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733887181/Jelly_Bean_Groove_lk1nku.wav",
                       title: "Jelly Bean Groove",
+                      length: "1:12",
                       genres: [
                         {
                           label: "Funk",
@@ -454,10 +462,11 @@ export default defineEventHandler((event) => {
                         }
                       ]
                     },
-                                        {
+                    {
                       id: 2,
                       audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733887181/Jelly_Bean_Groove_-_Instrumental_vxhkdw.wav",
                       title: "Jelly Bean Groove - Instrumental",
+                      length: "1:12",
                       genres: [
                         {
                           label: "Funk",
