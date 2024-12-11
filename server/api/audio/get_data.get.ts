@@ -235,6 +235,11 @@ export default defineEventHandler((event) => {
                           label: "House",
                           value: "house",
                           active: false
+                        },
+                        {
+                          label: "Pop",
+                          value: "pop",
+                          active: false
                         }
                       ],
                       vocals: [
@@ -255,6 +260,13 @@ export default defineEventHandler((event) => {
                           value: "drums",
                           active: false
                         }
+                      ],
+                      moods: [
+                        {
+                          label: "Confident",
+                          value: "confident",
+                          active: false
+                        }
                       ]
                     },
 
@@ -269,7 +281,13 @@ export default defineEventHandler((event) => {
                           active: false
                         }
                       ],
-                      moods: [],
+                      moods: [
+                        {
+                          label: "Dreamy",
+                          value: "dreamy",
+                          active: false
+                        }
+                      ],
                       vocals: [
                         {
                           label: "Female",
@@ -302,7 +320,18 @@ export default defineEventHandler((event) => {
                           active: false
                         }
                       ],
-                      moods: [],
+                      moods: [
+                        {
+                          label: "Anxious",
+                          value: "anxious",
+                          active: false
+                        },
+                        {
+                          label: "Dreamy",
+                          value: "dreamy",
+                          active: false
+                        }
+                      ],
                       vocals: [
                         {
                           label: "Female",

@@ -264,17 +264,23 @@ export const useMusicStore = defineStore({
             return track.genres.some((genre) => genre.label.toLowerCase() === filter.label.toLowerCase())
           })
         }
-        // this.search.filters.genres.push(filter)
-        // filter.active = true
-        // this.search.results = this.search.results.filter((track) => {
-          
-           
-
-
-        //   return track.genres.some((genre) => genre.label.toLowerCase() === filter.label.toLowerCase())
-        // })
       }
 
+      if (type === 'mood') {
+        // check if filter is NOT already in this.search.filters.moods:
+        this.search.filters.active_filters = true
+        if(this.search.filters.moods.some((mood) => mood.label.toLowerCase() === filter.label.toLowerCase())) {
+          this.search.filters.moods = this.search.filters.moods.filter((mood) => mood.label.toLowerCase() !== filter.label.toLowerCase())
+          filter.active = false
+          // this.search.results = this.tracks
+        } else {
+          this.search.filters.moods.push(filter)
+          filter.active = true
+          this.search.results = this.search.results.filter((track) => {
+            return track.moods?.some((mood) => mood.label.toLowerCase() === filter.label.toLowerCase())
+          })
+        }
+      }
 
 
     },

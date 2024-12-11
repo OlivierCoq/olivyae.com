@@ -24,8 +24,8 @@
         @click="musicStore.play(props.track, props.index)"
       />
     </div>
-    <div class="w-[20%] text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
-      <p>{{ props.track.title }}</p>
+    <div class="w-[20%] text-slate-800 dark:text-slate-200 font-thin hover:font-normal text-sm md:text-lg cursor-pointer">
+      <p @click="musicStore.play(props.track, props.index)">{{ props.track.title }}</p>
     </div>
 
     <div class="w-[20%] ctr-album text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
@@ -34,16 +34,18 @@
     <div class="w-[20%] ctr-genres text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
       <p 
         v-for="(genre, a) in props.track.genres" :key="a"
-        class="cursor-pointer"
+        class="cursor-pointer hover:font-normal"
         @click="musicStore.doFilter('genre',genre)"
       >
         {{ genre.label }}
         <span v-if="a < props.track.genres.length - 1">, </span>
       </p>
     </div>
-    <div class="ctr-moods text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg flex flex-wrap">
+    <div class="ctr-moods text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg flex flex-wrap cursor-pointer">
       <p 
         v-for="(mood, b) in props.track.moods" :key="b"
+        @click="musicStore.doFilter('mood',mood)"
+        class="hover:font-normal"
       >
         {{ mood.label }}<span v-if="b < props.track.moods.length - 1" class="ms-0 me-1">, </span>
       </p>
