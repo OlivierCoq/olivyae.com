@@ -45,7 +45,7 @@ export const useMusicStore = defineStore({
     async init_music(data) {
 
       const audio_data = data?.data?.value?.audio_data
-      console.log('initializing music store', audio_data)
+      // console.log('initializing music store', audio_data)
       const all_tracks = []
 
 
@@ -260,7 +260,6 @@ export const useMusicStore = defineStore({
       this.search.filters.forEach((filter) => { filter.active = false })
       nextTick(() => { this.search.filters = [] })
     },
-    // Legacy methods:
     fire_play() {
       const audio_player = document.getElementById('audio_player')
         nextTick(() => {
