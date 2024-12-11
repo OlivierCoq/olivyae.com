@@ -771,7 +771,69 @@ export default defineEventHandler((event) => {
             {
               label: 'Modern',
               value: 'modern',
-              albums: []
+              albums: [
+                {
+                  title: 'Insomnia',
+                  cover: {
+                    url: "https://i1.sndcdn.com/avatars-000201798655-vaqgul-t120x120.jpg"
+                  },
+                  tracks: [
+                    {
+                      id: 1,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733952698/Insomnia_kdu6js.mp3",
+                      title: "Insomnia",
+                      length: "4:20",
+                      genres: [
+                        {
+                          label: "R&B",
+                          value: "r_and_b",
+                          active: false
+                        },
+                      ],
+                      moods: [
+                        {
+                          label: "Sensual",
+                          value: "sensual",
+                          active: false
+                        },
+                        {
+                          label: "Pensive",
+                          value: "pensive",
+                          active: false
+                        }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Synth",
+                          value: "synth",
+                          active: false
+                        },
+                        {
+                          label: "Drums",
+                          value: "drums",
+                          active: false
+                        },
+                        {
+                          label: "Bass",
+                          value: "bass",
+                          active: false
+                        },
+                        {
+                          label: "Electric Guitar",
+                          value: "electric_guitar",
+                          active: false
+                        },
+                        {
+                          label: "Piano",
+                          value: "piano",
+                          active: false
+                        }
+                      ],
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
