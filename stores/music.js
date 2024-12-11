@@ -33,6 +33,8 @@ export const useMusicStore = defineStore({
       artists: [],
       genres: [],
       moods: [],
+      vocals: [],
+      instruments: [],
       tracks: [],
       player: {
         track: null,
@@ -114,6 +116,11 @@ export const useMusicStore = defineStore({
         // Moods
         this.moods = audio_data?.moods
 
+        // Instruments
+        this.instruments = audio_data?.instruments
+
+        // Vocals
+        this.vocals = audio_data?.vocals
       }
     },
 
@@ -296,6 +303,38 @@ export const useMusicStore = defineStore({
           filter.active = true
           this.search.results = this.search.results.filter((track) => {
             return track.album.title.toLowerCase() === filter.title.toLowerCase()
+          })
+        }
+      }
+
+      if (type === 'instrument') {
+        // check if filter is NOT already in this.search.filters.instruments:
+        this.search.filters.active_filters = true
+        if(this.search.filters.instruments.some((instrument) => instrument.label.toLowerCase() === filter.label.toLowerCase())) {
+          this.search.filters.instruments = this.search.filters.instruments.filter((instrument) => instrument.label.toLowerCase() !== filter.label.toLowerCase())
+          filter.active = false
+          // this.search.results = this.tracks
+        } else {
+          this.search.filters.instruments.push(filter)
+          filter.active = true
+          this.search.results = this.search.results.filter((track) => {
+            return track.instruments.some((instrument) => instrument.label.toLowerCase() === filter.label.toLowerCase())
+          })
+        }
+      }
+
+      if (type === 'vocal') {
+        // check if filter is NOT already in this.search.filters.vocals:
+        this.search.filters.active_filters = true
+        if(this.search.filters.vocals.some((vocal) => vocal.label.toLowerCase() === filter.label.toLowerCase())) {
+          this.search.filters.vocals = this.search.filters.vocals.filter((vocal) => vocal.label.toLowerCase() !== filter.label.toLowerCase())
+          filter.active = false
+          // this.search.results = this.tracks
+        } else {
+          this.search.filters.vocals.push(filter)
+          filter.active = true
+          this.search.results = this.search.results.filter((track) => {
+            return track.vocals.some((vocal) => vocal.label.toLowerCase() === filter.label.toLowerCase())
           })
         }
       }

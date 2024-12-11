@@ -88,7 +88,7 @@
           <div id="filter-tabs" class="mx-auto w-full flex flex-col md:flex-row">
 
             <div v-if="state.filtering.target.active && state.filtering.target.label === 'genres'" id="genres-tab" class="w-full flex flex-col lg:flex-row fade-in">
-              <div class="grid grid-cols-2 md:grid-cols-4 my-4 gap-2 rounded-md overflow-hidden fade-in w-full lg:w-1/2">
+              <div class="grid grid-cols-2 md:grid-cols-5 my-4 gap-2 rounded-md overflow-hidden fade-in w-full lg:w-2/3">
                 <div 
                   v-for="(genre, a) in musicStore.genres" :key="a" 
                   class="w-full h-auto p-10 bg-cover bg-center bg-no-repeat rounded-md shadow-md cursor-pointer opacity-90 hover:opacity-100"
@@ -98,15 +98,15 @@
                   <span class="primary-font text-white text-xl font-bold">{{ genre.label }}</span>
                 </div>
               </div>
-              <div v-if="state.filtering.target.focus" class="w-full lg:w-1/2 flex flex-col items-start justify-start px-4 fade-in">
+              <div v-if="state.filtering.target.focus" class="w-full lg:w-1/3 flex flex-col items-start justify-start px-4 fade-in">
                 <h3 class="primary-font text-2xl font-bold mt-4 text-slate-900 dark:text-slate-200">{{ state.filtering.target.focus.label }}</h3>
                 <div class="my-4 w-full grid grid-cols-3 gap-2">
                   <div 
                     v-for="(subgenre, b) in state.filtering.target.focus.subgenres" :key="b" 
-                    class="py-2 px-4 rounded-md shadow-sm bg-slate-100 hover:bg-slate-200 cursor-pointer"
+                    class="py-2 px-4 rounded-md shadow-sm bg-slate-100 hover:bg-slate-200 cursor-pointer text-sm"
                     @click="musicStore.doFilter('genre', subgenre)"
                   >
-                    <span class="primary-font font-thin">{{ subgenre.label }}</span>
+                    <span class="primary-font font-thin text-xm">{{ subgenre.label }}</span>
                   </div>
                 </div>
               </div>
@@ -119,6 +119,28 @@
                   @click="musicStore.doFilter('mood', mood)"
                 >
                   {{ mood.label }}
+                </div>
+              </div>
+            </div>
+
+            <div v-if="state.filtering.target.active && state.filtering.target.label === 'instruments'" id="instruments-tab" class="w-full lg:w-1/2 mx-auto fade-in">
+              <div class="w-full grid grid-cols-6 gap-2">
+                <div v-for="(instrument, d) in musicStore.instruments" :key="d" 
+                  class="bg-slate-100 hover:bg-slate-200 cursor-pointer p-3 text-center rounded-md shadow-sm primary-font font-thin flex flex-col justify-center"
+                  @click="musicStore.doFilter('instrument', instrument)"
+                >
+                  {{ instrument.label }}
+                </div>
+              </div>
+            </div>
+
+            <div v-if="state.filtering.target.active && state.filtering.target.label === 'vocals'" id="vocals-tab" class="w-full lg:w-1/2 mx-auto fade-in">
+              <div class="w-full grid grid-cols-6 gap-2">
+                <div v-for="(vocal, e) in musicStore.vocals" :key="e" 
+                  class="bg-slate-100 hover:bg-slate-200 cursor-pointer p-3 text-center rounded-md shadow-sm primary-font font-thin"
+                  @click="musicStore.doFilter('vocal', vocal)"
+                >
+                  {{ vocal.label }}
                 </div>
               </div>
             </div>

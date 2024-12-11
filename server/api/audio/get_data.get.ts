@@ -45,6 +45,11 @@ export default defineEventHandler((event) => {
               albums: []
             },
             {
+              label: 'Amapiano',
+              value: 'amapiano',
+              albums: []
+            },
+            {
               label: 'Misc',
               value: 'misc',
               albums: [
@@ -75,6 +80,11 @@ export default defineEventHandler((event) => {
                         {
                           label: "Pensive",
                           value: "pensive",
+                          active: false
+                        },
+                        {
+                          label: "Calm",
+                          value: "calm",
                           active: false
                         }
                       ],
@@ -126,6 +136,11 @@ export default defineEventHandler((event) => {
                         {
                           label: "Male",
                           value: "male",
+                          active: false
+                        },
+                        {
+                          label: "Group",
+                          value: "group",
                           active: false
                         }
                       ],
@@ -534,6 +549,11 @@ export default defineEventHandler((event) => {
               label: 'Lo-Fi',
               value: 'lo_fi',
               albums: []
+            },
+            {
+              label: 'Afrobeat',
+              value: 'afrobeat',
+              albums: []
             }
           ]
         },
@@ -627,6 +647,44 @@ export default defineEventHandler((event) => {
             }
           ]
         }, 
+        {
+          label: 'Classical',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733945041/Piano_Sheet_Music_xwxbmp.jpg"
+          },
+          value: 'classical',
+          subgenres: [
+            {
+              label: 'Modern',
+              value: 'Modern',
+              albums: []
+            },
+            {
+              label: 'Orchestral',
+              value: 'orchestral',
+              albums: []
+            }
+          ]
+        },
+        {
+          label: 'Acoustic',
+          imagery: {
+            url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733944976/Acoustic_Guitar_Photo_hegcid.jpg"
+          },
+          value: 'acoustic',
+          subgenres: [
+            {
+              label: 'Folk',
+              value: 'folk',
+              albums: []
+            },
+            {
+              label: 'Singer-Songwriter',
+              value: 'singer_songwriter',
+              albums: []
+            }
+          ]
+        }
       ],
       moods: [
         {
