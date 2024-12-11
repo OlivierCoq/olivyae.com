@@ -121,32 +121,39 @@
       <div id="body" class="w-full flex flex-1 flex-col justify-start align-center items-center">
         <div class="w-full h-[40px] p-2 flex flex-row bg-slate-100 mb-4"></div>
         <div class="w-[96%] mx-auto px-2 py-4 flex flex-row">
+
           <div class="w-[10%]"></div>
+
           <div class="w-[20%]">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Title
             </span>
           </div>
+
           <div class="w-[20%]">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Album
             </span>
           </div>
+
           <div class="w-[20%]">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Genres
             </span>
           </div>
+
           <div class="w-[20%]">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
-            Moods
+            Mood
             </span>
           </div>
+
           <div>
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Length
             </span>
           </div>
+
         </div>
         <div class="w-[96%] mx-auto overflow-y-scroll relative grid grid-cols-1 gap-1">
           <TrackBox
@@ -155,7 +162,10 @@
             :track="track"
             :index="index"
           />
+          <!-- Pagination -->
         </div>
+          <!-- Music player: -->
+        <MusicPlayer v-if="musicStore.player.track" />
       </div>
     </div>
   </div> 

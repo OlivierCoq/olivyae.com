@@ -2,7 +2,7 @@
   <div
     class="w-full h-[70px] border-2 border-slate-200 rounded-sm p-2 flex flex-row justify-start align-center items-center"
   >
-    <div class="w-[10%] text-gray-100 font-thin ps-2">
+    <div class="w-[10%] text-gray-100 font-thin flex flex-row justify-center pe-10">
       <font-awesome
         :icon="['fas', 'pause']"
         color="#8d8484"

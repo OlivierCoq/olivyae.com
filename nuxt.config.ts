@@ -76,6 +76,8 @@ export default defineNuxtConfig({
         'pause',
         'backward',
         'forward',
+        'backward-step',
+        'forward-step',
         'volume-high',
         'volume-xmark',
         'headphones',
