@@ -14,7 +14,7 @@
         </a>
       </div>
     </div>
-    <div v-show="!state.fresh" id="music_library" class="fade-in w-[98%] h-[92%] flex flex-col justify-start items-start align-start fade-in mx-auto mt-20 rounded-lg shadow-xl overflow-hidden bg-white dark:bg-slate-600">
+    <div v-show="!state.fresh" id="music_library" class="fade-in w-[98%] h-[90%] flex flex-col justify-start items-start align-start fade-in mx-auto mt-20 rounded-lg shadow-xl overflow-hidden bg-white dark:bg-slate-600">
       <div id="search-filter" class="w-full min-h-[20%] bg-slate-300 dark:bg-slate-700 flex flex-col items-center">
 
         <div id="search" class="mx-auto w-[90%] md:w-1/3 flex flex-row p-2 mt-10">
@@ -87,8 +87,8 @@
 
           <div id="filter-tabs" class="mx-auto w-full flex flex-col md:flex-row">
 
-            <div v-if="state.filtering.target.active && state.filtering.target.label === 'genres'" class="w-full flex flex-col md:flex-row">
-              <div class="grid grid-cols-2 md:grid-cols-4 my-4 gap-2 rounded-md overflow-hidden fade-in w-full md:w-1/2">
+            <div v-if="state.filtering.target.active && state.filtering.target.label === 'genres'" class="w-full flex flex-col lg:flex-row fade-in">
+              <div class="grid grid-cols-2 md:grid-cols-4 my-4 gap-2 rounded-md overflow-hidden fade-in w-full lg:w-1/2">
                 <div 
                   v-for="(genre, a) in musicStore.genres" :key="a" 
                   class="w-full h-auto p-10 bg-cover bg-center bg-no-repeat rounded-md shadow-md cursor-pointer opacity-90 hover:opacity-100"
@@ -98,12 +98,13 @@
                   <span class="primary-font text-white text-xl font-bold">{{ genre.label }}</span>
                 </div>
               </div>
-              <div v-if="state.filtering.target.focus" class="w-full md:w-1/2 flex flex-col items-start justify-start px-4 fade-in">
-                <h3 class="primary-font text-2xl font-bold mt-4">{{ state.filtering.target.focus.label }}</h3>
+              <div v-if="state.filtering.target.focus" class="w-full lg:w-1/2 flex flex-col items-start justify-start px-4 fade-in">
+                <h3 class="primary-font text-2xl font-bold mt-4 text-slate-900 dark:text-slate-200">{{ state.filtering.target.focus.label }}</h3>
                 <div class="my-4 w-full grid grid-cols-3 gap-2">
                   <div 
                     v-for="(subgenre, b) in state.filtering.target.focus.subgenres" :key="b" 
                     class="py-2 px-4 rounded-md shadow-sm bg-slate-100 hover:bg-slate-200 cursor-pointer"
+                    @click="musicStore.doFilter('genre', subgenre.label)"
                   >
                     <span class="primary-font font-thin">{{ subgenre.label }}</span>
                   </div>
@@ -117,7 +118,45 @@
         </div>
 
       </div>
-      <div id="body" class="flex flex-1 m-4"></div>
+      <div id="body" class="w-full flex flex-1 flex-col justify-start align-center items-center">
+        <div class="w-full h-[40px] p-2 flex flex-row bg-slate-100 mb-4"></div>
+        <div class="w-[96%] mx-auto px-2 py-4 flex flex-row">
+          <div class="w-[10%]"></div>
+          <div class="w-[20%]">
+            <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
+            Title
+            </span>
+          </div>
+          <div class="w-[20%]">
+            <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
+            Album
+            </span>
+          </div>
+          <div class="w-[20%]">
+            <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
+            Genres
+            </span>
+          </div>
+          <div class="w-[20%]">
+            <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
+            Moods
+            </span>
+          </div>
+          <div>
+            <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
+            Length
+            </span>
+          </div>
+        </div>
+        <div class="w-[96%] mx-auto overflow-y-scroll relative grid grid-cols-1 gap-1">
+          <TrackBox
+            v-for="(track, index) in musicStore.search.results"
+            :key="index"
+            :track="track"
+            :index="index"
+          />
+        </div>
+      </div>
     </div>
   </div> 
 </template>
@@ -134,6 +173,8 @@
   })
 
   // Importing components
+import TrackBox from './components/TrackBox.vue'
+import MusicPlayer from './components/MusicPlayer.vue'
 
   // Stores
 import { useMusicStore } from '~/stores/music.js'

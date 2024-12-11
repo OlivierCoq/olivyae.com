@@ -61,6 +61,7 @@ export const useMusicStore = defineStore({
                   this.albums.push(album)
                   if(album?.tracks && album?.tracks.length) {
                     album?.tracks?.forEach((track) => {
+                      track['album'] = album
                       all_tracks.push(track)
                     })
                   }
