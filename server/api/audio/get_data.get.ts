@@ -663,6 +663,31 @@ export default defineEventHandler((event) => {
           label: 'Calm',
           value: 'calm',
           active: false
+        },
+        {
+          label: 'Playful',
+          value: 'playful',
+          active: false
+        }, 
+        {
+          label: 'Anxious',
+          value: 'anxious',
+          active: false
+        },
+        {
+          label: 'Dreamy',
+          value: 'dreamy',
+          active: false
+        },
+        {
+          label: 'Confident',
+          value: 'confident',
+          active: false
+        },
+        {
+          label: 'Upbeat',
+          value: 'upbeat',
+          active: false
         }
       ],
       instruments: [

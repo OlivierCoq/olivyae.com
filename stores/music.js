@@ -32,6 +32,7 @@ export const useMusicStore = defineStore({
       albums: [],
       artists: [],
       genres: [],
+      moods: [],
       tracks: [],
       player: {
         track: null,
@@ -52,13 +53,14 @@ export const useMusicStore = defineStore({
     async init_music(data) {
 
       const audio_data = data?.data?.value?.audio_data
-      // console.log('initializing music store', audio_data)
+      console.log('initializing music store', audio_data)
       const all_tracks = []
 
 
       // Tracks and Genres
       if(audio_data) {
 
+        // Genres
         audio_data?.genres?.forEach((genre) => { 
           this.genres.push(genre)
           if(genre?.subgenres &&  genre?.subgenres.length) {
@@ -85,11 +87,7 @@ export const useMusicStore = defineStore({
           this.search.results = this.tracks
         }
 
-
-      }
-
-      // Filters
-      if(audio_data) {
+        // Filters
         this.filters = [
           {
             label: 'Genres',
@@ -112,6 +110,10 @@ export const useMusicStore = defineStore({
             data: audio_data?.vocals,
           }
         ]
+
+        // Moods
+        this.moods = audio_data?.moods
+
       }
     },
 
