@@ -126,7 +126,7 @@
             <span v-if="musicStore.search.filters.albums.length">
               <span class="primary-font">Albums: </span>
               <span v-for="(album, c) in musicStore.search.filters.albums" :key="c">
-                {{ album.label }}
+                {{ album.title }}
                 <span v-if="c < musicStore.search.filters.albums.length - 1">, </span>
               </span>
             </span>

@@ -282,6 +282,22 @@ export const useMusicStore = defineStore({
         }
       }
 
+      if (type === 'album') {
+        // check if filter is NOT already in this.search.filters.albums:
+        this.search.filters.active_filters = true
+        if(this.search.filters.albums.some((album) => album.title.toLowerCase() === filter.label.toLowerCase())) {
+          this.search.filters.albums = this.search.filters.albums.filter((album) => album.title.toLowerCase() !== filter.label.toLowerCase())
+          filter.active = false
+          // this.search.results = this.tracks
+        } else {
+          this.search.filters.albums.push(filter)
+          filter.active = true
+          this.search.results = this.search.results.filter((track) => {
+            return track.album.title.toLowerCase() === filter.title.toLowerCase()
+          })
+        }
+      }
+
 
     },
     clearFilters() {

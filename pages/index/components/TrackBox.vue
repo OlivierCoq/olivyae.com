@@ -29,7 +29,10 @@
     </div>
 
     <div class="w-[20%] ctr-album text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
-      <p>{{ props.track.album.title }}</p>
+      <p
+        @click="musicStore.doFilter('album', props.track.album)"
+        class="hover:font-normal cursor-pointer"
+      >{{ props.track.album.title }}</p>
     </div>
     <div class="w-[20%] ctr-genres text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
       <p 
