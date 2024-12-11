@@ -47,8 +47,8 @@
 
             <div 
               id="filter-tab-genres"
-              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white': state.filtering.target.label === 'genres' }" 
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer hover:bg-fuchsia-200 hover:text-white"
+              :class=" state.filtering.target.label === 'genres' ? 'bg-fuchsia-500 text-white' : 'bg-white' " 
               @click="filter_tab_toggle('genres')"
             >
               <span class="primary-font text-xl font-thin">Genres</span>
@@ -56,8 +56,8 @@
 
             <div 
               id="filter-tab-moods"
-              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'moods' }" 
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer hover:bg-fuchsia-200 hover:text-white"
+              :class=" state.filtering.target.label === 'moods' ? 'bg-fuchsia-500 text-white' : 'bg-white' " 
               @click="filter_tab_toggle('moods')"
             >
               <span class="primary-font text-xl font-thin">Moods</span>
@@ -65,8 +65,8 @@
 
             <div 
               id="filter-tab-instruments"
-              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'instruments' }" 
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer hover:bg-fuchsia-200 hover:text-white"
+              :class=" state.filtering.target.label === 'instruments' ? 'bg-fuchsia-500 text-white' : 'bg-white' " 
               @click="filter_tab_toggle('instruments')"
             >
               <span class="primary-font text-xl font-thin">Instruments</span>
@@ -74,8 +74,8 @@
 
             <div 
               id="filter-tab-vocals"
-              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
-              :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'vocals' }" 
+              class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer hover:bg-fuchsia-200 hover:text-white"
+              :class=" state.filtering.target.label === 'vocals' ? 'bg-fuchsia-500 text-white' : 'bg-white' "
               @click="filter_tab_toggle('vocals')"
             >
               <span class="primary-font text-xl font-thin">Vocals</span>
