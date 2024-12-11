@@ -13,7 +13,14 @@ export const useMusicStore = defineStore({
       search: {
         query: "",
         results: [],
-        filters: [],
+        filters: {
+          active_filters: false,
+          genres: [],
+          instruments: [],
+          moods: [],
+          vocals: [],
+          albums: []
+        },
         loading: false,
         error: null
       },
@@ -238,27 +245,51 @@ export const useMusicStore = defineStore({
       this.search.results = this.tracks
       this.search.query = ''
     },
-    doFilter(filter) {
-      console.log('filtering by', filter)
-      this.search.filters.push(filter)
+    doFilter(type, filter) {
+      console.log('filter type: ', type)
+      console.log('filtering by: ', filter)
 
-      if (filter.type === 'genre') {
-
-        this.search.results = this.search.results.filter((track) => {
-          this.search.filters.push(filter)
+      
+      if (type === 'genre') {
+        // check if filter is NOT already in this.search.filters.genres:
+        this.search.filters.active_filters = true
+        if(this.search.filters.genres.some((genre) => genre.label.toLowerCase() === filter.label.toLowerCase())) {
+          this.search.filters.genres = this.search.filters.genres.filter((genre) => genre.label.toLowerCase() !== filter.label.toLowerCase())
+          filter.active = false
+          // this.search.results = this.tracks
+        } else {
+          this.search.filters.genres.push(filter)
           filter.active = true
-          return track.genres.some((genre) => genre.label.toLowerCase() === filter.label.toLowerCase())
-        })
+          this.search.results = this.search.results.filter((track) => {
+            return track.genres.some((genre) => genre.label.toLowerCase() === filter.label.toLowerCase())
+          })
+        }
+        // this.search.filters.genres.push(filter)
+        // filter.active = true
+        // this.search.results = this.search.results.filter((track) => {
+          
+           
+
+
+        //   return track.genres.some((genre) => genre.label.toLowerCase() === filter.label.toLowerCase())
+        // })
       }
 
 
 
     },
     clearFilters() {
-      console.log('clearing filters')
-      this.search.results = this.tracks.data
-      this.search.filters.forEach((filter) => { filter.active = false })
-      nextTick(() => { this.search.filters = [] })
+      // console.log('clearing filters')
+      this.search.results = this.tracks
+      this.search.filters.active_filters = false
+      this.search.filters.genres = []
+      this.search.filters.instruments = []
+      this.search.filters.moods = []
+      this.search.filters.vocals = []
+      this.search.filters.albums = []
+      this.filters.forEach((filter) => { filter.active = false })
+      // this.search.filters.forEach((filter) => { filter.active = false })
+      // nextTick(() => { this.search.filters = [] })
     },
     fire_play() {
       const audio_player = document.getElementById('audio_player')

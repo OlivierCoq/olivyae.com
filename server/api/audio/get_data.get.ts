@@ -321,7 +321,153 @@ export default defineEventHandler((event) => {
             url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733704766/Funk_x6dwnn.jpg"
           },
           value: 'funk',
-          subgenres: []
+          subgenres: [
+            {
+              label: 'Funk',
+              value: 'funk',
+              albums: [
+                {
+                  title: 'Candy',
+                  cover: {
+                    url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1733887081/Candy_album_cover_eggcfi.jpg"
+                  },
+                  tracks: [
+                    {
+                      id: 1,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733887181/Jelly_Bean_Groove_lk1nku.wav",
+                      title: "Jelly Bean Groove",
+                      genres: [
+                        {
+                          label: "Funk",
+                          value: "funk",
+                          active: false
+                        },
+                      ],
+                      moods: [
+                        {
+                          label: "Playful",
+                          value: "playful",
+                          active: false
+                        },
+                         {
+                          label: "Happy",
+                          value: "happy",
+                          active: false
+                         },
+                         {
+                          label: "Excited",
+                          value: "excited",
+                          active: false
+                         },
+                         {
+                          label: "Upbeat",
+                          value: "upbeat",
+                          active: false
+                         }
+                      ],
+                      vocals: [
+                        {
+                          label: "Male",
+                          value: "male",
+                          active: false
+                        }
+                      ],
+                      instruments: [
+                        {
+                          label: "Synth",
+                          value: "synth",
+                          active: false
+                        },
+                        {
+                          label: "Drums",
+                          value: "drums",
+                          active: false
+                        },
+                        {
+                          label: "Bass",
+                          value: "bass",
+                          active: false
+                        },
+                        {
+                          label: "Electric Guitar",
+                          value: "electric_guitar",
+                          active: false
+                        }
+                      ]
+                    },
+                                        {
+                      id: 2,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733887181/Jelly_Bean_Groove_-_Instrumental_vxhkdw.wav",
+                      title: "Jelly Bean Groove - Instrumental",
+                      genres: [
+                        {
+                          label: "Funk",
+                          value: "funk",
+                          active: false
+                        },
+                      ],
+                      moods: [
+                        {
+                          label: "Playful",
+                          value: "playful",
+                          active: false
+                        },
+                         {
+                          label: "Happy",
+                          value: "happy",
+                          active: false
+                         },
+                         {
+                          label: "Excited",
+                          value: "excited",
+                          active: false
+                         },
+                         {
+                          label: "Upbeat",
+                          value: "upbeat",
+                          active: false
+                         }
+                      ],
+                      vocals: [
+                        {
+                          label: "Male",
+                          value: "male",
+                          active: false
+                        }
+                      ],
+                      instruments: [
+                        {
+                          label: "Synth",
+                          value: "synth",
+                          active: false
+                        },
+                        {
+                          label: "Drums",
+                          value: "drums",
+                          active: false
+                        },
+                        {
+                          label: "Bass",
+                          value: "bass",
+                          active: false
+                        },
+                        {
+                          label: "Electric Guitar",
+                          value: "electric_guitar",
+                          active: false
+                        }
+                      ]
+                    },
+                  ]
+                }
+              ]
+            },
+            {
+              label: 'Neo Funk',
+              value: 'neo_funk',
+              albums: []
+            }
+          ]
         },
         {
           label: 'Hip-Hop',

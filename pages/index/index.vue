@@ -46,7 +46,7 @@
           <div id="filter-tab-headers" class="py-2 px-4 flex flex-row align-center justify-center mx-auto w-full md:w-1/2">
 
             <div 
-              id="filter-rab-genres"
+              id="filter-tab-genres"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
               :class="{ 'bg-fuchsia-500 text-white': state.filtering.target.label === 'genres' }" 
               @click="filter_tab_toggle('genres')"
@@ -55,7 +55,7 @@
             </div>
 
             <div 
-              id="filter-rab-moods"
+              id="filter-tab-moods"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
               :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'moods' }" 
               @click="filter_tab_toggle('moods')"
@@ -64,7 +64,7 @@
             </div>
 
             <div 
-              id="filter-rab-instruments"
+              id="filter-tab-instruments"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
               :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'instruments' }" 
               @click="filter_tab_toggle('instruments')"
@@ -73,7 +73,7 @@
             </div>
 
             <div 
-              id="filter-rab-vocals"
+              id="filter-tab-vocals"
               class="filter_tab shadow-sm rounded-full my-2 mx-2 py-2 px-4 cursor-pointer bg-white hover:bg-fuchsia-200 hover:text-white"
               :class="{ 'bg-fuchsia-500 text-white':  state.filtering.target.label === 'vocals' }" 
               @click="filter_tab_toggle('vocals')"
@@ -104,7 +104,7 @@
                   <div 
                     v-for="(subgenre, b) in state.filtering.target.focus.subgenres" :key="b" 
                     class="py-2 px-4 rounded-md shadow-sm bg-slate-100 hover:bg-slate-200 cursor-pointer"
-                    @click="musicStore.doFilter('genre', subgenre.label)"
+                    @click="musicStore.doFilter('genre', subgenre)"
                   >
                     <span class="primary-font font-thin">{{ subgenre.label }}</span>
                   </div>
@@ -119,8 +119,54 @@
 
       </div>
       <div id="body" class="w-full flex flex-1 flex-col justify-start align-center items-center">
-        <div class="w-full h-[40px] p-2 flex flex-row bg-slate-100 mb-4"></div>
-        <div class="w-[96%] mx-auto px-2 py-4 flex flex-row">
+        <div class="ctr-filter_interface w-full h-[40px] py-2 px-4 flex flex-row justify-between bg-slate-100 mb-4">
+          <p v-if="musicStore.search.filters.active_filters" class="text-slate-800 dark:text-slate-200 font-thin text-md me-10 fade-in">Results: {{ musicStore.search.results.length }}</p>
+          <p v-if="musicStore.search.filters.active_filters" class="text-slate-800 dark:text-slate-200 font-thin text-md me-10 fade-in">Filtered by: 
+
+            <span v-if="musicStore.search.filters.albums.length">
+              <span class="primary-font">Albums: </span>
+              <span v-for="(album, c) in musicStore.search.filters.albums" :key="c">
+                {{ album.label }}
+                <span v-if="c < musicStore.search.filters.albums.length - 1">, </span>
+              </span>
+            </span>
+
+            <span v-if="musicStore.search.filters.genres.length">
+              <span class="primary-font">Genres: </span>
+              <span v-for="(genre, d) in musicStore.search.filters.genres" :key="d">
+                {{ genre.label }}
+                <span v-if="d < musicStore.search.filters.genres.length - 1">, </span>
+              </span>
+            </span>
+
+            <span v-if="musicStore.search.filters.moods.length">
+              <span class="primary-font">Moods: </span>
+              <span v-for="(mood, e) in musicStore.search.filters.moods" :key="e">
+                {{ mood.label }}
+                <span v-if="e < musicStore.search.filters.moods.length - 1">, </span>
+              </span>
+            </span>
+
+            <span v-if="musicStore.search.filters.instruments.length">
+              <span class="primary-font">Instruments: </span>
+              <span v-for="(instrument, f) in musicStore.search.filters.instruments" :key="f">
+                {{ instrument.label }}
+                <span v-if="f < musicStore.search.filters.instruments.length - 1">, </span>
+              </span>
+            </span>
+
+          </p>
+          <div class="flex-1"></div>
+          <button
+            v-if="musicStore.search.filters.active_filters"
+            class="px-4 rounded-md shadow-sm bg-slate-100 hover:bg-slate-200 cursor-pointer"
+            @click="musicStore.clearFilters"
+          >
+            <span class="primary-font text-slate-800 dark:text-slate-200 font-thin">Clear Filters </span>
+            <font-awesome :icon="['fas', 'times']" />
+          </button>
+        </div>
+        <div class="ctr-table_headers w-[96%] mx-auto px-2 py-4 flex flex-row">
 
           <div class="w-[10%]"></div>
 
@@ -155,7 +201,7 @@
           </div>
 
         </div>
-        <div class="w-[96%] mx-auto overflow-y-scroll relative grid grid-cols-1 gap-1">
+        <div class="w-[96%] h-[75%] mx-auto overflow-y-scroll relative flex flex-col">
           <TrackBox
             v-for="(track, index) in musicStore.search.results"
             :key="index"

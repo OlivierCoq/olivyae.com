@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-[70px] border-2 border-slate-200 rounded-sm p-2 flex flex-row justify-start align-center items-center"
+    class="w-full h-[55px] mb-1 border-2 border-slate-200 rounded-md p-2 flex flex-row justify-start align-center items-center"
   >
     <div class="w-[10%] text-gray-100 font-thin flex flex-row justify-center pe-10">
       <font-awesome
@@ -34,17 +34,18 @@
     <div class="w-[20%] ctr-genres text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
       <p 
         v-for="(genre, a) in props.track.genres" :key="a"
+        class="cursor-pointer"
+        @click="musicStore.doFilter('genre',genre)"
       >
         {{ genre.label }}
         <span v-if="a < props.track.genres.length - 1">, </span>
       </p>
     </div>
-    <div class="ctr-moods text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
+    <div class="ctr-moods text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg flex flex-wrap">
       <p 
         v-for="(mood, b) in props.track.moods" :key="b"
       >
-        {{ mood.label }}
-        <span v-if="b < props.track.moods.length - 1">, </span>
+        {{ mood.label }}<span v-if="b < props.track.moods.length - 1" class="ms-0 me-1">, </span>
       </p>
     </div>
     <div class="ctr-moods text-slate-800 dark:text-slate-200 font-thin text-sm md:text-lg">
