@@ -67,6 +67,7 @@
               >
                 <span>Submit</span>
               </button>
+              <p v-if="state.success" class="text-green-500 text-md mt-2">{{ state.success }}</p>
             </div>
           </div>  
          </div>
@@ -84,6 +85,7 @@
       message: ''
     },
     posting: false,
+    success: false,
     errors: {
       name: '',
       email: '',
@@ -157,6 +159,7 @@ const submit_form = () => {
         subject: '',
         message: ''
       }
+      state.success = "Message sent successfully! I'll get back to you soon. In the meantime, jam out to some more of my tunes!"
     })
   } else {
     console.log('All fields are not valid')
