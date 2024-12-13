@@ -11,50 +11,54 @@
             <div class="w-full flex flex-row mb-2">
 
               <div class="w-1/2 mx-2">
-                <label for="name" class="text-slate-800 dark:text-slate-200">What's your name?</label>
+                <label for="name" class="text-slate-800 dark:text-slate-200 primary-font">What's your name?</label>
                 <input 
                   type="text" 
                   id="name" 
                   v-model="state.message.name" 
                   class="w-full p-2 border-2 border-slate-300 rounded-md"
+                  placeholder="Sarah Connor"
                   @keydown="validateName(state.message.name)"
                 />
                 <p class="text-red-500 text-sm">{{ state.errors.name }}</p>
               </div>
 
               <div class="w-1/2 mx-2">
-                <label for="email" class="text-slate-800 dark:text-slate-200">How about your email?</label>
+                <label for="email" class="text-slate-800 dark:text-slate-200 primary-font">How about your email?</label>
                 <input 
                   type="email" 
                   id="email" 
                   v-model="state.message.email" 
                   class="w-full p-2 border-2 border-slate-300 rounded-md"
+                  placeholder="testy.mctesterson@test.com"
                   @keydown="validateEmail(state.message.email)"
                 />
                 <p class="text-red-500 text-sm">{{ state.errors.email }}</p>
               </div>
 
             </div>
-            <!-- <div class="w-full flex flex-row mb-4">
+            <div class="w-full flex flex-row mb-4">
               <div class="w-full mx-2">
-                <label for="subject" class="text-slate-800 dark:text-slate-200">Subject</label>
+                <label for="subject" class="text-slate-800 dark:text-slate-200 primary-font">Whatcha talkin' bout Willis?</label>
                 <input 
                   type="text" 
                   id="subject" 
                   v-model="state.message.subject" 
                   class="w-full p-2 border-2 border-slate-300 rounded-md"
+                  placeholder="Subject"
                   @keydown="validateSubject(state.message.subject)"
                 />
                 <p class="text-red-500 text-sm">{{ state.errors.subject }}</p>
               </div>
-            </div> -->
+            </div>
             <div class="w-full flex flex-col">
               <div class="w-full mx-2">
-                <label for="message" class="text-slate-800 dark:text-slate-200">Alright, lay it on me!</label>
+                <label for="message" class="text-slate-800 dark:text-slate-200 primary-font">Alright, lay it on me.</label>
                 <textarea 
                   id="message" 
                   v-model="state.message.message" 
                   class="w-full p-2 border-2 border-slate-300 rounded-md h-[10rem]"
+                  placeholder="You need a track for your next banger project? I got you."
                   @keydown="validateMessage(state.message.message)"
                 ></textarea>
                 <p class="text-red-500 text-sm">{{ state.errors.message }}</p>
@@ -62,8 +66,8 @@
               <button 
                 @click="submit_form" 
                 class="w-full p-2 mx-2 bg-slate-800 dark:bg-slate-200 text-slate-200 dark:text-slate-800 rounded-md mt-4"
-                :class="state.errors.name.length || state.errors.email.length || state.errors.message.length ? 'cursor-not-allowed' : 'hover:bg-slate-700 hover:text-slate-100 cursor-pointer'"
-                :disabled="state.errors.name.length || state.errors.email.length || state.errors.message.length"
+                :class="state.errors.name.length || state.errors.email.length || state.errors.subject.length || state.errors.message.length ? 'cursor-not-allowed' : 'hover:bg-slate-700 hover:text-slate-100 cursor-pointer'"
+                :disabled="state.errors.name.length || state.errors.email.length || state.errors.subject.length || state.errors.message.length"
               >
                 <span>Submit</span>
               </button>
@@ -81,6 +85,7 @@
     message: {
       name: '',
       email: '',
+      subject: '',
       message: ''
     },
     posting: false,
@@ -88,6 +93,7 @@
     errors: {
       name: '',
       email: '',
+      subject: '',
       message: ''
     }
   })
@@ -108,14 +114,14 @@ const validateEmail = (email) => {
     }
 }
 // validate subject:
-// const validateSubject = (subject) => {
-//   if (String(subject).length > 0) {
-//     state.errors.subject = ''
-//     return true
-//   } else {
-//     state.errors.subject = 'Subject is required'
-//   }
-// }
+const validateSubject = (subject) => {
+  if (String(subject).length > 0) {
+    state.errors.subject = ''
+    return true
+  } else {
+    state.errors.subject = 'Subject is required'
+  }
+}
 
 // validate message:
 const validateMessage = (message) => {
@@ -141,7 +147,7 @@ const validateName = (name) => {
 const submit_form = () => {
   state.posting = true
   console.log('Submitting form')
-  if(validateEmail(state.message.email) && validateMessage(state.message.message) && validateName(state.message.name)) {
+  if(validateEmail(state.message.email) && validateSubject(state.message.subject) && validateMessage(state.message.message) && validateName(state.message.name)) {
     console.log('All fields are valid')
     $fetch('/api/contact/send', {
       method: 'POST',
@@ -154,6 +160,7 @@ const submit_form = () => {
       state.message = {
         name: '',
         email: '',
+        subject: '',
         message: ''
       }
       state.success = "Message sent successfully! I'll get back to you soon. In the meantime, jam out to some more of my tunes!"
