@@ -8,12 +8,27 @@ export default defineEventHandler(async (event) => {
     template_id: process.env.email_js_template_id,
     user_id: process.env.email_js_user_id,
     template_params: {
-      'from_name': post_data.name,
-      'from_email': post_data.email,
-      'message': post_data.message,
-      'to_name': 'Nathan'
+      'user_name': post_data.name,
+      'user_email': post_data.email,
+      'message': post_data.message
     }
   }
 
+  $fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(post_obj),
+  }).then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      throw new Error('Failed to send email');
+    }
+  }).catch((error) => {
+    console.error('Error:', error);
+    return new Response('Error sending email', { status: 500 });
+  })
 
 });
