@@ -1,34 +1,20 @@
+import { Resend } from 'resend'
+const resend = new Resend(process.env.RESEND_API_KEY)
+
 export default defineEventHandler(async (event) => {
 
   const post_data = await readBody(event);
   console.log('coming from confirm frontend', post_data);
   
+  
   const post_obj = {
-    service_id: process.env.email_js_service_id,
-    template_id: process.env.email_js_template_id,
-    user_id: process.env.email_js_user_id,
-    template_params: {
-      'user_name': post_data.name,
-      'user_email': post_data.email,
-      'message': post_data.message
-    }
+    from: post_data.email,
+    name: post_data.name,
+    to: 'olli.vyae@gail.com',
+    subject: post_data.subject,
+    html: `<p>${post_data.message}</p>`
   }
 
-  $fetch('https://api.emailjs.com/api/v1.0/email/send', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(post_obj),
-  }).then((response) => {
-    if (response.status === 200) {
-      return response.json();
-    } else {
-      throw new Error('Failed to send email');
-    }
-  }).catch((error) => {
-    console.error('Error:', error);
-    return new Response('Error sending email', { status: 500 });
-  })
-
+  resend.emails.send(post_obj)
+  
 });
