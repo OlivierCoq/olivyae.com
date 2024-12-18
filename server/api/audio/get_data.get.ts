@@ -1195,7 +1195,217 @@ export default defineEventHandler((event) => {
             {
               label: 'Modern',
               value: 'Modern',
-              albums: []
+              albums: [
+                {
+                  title: "Practice Room",
+                  cover: {
+                    url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1734498649/Practice_Room_Album_Cover_vurriz.jpg"
+                  },
+                  tracks: [
+                    {
+                      id: 1,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734498671/Only_Sky_nbxgrc.mp3",
+                      title: "Only Sky",
+                      length: "1:54",
+                      genres: [
+                        {
+                          label: "Modern",
+                          value: "modern",
+                          active: false
+                        },
+                        {
+                          label: "Classical",
+                          value: "classical",
+                          active: false
+                        }
+                      ],
+                      moods: [
+                        {
+                          label: "Pensive",
+                          value: "pensive",
+                          active: false
+                        },
+                        {
+                          label: "Calm",
+                          value: "calm",
+                          active: false
+                        }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Piano",
+                          value: "piano",
+                          active: false
+                        },
+                        {
+                          label: "Strings",
+                          value: "strings",
+                          active: false
+                        },
+                        {
+                          label: "Percussion",
+                          value: "percussion",
+                          active: false
+                        }
+                      ]
+                    },
+                    {
+                      id: 2,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734499152/Air_j783od.mp3",
+                      title: "Air",
+                      length: "1:39",
+                      genres: [
+                        {
+                          label: "Modern",
+                          value: "modern",
+                          active: false
+                        },
+                        {
+                          label: "Classical",
+                          value: "classical",
+                          active: false
+                        }
+                      ],
+                      moods: [
+                        {
+                          label: "Pensive",
+                          value: "pensive",
+                          active: false
+                        },
+                        {
+                          label: "Calm",
+                          value: "calm",
+                          active: false
+                        }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Piano",
+                          value: "piano",
+                          active: false
+                        }
+                      ]
+                    },
+                    {
+                      id: 3,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734499374/In_Dreams_c97fi8.mp3",
+                      title: "In Dreams",
+                      length: "1:37",
+                      genres: [
+                        {
+                          label: "Modern",
+                          value: "modern",
+                          active: false
+                        },
+                        {
+                          label: "Classical",
+                          value: "classical",
+                          active: false
+                        }
+                      ],
+                      moods: [
+                        {
+                          label: "Pensive",
+                          value: "pensive",
+                          active: false
+                        },
+                        {
+                          label: "Calm",
+                          value: "calm",
+                          active: false
+                        }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Piano",
+                          value: "piano",
+                          active: false
+                        }
+                      ]
+                    },
+                    {
+                      id: 4,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734499473/Short_Prelude_in_G_Minor_ng2e4b.mp3",
+                      title: "Short Prelude in G Minor",
+                      length: "1:55",
+                      genres: [
+  
+                        {
+                          label: "Classical",
+                          value: "classical",
+                          active: false
+                        }
+                      ],
+                      moods: [
+                        {
+                          label: "Pensive",
+                          value: "pensive",
+                          active: false
+                        },
+                        {
+                          label: "Calm",
+                          value: "calm",
+                          active: false
+                        }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Piano",
+                          value: "piano",
+                          active: false
+                        }
+                      ]
+                    },     
+                    {
+                      id: 5,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734499582/Patience_sz7d1k.mp3",
+                      title: "Patience",
+                      length: "2:45",
+                      genres: [
+                        {
+                          label: "Modern",
+                          value: "modern",
+                          active: false
+                        },
+                        {
+                          label: "Classical",
+                          value: "classical",
+                          active: false
+                        }
+                      ],
+                      moods: [
+                        {
+                          label: "Calm",
+                          value: "calm",
+                          active: false
+                        },
+                        {
+                          label: "Hopeful",
+                          value: "hopeful",
+                          active: false
+                        }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Piano",
+                          value: "piano",
+                          active: false
+                        },
+                        {
+                          label: "Strings",
+                          value: "strings",
+                          active: false
+                        }
+                      ]
+                    },              
+                  ]
+                }
+              ]
             },
             {
               label: 'Orchestral',
