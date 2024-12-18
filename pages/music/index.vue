@@ -243,7 +243,7 @@
 
         </div>
         <div class="ctr-tracks w-[96%] h-[68vh] mx-auto overflow-y-scroll relative flex flex-col pb-4">
-          <TrackBox
+          <CommonTrackBox
             v-for="(track, index) in musicStore.search.results"
             :key="index"
             :num="index"
@@ -257,7 +257,7 @@
           <!-- Pagination -->
         </div>
           <!-- Music player: -->
-        <MusicPlayer v-if="musicStore.player.track" />
+        <CommonMusicPlayer v-if="musicStore.player.track" />
       </div>
     </div>
   </div> 
@@ -274,9 +274,6 @@
     url: 'https://olivyae.music',
   })
 
-  // Importing components
-import TrackBox from '~/components/common/TrackBox.vue'
-import MusicPlayer from '~/components/common/MusicPlayer.vue'
 
   // Stores
 import { useMusicStore } from '~/stores/music.js'
@@ -307,6 +304,9 @@ const state = reactive({
 // Lifecycle
 onMounted(() => {
   musicStore.init_music(audio_data)
+  nextTick(() => {
+    state.loading = false
+  })
 })
 
   // Methods
@@ -317,7 +317,6 @@ const randomBackgroundImage = () => {
 
 const init_music_browser = () => {
   state.fresh = false
-  state.loading = false
   // create a cookie to remember the user has visited the site
   document.cookie = 'fresh=false; max-age=31536000; path=/'
 }

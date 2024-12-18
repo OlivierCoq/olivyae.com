@@ -2,12 +2,12 @@
   <div class="w-[100vw] h-full bg-slate-200 dark:bg-slate-900 absolute px-2">
     <div v-show="state.fresh" id="fresh" class="fade-in mt-[3.5rem] p-4 h-full w-full flex flex-col justify-center align-center items-cener fade-in">
       <h1 
-        class="uppercase text-9xl font-bold primary-font text-center" 
+        class="uppercase text-7xl lg:text-9xl font-bold primary-font text-center" 
         :style="{ backgroundImage: `url(${randomBackgroundImage()})` }"
       >
         Oli.Vyae
       </h1>
-      <div class="mx-auto w-full md:w-1/2 lg:w-1/3 flex flex-row justify-center items-center align-center">
+      <div class="mx-auto w-full md:w-1/2 lg:w-1/3 flex flex-col lg:flex-row justify-start lg:justify-center items-center align-center mt-5">
         <span class="primary-font text-slate-800 dark:text-slate-200 text-xl mx-6 cursor-pointer" @click="init_music_browser">Browse my music now <font-awesome :icon="['fas', 'play']" /></span>
         <a href="/contact">
           <span class="primary-font text-slate-800 dark:text-slate-200 text-xl mx-6">Get in touch <font-awesome :icon="['fas', 'caret-right']" /></span>
@@ -243,7 +243,7 @@
 
         </div>
         <div class="ctr-tracks w-[96%] h-[65vh] mx-auto overflow-y-scroll relative flex flex-col pb-4">
-          <TrackBox
+          <CommonTrackBox
             v-for="(track, index) in musicStore.search.results"
             :key="index"
             :num="index"
@@ -257,7 +257,7 @@
           <!-- Pagination -->
         </div>
           <!-- Music player: -->
-        <MusicPlayer v-if="musicStore.player.track" />
+        <CommonMusicPlayer v-if="musicStore.player.track" />
       </div>
     </div>
   </div> 
@@ -273,10 +273,6 @@
     image: 'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635260/guitars-small_nubeqe.jpg',
     url: 'https://olivyae.music',
   })
-
-  // Importing components
-import TrackBox from '~/components/common/TrackBox.vue'
-import MusicPlayer from '~/components/common/MusicPlayer.vue'
 
   // Stores
 import { useMusicStore } from '~/stores/music.js'
