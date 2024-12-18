@@ -5,18 +5,20 @@
     class="music-player h-[5em] bottom-0 w-full bg-slate-300 dark:bg-slate-800 z-20 left-0 fixed"
   >
     <div class="w-full h-full flex flex-row justifty-start items-start">
-      <div class="w-[20%] h-full flex flex-col px-5">
+      <div class="w-1/3 md:w-[20%] h-full flex flex-row lg:px-5">
         <img
-          :src="musicStore.player.track.album.cover .url"
+          :src="musicStore.player.track.album.cover.url"
           :alt="musicStore.player.track.title"
-          class="w-[100px] mt-[-3rem] lg:mt-[-5rem] shadow-2xl"
+          class="shadow-2xl mt-[-1rem] ms-[-1rem]"
         />
-        <p class="text-slate-800 dark:text-slate-200 font-thin font-bold text-xs lg:text-sm primary-font mt-2">
-          {{ musicStore.player.track.title }}
-        </p>
-        <small class="text-slate-800 dark:text-slate-200 font-thin text-xs">{{ musicStore.player.track.album.title }}</small>
+        <div class="flex flex-col justify-center items-start align-center text-start ms-2 mb-8">
+          <p class="text-slate-800 dark:text-slate-200 font-thin font-bold text-xs lg:text-sm primary-font mt-2">
+            {{ musicStore.player.track.title }}
+          </p>
+          <small class="text-slate-800 dark:text-slate-200 font-thin text-xs">{{ musicStore.player.track.album.title }}</small>
+        </div>
       </div>
-      <div class="w-[60%]">
+      <div class="w-2/3 md:w-[60%]">
         <audio
           id="audio_player"
           controls
@@ -85,7 +87,7 @@
           </div>
         </div>
       </div>
-      <div class="w-[20%] h-full">
+      <div class="invisible md:visible md:w-[20%] h-full">
         <div class="h-full w-full flex flex-row items-center justify-start">
           <font-awesome
             :icon="[

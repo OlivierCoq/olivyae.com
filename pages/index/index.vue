@@ -217,19 +217,19 @@
             </span>
           </div>
 
-          <div class="w-[20%]">
+          <div class="w-[20%] invisible md:visible">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Album
             </span>
           </div>
 
-          <div class="w-[20%]">
+          <div class="w-[20%] invisible md:visible">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Genres
             </span>
           </div>
 
-          <div class="w-[20%]">
+          <div class="w-[20%] invisible md:visible">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Mood
             </span>
@@ -242,7 +242,7 @@
           </div>
 
         </div>
-        <div class="ctr-tracks w-[96%] h-[65%] mx-auto overflow-y-scroll relative flex flex-col pb-4">
+        <div class="ctr-tracks w-[96%] h-[65vh] mx-auto overflow-y-scroll relative flex flex-col pb-4">
           <TrackBox
             v-for="(track, index) in musicStore.search.results"
             :key="index"

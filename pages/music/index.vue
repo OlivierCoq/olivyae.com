@@ -217,19 +217,19 @@
             </span>
           </div>
 
-          <div class="w-[20%]">
+          <div class="w-[20%] invisible md:visible">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Album
             </span>
           </div>
 
-          <div class="w-[20%]">
+          <div class="w-[20%] invisible md:visible">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Genres
             </span>
           </div>
 
-          <div class="w-[20%]">
+          <div class="w-[20%] invisible md:visible">
             <span class="text-slate-900 dark:text-slate-200 font-thin text-2xl">
             Mood
             </span>
@@ -242,7 +242,7 @@
           </div>
 
         </div>
-        <div class="ctr-tracks w-[96%] h-[65%] mx-auto overflow-y-scroll relative flex flex-col pb-4">
+        <div class="ctr-tracks w-[96%] h-[68vh] mx-auto overflow-y-scroll relative flex flex-col pb-4">
           <TrackBox
             v-for="(track, index) in musicStore.search.results"
             :key="index"
@@ -251,7 +251,7 @@
             :index="index"
           />
           <p 
-            v-if="!musicStore.search.results.length"
+            v-if="!musicStore.search.results.length && !loading"
             class="my-20 text-center font-thin text-2xl text-slate-800 dark:text-slate-200"
             >Oh man! No tracks here. I guess I haven't delved too deeply in that genre.......yet! Reach out if you'd like to hear a song in this genre!</p>
           <!-- Pagination -->
@@ -288,6 +288,7 @@ const audio_data = await useFetch('/api/audio/get_data', { method: 'GET' })
 // State
 const state = reactive({
   fresh: false,
+  loading: true,
   images: [
     'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635260/guitars-small_nubeqe.jpg',
     'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635370/DJing-small_zbhbfd.jpg',
@@ -316,6 +317,7 @@ const randomBackgroundImage = () => {
 
 const init_music_browser = () => {
   state.fresh = false
+  state.loading = false
   // create a cookie to remember the user has visited the site
   document.cookie = 'fresh=false; max-age=31536000; path=/'
 }
