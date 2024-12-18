@@ -8,7 +8,8 @@ export default defineEventHandler(async (event) => {
   
   
   const post_obj = {
-    from: post_data.data.email,
+    reply_to: post_data.data.email,
+    from: 'info@olivyae.com',
     name: post_data.data.name,
     to: 'olli.vyae@gmail.com',
     subject: post_data.data.subject,
