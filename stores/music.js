@@ -362,7 +362,22 @@ export const useMusicStore = defineStore({
           audio_player.play()
           this.player.playing = true
           this.update_tracktime()
+
+          audio_player.addEventListener('ended', this.select_next)
         })
+    },
+    select_next() {
+      const target = this.player.track;
+      const next = this.search.results.indexOf(target) + 1;
+      this.player.track = false;
+      nextTick(() => {
+        this.player.track = this.search.results[next] ? this.search.results[next] : target;
+        const audio_player = document.getElementById('audio_player');
+        audio_player.volume = this.player.volume;
+        nextTick(() => {
+          this.fire_play();
+        });
+      });
     }
   },
   getters: {},
