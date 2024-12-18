@@ -11,7 +11,7 @@
           :alt="musicStore.player.track.title"
           class="shadow-2xl mt-[-1rem] ms-[-1rem]"
         />
-        <div class="flex flex-col justify-center items-start align-center text-start ms-2 mb-8">
+        <div class="flex flex-col justify-center items-start align-center text-start ms-2 mb-8 md:mb-4">
           <p class="text-slate-800 dark:text-slate-200 font-thin font-bold text-xs lg:text-sm primary-font mt-2">
             {{ musicStore.player.track.title }}
           </p>
