@@ -1200,7 +1200,64 @@ export default defineEventHandler((event) => {
             {
               label: 'Orchestral',
               value: 'orchestral',
-              albums: []
+              albums: [
+                {
+                  title: "Spooky Tunes",
+                  cover: {
+                    url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1734495781/Spooky_Tunes_eu51le.jpg"
+                  },
+                  tracks: [
+                    {
+                      id: 1,
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734495795/Cute_Spooky_Halloween_Music-_HalloweenerDog_yxnlj2.mp3",
+                      title: "The Halloweener Dog",
+                      length: "1:22",
+                      genres: [
+                        {
+                          label: "Orchestral",
+                          value: "orchestral",
+                          active: false
+                        },
+                        {
+                          label: "Classical",
+                          value: "classical",
+                          active: false
+                        }
+                      ],
+                      moods: [
+                        {
+                          label: "Playful",
+                          value: "playful",
+                          active: false
+                        },
+                        {
+                          label: "Whimsical",
+                          value: "whimsical",
+                          active: false
+                        }
+                      ],
+                      vocals: [],
+                      instruments: [
+                        {
+                          label: "Strings",
+                          value: "strings",
+                          active: false
+                        },
+                        {
+                          label: "Percussion",
+                          value: "percussion",
+                          active: false
+                        },
+                        {
+                          label: "Synth",
+                          value: "synth",
+                          active: false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
