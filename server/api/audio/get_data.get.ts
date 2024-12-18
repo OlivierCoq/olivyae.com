@@ -470,8 +470,8 @@ export default defineEventHandler((event) => {
                   tracks: [
                     {
                       id: 1,
-                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733887181/Jelly_Bean_Groove_lk1nku.wav",
-                      title: "Jelly Bean Groove",
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734489576/The_Jelly_Bean_Groove_xrppn5.wav",
+                      title: "The Jelly Bean Groove",
                       length: "1:12",
                       genres: [
                         {
@@ -534,8 +534,8 @@ export default defineEventHandler((event) => {
                     },
                     {
                       id: 2,
-                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733887181/Jelly_Bean_Groove_-_Instrumental_vxhkdw.wav",
-                      title: "Jelly Bean Groove - Instrumental",
+                      audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734489575/The_Jelly_Bean_Groove_-_Instrumental_kuxwea.wav",
+                      title: "The Jelly Bean Groove - Instrumental",
                       length: "1:12",
                       genres: [
                         {
@@ -872,7 +872,152 @@ export default defineEventHandler((event) => {
             {
               label: 'Indie',
               value: 'indie',
-              albums: []
+              albums: [{
+                title: "Burn it Down",
+                cover: {
+                  url: "https://res.cloudinary.com/dffwof1gx/image/upload/v1734490371/Burn_It_Down_cover_jjftz1.jpg"
+                },
+                tracks: [
+                  {
+                    id: 1,
+                    audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734490393/Burn_it_Down_nu5bl5.wav",
+                    title: "Burn it Down",
+                    length: "2:40",
+                    genres: [
+                      {
+                        label: "Indie",
+                        value: "indie",
+                        active: false
+                      },
+                      {
+                        label: "Rock",
+                        value: "rock",
+                        active: false
+                      }
+                    ],
+                    moods: [
+                      {
+                        label: "Angry",
+                        value: "angry",
+                        active: false
+                      },
+                      {
+                        label: "Confident",
+                        value: "confident",
+                        active: false
+                      },
+                      {
+                        label: "Upbeat",
+                        value: "upbeat",
+                        active: false
+                      },
+                      {
+                        label: "Excited",
+                        value: "excited",
+                        active: false
+                      }
+                    ],
+                    vocals: [
+                      {
+                        label: "Male",
+                        value: "male",
+                        active: false
+                      }
+                    ],
+                    instruments: [
+                      {
+                        label: "Electric Guitar",
+                        value: "electric_guitar",
+                        active: false
+                      },
+                      {
+                        label: "Drums",
+                        value: "drums",
+                        active: false
+                      },
+                      {
+                        label: "Bass",
+                        value: "bass",
+                        active: false
+                      },
+                      {
+                        label: "Synth",
+                        value: "synth",
+                        active: false
+                      }
+                    ]
+                  },
+                  {
+                    id: 2,
+                    audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734490394/Burn_it_Down_-_Instrumental_iirngd.wav",
+                    title: "Burn it Down - Instrumental",
+                    length: "2:40",
+                    genres: [
+                      {
+                        label: "Indie",
+                        value: "indie",
+                        active: false
+                      },
+                      {
+                        label: "Rock",
+                        value: "rock",
+                        active: false
+                      }
+                    ],
+                    moods: [
+                      {
+                        label: "Angry",
+                        value: "angry",
+                        active: false
+                      },
+                      {
+                        label: "Confident",
+                        value: "confident",
+                        active: false
+                      },
+                      {
+                        label: "Upbeat",
+                        value: "upbeat",
+                        active: false
+                      },
+                      {
+                        label: "Excited",
+                        value: "excited",
+                        active: false
+                      }
+                    ],
+                    vocals: [
+                      {
+                        label: "Male",
+                        value: "male",
+                        active: false
+                      }
+                    ],
+                    instruments: [
+                      {
+                        label: "Electric Guitar",
+                        value: "electric_guitar",
+                        active: false
+                      },
+                      {
+                        label: "Drums",
+                        value: "drums",
+                        active: false
+                      },
+                      {
+                        label: "Bass",
+                        value: "bass",
+                        active: false
+                      },
+                      {
+                        label: "Synth",
+                        value: "synth",
+                        active: false
+                      }
+                    ]
+                  }
+                ]                  
+              }]
             }
           ]
         },
