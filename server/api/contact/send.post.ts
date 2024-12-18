@@ -13,7 +13,14 @@ export default defineEventHandler(async (event) => {
     name: post_data.data.name,
     to: 'olli.vyae@gmail.com',
     subject: post_data.data.subject,
-    html: `<p>${post_data.data.message}</p>`
+    html: `
+    
+      <h1>${post_data.data.subject}</h1>
+      <p>${post_data.data.name}</p>
+      <p>${post_data.data.email}</p>
+      <p>${post_data.data.message}</p>
+      
+      `
   }
 
   console.log('post_obj', post_obj);
