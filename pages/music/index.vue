@@ -287,7 +287,7 @@ const audio_data = await useFetch('/api/audio/get_data', { method: 'GET' })
 
 // State
 const state = reactive({
-  fresh: true,
+  fresh: false,
   images: [
     'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635260/guitars-small_nubeqe.jpg',
     'https://res.cloudinary.com/dffwof1gx/image/upload/v1733635370/DJing-small_zbhbfd.jpg',
