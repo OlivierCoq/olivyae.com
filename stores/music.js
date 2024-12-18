@@ -182,9 +182,9 @@ export const useMusicStore = defineStore({
       const target_track = track
 
       if(this.player.track) {
-        if(this.player.track.id === track.id){ this.fire_play() }
+        if(this.player.track.title === track.title){ this.fire_play() }
         else {
-          this.player.track = false
+          this.player.track = null
           this.player.playing = false
           this.player.paused = true
           nextTick(() => {
@@ -195,6 +195,7 @@ export const useMusicStore = defineStore({
           })
         }
       } else {
+        this.player.track = null 
         this.player.track = track
         nextTick(() => { this.fire_play() })
       }

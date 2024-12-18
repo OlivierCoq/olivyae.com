@@ -153,7 +153,7 @@
       </div>
       <div id="body" class="w-full flex flex-1 flex-col justify-start align-center items-center">
         <div class="ctr-filter_interface w-full h-[40px] py-2 px-4 flex flex-row justify-between bg-slate-100 mb-4">
-          <p v-if="musicStore.search.filters.active_filters" class="text-slate-800 dark:text-slate-200 font-thin text-md me-10 fade-in">Results: {{ musicStore.search.results.length }}</p>
+          <p class="text-slate-800 dark:text-slate-200 font-thin text-md me-10 fade-in">Count: {{ musicStore.search.results.length }}</p>
           <p v-if="musicStore.search.filters.active_filters" class="text-slate-800 dark:text-slate-200 font-thin text-md me-10 fade-in">Filtered by: 
 
             <span v-if="musicStore.search.filters.albums.length">
@@ -242,10 +242,11 @@
           </div>
 
         </div>
-        <div class="w-[96%] h-[75%] mx-auto overflow-scroll relative flex flex-col">
+        <div class="ctr-tracks w-[96%] h-[65%] mx-auto overflow-y-scroll relative flex flex-col">
           <TrackBox
             v-for="(track, index) in musicStore.search.results"
             :key="index"
+            :num="index"
             :track="track"
             :index="index"
           />
@@ -341,5 +342,28 @@ const select_genre = (genre) => {
       -webkit-background-clip:text;
       animation: animate 15s ease-in-out infinite;
     }
+  }
+  .ctr-tracks {
+
+    // custom scrollbar css:
+    &::-webkit-scrollbar {
+      width: 8px;
+      margin-left: 4px;
+      border-radius: 4px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #888; 
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555; 
+    }
+
   }
 </style>

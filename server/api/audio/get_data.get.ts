@@ -111,6 +111,132 @@ export default defineEventHandler((event) => {
                       }
                     ]
                   },
+                  {
+                    id: 2,
+                    audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1734491887/to_mustache_or_not_to_mustache_gpxrq1.wav",
+                    title: "To Mustache or Not to Mustache",
+                    length: "2:57",
+                    genres: [
+                      {
+                        label: "Electro Funk",
+                        value: "electro_funk",
+                        active: false
+                      },
+                      {
+                        label:"Electronic",
+                        value: "electronic",
+                        active: false
+                      },
+                      {
+                        label: "Synthwave",
+                        value: "synthwave",
+                        active: false
+                      }
+                    ],
+                    moods: [
+                      {
+                        label: "Playful",
+                        value: "playful",
+                        active: false
+                      },
+                      {
+                        label: "Happy",
+                        value: "happy",
+                        active: false
+                      },
+                      {
+                        label: "Excited",
+                        value: "excited",
+                        active: false
+                      },
+                      {
+                        label: "Upbeat",
+                        value: "upbeat",
+                        active: false
+                      }
+                    ],
+                    vocals: [],
+                    instruments: [
+                      {
+                        label: "Synth",
+                        value: "synth",
+                        active: false
+                      },
+                      {
+                        label: "Drums",
+                        value: "drums",
+                        active: false
+                      },
+                      {
+                        label: "Bass",
+                        value: "bass",
+                        active: false
+                      }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    audio_file: "https://res.cloudinary.com/dffwof1gx/video/upload/v1733950862/The_twins_ywzgwn.wav",
+                    title: "The Twins",
+                    length: "2:15",
+                    genres: [
+                      {
+                        label: "Electro Funk",
+                        value: "electro_funk",
+                        active: false
+                      },
+                      {
+                        label:"Electronic",
+                        value: "electronic",
+                        active: false
+                      },
+                      {
+                        label: "Synthwave",
+                        value: "synthwave",
+                        active: false
+                      }
+                    ],
+                    moods: [
+                      {
+                        label: "Playful",
+                        value: "playful",
+                        active: false
+                      },
+                      {
+                        label: "Happy",
+                        value: "happy",
+                        active: false
+                      },
+                      {
+                        label: "Excited",
+                        value: "excited",
+                        active: false
+                      },
+                      {
+                        label: "Upbeat",
+                        value: "upbeat",
+                        active: false
+                      }
+                    ],
+                    vocals: [],
+                    instruments: [
+                      {
+                        label: "Synth",
+                        value: "synth",
+                        active: false
+                      },
+                      {
+                        label: "Drums",
+                        value: "drums",
+                        active: false
+                      },
+                      {
+                        label: "Bass",
+                        value: "bass",
+                        active: false
+                      }
+                    ]
+                  }
                 ]
               }]
             },
